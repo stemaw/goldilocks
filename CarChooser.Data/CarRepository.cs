@@ -11,17 +11,18 @@ namespace CarChooser.Data
 {
     public class CarRepository : IGetCars
     {
+        private const string DatabasePath = @"C:\Users\ste_000\Documents\goldilocks\CarChooser.Data\CarData.db";
         //private const string DatabasePath = @"C:\Users\ste_000\Documents\visual studio 2012\Projects\CarChooser\Database\CarData.db";
-        private static string DatabasePath
-        {
-            get
-            {
-                var codeBase = Assembly.GetExecutingAssembly().CodeBase;
-                var uri = new UriBuilder(codeBase);
-                var path = Uri.UnescapeDataString(uri.Path);
-                return Path.Combine(Path.GetDirectoryName(path), "CarData.db");
-            }
-        }
+        //private static string DatabasePath
+        //{
+        //    get
+        //    {
+        //        var codeBase = Assembly.GetExecutingAssembly().CodeBase;
+        //        var uri = new UriBuilder(codeBase);
+        //        var path = Uri.UnescapeDataString(uri.Path);
+        //        return Path.Combine(Path.GetDirectoryName(path), "CarData.db");
+        //    }
+        //}
             
         public Car GetCar(long currentCarId)
         {

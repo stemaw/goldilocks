@@ -59,7 +59,7 @@ namespace DataImporter
         private static string GetImageName(long id)
         {
             return string.Format(
-                @"C:\Users\ste_000\Documents\Visual Studio 2012\Projects\CarChooser\CarChooser\Content\CarImages\{0}.jpg",
+                @"C:\Users\ste_000\Documents\goldilocks\CarChooser\Content\CarImages\{0}.jpg",
                 id);
         }
     }

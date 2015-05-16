@@ -11,14 +11,14 @@ namespace DataImporter
         private static void Main(string[] args)
         {
             var browser1 = Browser.SpinUpBrowser();
-           // var browser2 = Browser.SpinUpBrowser();
+            var browser2 = Browser.SpinUpBrowser();
 
-            //var task1 = Task.Run(() => Parkers(browser2));
-            //var task2 = Task.Run(() => Images(browser1));
-            
-            //Task.WaitAll(task1, task2);
+            var task1 = Task.Run(() => Parkers(browser2));
+            var task2 = Task.Run(() => Images(browser1));
 
-            Parkers(browser1);
+            Task.WaitAll(task1, task2);
+
+            //Parkers(browser1);
         }
 
         private static void Images(BrowserSession browser)

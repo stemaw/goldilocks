@@ -1,0 +1,4 @@
+c:\users\ste_000\documents\visual studio 2012\Projects\CarChooser\CarChooser.Domain\bin\Debug\CarChooser.Domain.dll
+c:\users\ste_000\documents\visual studio 2012\Projects\CarChooser\CarChooser.Domain\bin\Debug\CarChooser.Domain.pdb
+c:\users\ste_000\documents\visual studio 2012\Projects\CarChooser\CarChooser.Domain\obj\Debug\CarChooser.Domain.dll
+c:\users\ste_000\documents\visual studio 2012\Projects\CarChooser\CarChooser.Domain\obj\Debug\CarChooser.Domain.pdb

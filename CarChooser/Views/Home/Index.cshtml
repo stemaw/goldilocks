@@ -1,0 +1,82 @@
+﻿@using CarChooser.Web.Models
+@model SearchResultVM
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model));
+    var searchUrl = '@Url.Action("Post", "Home")';
+    myApp.value("viewModel", model);
+    myApp.value("searchUrl", searchUrl);
+</script>
+
+<!-- Intro Header -->
+    <header class="intro">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h1 class="brand-heading">Goldilocker</h1>
+                        <p class="intro-text">the new way to choose a car that's just right for you</p>
+                        <p class="intro-text">our system recommends and learns from those who use it</p>
+                        <a href="#about" class="btn btn-circle page-scroll">
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+<!-- About Section -->
+
+<section ng-controller="mainController"  id="about" class="container content-section text-center" style="padding: 50px;">
+    <div class="row" style="background-size:cover url('@Url.Content("~/content/carimages")/default.png'"  ng-style="{'background-image': 'url(@Url.Content("~/content/carimages")/'+viewModel.CurrentCar.Id+ '.jpg)'}">
+        <div class="col-lg-12 carHeader">
+            <div class="col-lg-1">
+                <button class="btn"><i class="glyphicon glyphicon-thumbs-down"></i>Dislike</button>
+            </div>
+            <div class="col-lg-10 text-primary currentCar">
+                {{viewModel.CurrentCar.Manufacturer}} {{viewModel.CurrentCar.Model}} ({{viewModel.CurrentCar.YearFrom}})
+            </div>
+            <div class="col-lg-1">
+                <button class="btn"><i class="glyphicon glyphicon-thumbs-up"></i>Like</button>
+            </div>
+
+        </div> 
+        <img class="img-responsive col-lg-8"  on-error-src='@Url.Content("~/content/carimages")/default.png' ng-src='@Url.Content("~/content/carimages")/{{viewModel.CurrentCar.Id}}.jpg' style="visibility: hidden; padding-bottom: 80px;"/>
+       
+    </div>
+    <div class="row">
+
+        <div class="col-lg-2" ng-repeat="reason in viewModel.RejectionReasons">
+            <button class="btn btn-circle btn-circle-lg" ng-click="submitRejection(reason)">{{reason | enum}}</button>
+        </div>
+
+    </div>
+</section>
+
+  <section id="contact" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>Contact me</h2>
+                <p>Feel free to email us to provide some feedback, give us suggestions, or to just say hello!</p>
+                <p><a href="mailto:enquiry@mawbusinesssolutions.co.uk">enquiry@mawbusinesssolutions.co.uk</a>
+                </p>
+                <ul class="list-inline banner-social-buttons">
+                    <li>
+                        <a href="https://twitter.com/mawste" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                    </li>
+
+                    <li>
+                        <a href="https://plus.google.com/112151541140544832241/posts" class="btn btn-default btn-lg"><i class="fa fa-google-plus fa-fw"></i> <span class="network-name">Google+</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+
+
+
+

@@ -9,3 +9,4 @@ CarChooser.UnitTests/bin/**/
 CarChooser.UnitTests/obj/**/
 CarChooser.v12.suo
 CarChooser/bin/**
+DataImporter/obj/

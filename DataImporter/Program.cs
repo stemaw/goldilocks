@@ -10,13 +10,21 @@ namespace DataImporter
     {
         private static void Main(string[] args)
         {
-            var browser1 = Browser.SpinUpBrowser();
-            var browser2 = Browser.SpinUpBrowser();
+            //var browser1 = Browser.SpinUpBrowser();
+            //var browser2 = Browser.SpinUpBrowser();
 
-            var task1 = Task.Run(() => Parkers(browser2));
-            var task2 = Task.Run(() => Images(browser1));
+            //var task1 = Task.Run(() => Parkers(browser2));
+            //var task2 = Task.Run(() => Images(browser1));
 
-            Task.WaitAll(task1, task2);
+            //Task.WaitAll(task1, task2);
+
+            //Images(browser1);
+
+            //new Prestige().ImportManufacturerScores();
+            new ReliabilityIndex().ImportManufacturerScores();
+
+            Console.WriteLine("Done");
+            Console.ReadKey();
 
             //Parkers(browser1);
         }
@@ -47,7 +55,7 @@ namespace DataImporter
 
             try
             {
-                ripper.RipParkers(66, 4);
+                ripper.RipParkers(70, 1, false);
             }
             catch (Exception ex)
             {
@@ -61,7 +69,7 @@ namespace DataImporter
 
                 ripper = new ParkersRipper(browser);
 
-                ripper.RipParkers(currentManufacturer, modelIndex);
+                ripper.RipParkers(currentManufacturer, modelIndex, false);
             }
         }
     }

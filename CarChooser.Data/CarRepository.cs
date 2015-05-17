@@ -11,8 +11,8 @@ namespace CarChooser.Data
 {
     public class CarRepository : IGetCars
     {
-        private const string DatabasePath = @"CarData.db";
-        //private const string DatabasePath = @"C:\Users\ste_000\Documents\visual studio 2012\Projects\CarChooser\Database\CarData.db";
+        //private const string DatabasePath = @"CarData.db";
+        private const string DatabasePath = @"C:\Users\ste_000\Documents\goldilocks\CarChooser.Data\CarData.db";
         //private static string DatabasePath
         //{
         //    get
@@ -23,7 +23,7 @@ namespace CarChooser.Data
         //        return Path.Combine(Path.GetDirectoryName(path), "CarData.db");
         //    }
         //}
-            
+
         public Car GetCar(long currentCarId)
         {
             using (var db = Db4oEmbedded.OpenFile(DatabasePath))
@@ -38,7 +38,7 @@ namespace CarChooser.Data
             {
                 var car = db.Query<Car>().FirstOrDefault(c => c.Id == id);
                 var dbId = db.Ext().GetID(car);
-                car = (Car) db.Ext().GetByID(dbId);
+                car = (Car)db.Ext().GetByID(dbId);
                 car.Attractiveness = score;
                 db.Store(car);
                 db.Close();
@@ -138,6 +138,82 @@ namespace CarChooser.Data
                     db.Commit();
                 }
 
+            }
+        }
+
+        public bool UpdateManufacturerScore(string manufacturer, int score)
+        {
+            using (var db = Db4oEmbedded.OpenFile(DatabasePath))
+            {
+                var cars = db.Query<Car>().Where(c => c.Manufacturer.Name.ToLower() == manufacturer.ToLower());
+                if (!cars.ToList().Any())
+                {
+                    if (manufacturer == "MG")
+                    {
+                        cars = db.Query<Car>().Where(c => c.Manufacturer.Name == "MG");
+                    }
+                    else
+                    {
+                        cars =
+                            db.Query<Car>()
+                              .Where(
+                                  c =>
+                                  c.Manufacturer.Name.Length > 3 &&
+                                  c.Manufacturer.Name.Substring(0, 3) == manufacturer.Substring(0, 3));
+                    }
+                }
+                if (!cars.ToList().Any())
+                {
+                    return false;
+                }
+
+                foreach (var car in cars)
+                {
+                    var dbId = db.Ext().GetID(car);
+                    var carToUpdate = (Car) db.Ext().GetByID(dbId);
+                    carToUpdate.Manufacturer.ReliabilityIndex = score;
+                    db.Store(carToUpdate);
+                }
+
+                return true;
+            }
+        }
+
+        public bool UpdatePrestiage(string manufacturer, int score)
+        {
+            using (var db = Db4oEmbedded.OpenFile(DatabasePath))
+            {
+                var cars = db.Query<Car>().Where(c => c.Manufacturer.Name.ToLower() == manufacturer.ToLower());
+                if (!cars.ToList().Any())
+                {
+                    if (manufacturer == "MG")
+                    {
+                        cars = db.Query<Car>().Where(c => c.Manufacturer.Name == "MG");
+                    }
+                    else
+                    {
+                        cars =
+                            db.Query<Car>()
+                              .Where(
+                                  c =>
+                                  c.Manufacturer.Name.Length > 3 &&
+                                  c.Manufacturer.Name.Substring(0, 3) == manufacturer.Substring(0, 3));
+                    }
+                }
+                if (!cars.ToList().Any())
+                {
+                    return false;
+                }
+
+                foreach (var car in cars)
+                {
+                    var dbId = db.Ext().GetID(car);
+                    var carToUpdate = (Car)db.Ext().GetByID(dbId);
+                    carToUpdate.Manufacturer.PrestigeIndex = score;
+                    db.Store(carToUpdate);
+                }
+
+                return true;
             }
         }
     }

@@ -26,7 +26,7 @@ namespace DataImporter
         protected static string PriceRangePanelId = "ctl00_contentHolder_topFullWidthContent_ctl01_pnlNewPriceRange";
 
 
-        public void RipParkers(int manufacturerIndex, int modelIndex)
+        public void RipParkers(int manufacturerIndex, int modelIndex, bool hasOptionGroups)
         {
             CurrentManufacturer = manufacturerIndex;
             CurrentModel = modelIndex;
@@ -43,21 +43,21 @@ namespace DataImporter
 
             try
             {
-                modelName = SelectModel(modelIndex);
+                modelName = SelectModel(modelIndex, hasOptionGroups);
             }
             catch (Exception)
             {
                 try
                 {
                     manufacturerName = SelectManufacturer(manufacturerIndex);
-                    modelName = SelectModel(modelIndex);
+                    modelName = SelectModel(modelIndex, hasOptionGroups);
                 }
                 catch (Exception)
                 {
                     manufacturerIndex++;
                     modelIndex = 0;
                     
-                    RipParkers(manufacturerIndex, modelIndex);
+                    RipParkers(manufacturerIndex, modelIndex, hasOptionGroups);
                     return;
                 }
 
@@ -69,7 +69,7 @@ namespace DataImporter
             if (existingCar != null)
             {
                 modelIndex++;
-                RipParkers(manufacturerIndex, modelIndex);
+                RipParkers(manufacturerIndex, modelIndex, true);
                 Console.WriteLine("Already had {0} {1}", manufacturerName, modelName);
                 return;
             }
@@ -79,7 +79,7 @@ namespace DataImporter
             if (Browser.FindId(ReviewDropdownId).SelectedOption != "Read review")
             {
                 modelIndex++;
-                RipParkers(manufacturerIndex, modelIndex);
+                RipParkers(manufacturerIndex, modelIndex, true);
                 Console.WriteLine("No review for {0} {1}", manufacturerName, modelName);
                 return;
             }
@@ -117,7 +117,7 @@ namespace DataImporter
 
             Console.WriteLine("Successfully ripped {0} {1} : Manufacturer {2} Model {3}", car.Manufacturer.Name, car.Model, CurrentManufacturer, CurrentModel);
 
-            RipParkers(manufacturerIndex, modelIndex);
+            RipParkers(manufacturerIndex, modelIndex, hasOptionGroups);
         }
 
         private static int CalculatePriceScore(decimal price)
@@ -265,12 +265,23 @@ namespace DataImporter
             Browser.ExecuteScript(script);
         }
 
-        private string SelectModel(int modelIndex)
+        private string SelectModel(int modelIndex, bool hasOptionGroups)
         {
             WaitForDropdownPopulation(ModelDropdownId);
 
-            var script = string.Format(
-                @"$('#{0}>optgroup>option:eq({1})').attr('selected', true);$('#{0}').trigger('change');", ModelDropdownId, modelIndex);
+            string script;
+            if (hasOptionGroups)
+            {
+                script = string.Format(
+                    @"$('#{0}>optgroup>option:eq({1})').attr('selected', true);$('#{0}').trigger('change');",
+                    ModelDropdownId, modelIndex);
+            }
+            else
+            {
+                script = string.Format(
+                    @"$('#{0}>option:eq({1})').attr('selected', true);$('#{0}').trigger('change');",
+                    ModelDropdownId, modelIndex);
+            }
 
             Browser.ExecuteScript(script);
 

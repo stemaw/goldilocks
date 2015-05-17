@@ -1,0 +1,11 @@
+CarChooser.AcceptanceTests/bin/**/
+CarChooser.AcceptanceTests/bin/**/
+CarChooser.AcceptanceTests/obj/**/
+CarChooser.Data/bin/**/
+CarChooser.Data/obj/**/
+CarChooser.Domain/bin/**/
+CarChooser.Domain/obj/**/
+CarChooser.UnitTests/bin/**/
+CarChooser.UnitTests/obj/**/
+CarChooser.v12.suo
+CarChooser/bin/**

@@ -14,3 +14,19 @@ C:\Users\ste_000\Documents\Visual Studio 2012\Projects\CarChooser\CarChooser.Acc
 C:\Users\ste_000\Documents\Visual Studio 2012\Projects\CarChooser\CarChooser.AcceptanceTests\obj\Debug\CarChooser.AcceptanceTests.pdb
 C:\Users\ste_000\Documents\Visual Studio 2012\Projects\CarChooser\CarChooser.AcceptanceTests\bin\Debug\chromedriver.exe
 C:\Users\ste_000\documents\visual studio 2012\Projects\CarChooser\CarChooser.AcceptanceTests\obj\Debug\CarChooser.AcceptanceTests.csprojResolveAssemblyReference.cache
+C:\Workarea\goldilocks\CarChooser.AcceptanceTests\obj\Debug\CarChooser.AcceptanceTests.csprojResolveAssemblyReference.cache
+C:\Workarea\goldilocks\CarChooser.AcceptanceTests\bin\Debug\chromedriver.exe
+C:\Workarea\goldilocks\CarChooser.AcceptanceTests\bin\Debug\Coypu.dll
+C:\Workarea\goldilocks\CarChooser.AcceptanceTests\bin\Debug\nunit.framework.dll
+C:\Workarea\goldilocks\CarChooser.AcceptanceTests\bin\Debug\TechTalk.SpecFlow.dll
+C:\Workarea\goldilocks\CarChooser.AcceptanceTests\bin\Debug\WebDriver.dll
+C:\Workarea\goldilocks\CarChooser.AcceptanceTests\bin\Debug\WebDriver.Support.dll
+C:\Workarea\goldilocks\CarChooser.AcceptanceTests\bin\Debug\Coypu.xml
+C:\Workarea\goldilocks\CarChooser.AcceptanceTests\bin\Debug\nunit.framework.xml
+C:\Workarea\goldilocks\CarChooser.AcceptanceTests\bin\Debug\WebDriver.xml
+C:\Workarea\goldilocks\CarChooser.AcceptanceTests\bin\Debug\WebDriver.Support.xml
+C:\Workarea\goldilocks\CarChooser.AcceptanceTests\obj\Debug\CarChooser.AcceptanceTests.dll
+C:\Workarea\goldilocks\CarChooser.AcceptanceTests\obj\Debug\CarChooser.AcceptanceTests.pdb
+C:\Workarea\goldilocks\CarChooser.AcceptanceTests\bin\Debug\CarChooser.AcceptanceTests.dll.config
+C:\Workarea\goldilocks\CarChooser.AcceptanceTests\bin\Debug\CarChooser.AcceptanceTests.dll
+C:\Workarea\goldilocks\CarChooser.AcceptanceTests\bin\Debug\CarChooser.AcceptanceTests.pdb

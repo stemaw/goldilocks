@@ -11,7 +11,7 @@ namespace CarChooser.Data
 {
     public class CarRepository : IGetCars
     {
-        private const string DatabasePath = @"C:\Users\ste_000\Documents\goldilocks\CarChooser.Data\CarData.db";
+        private const string DatabasePath = @"CarData.db";
         //private const string DatabasePath = @"C:\Users\ste_000\Documents\visual studio 2012\Projects\CarChooser\Database\CarData.db";
         //private static string DatabasePath
         //{
@@ -41,12 +41,13 @@ namespace CarChooser.Data
                 car = (Car) db.Ext().GetByID(dbId);
                 car.Attractiveness = score;
                 db.Store(car);
+                db.Close();
             }
         }
 
         public Car GetDefaultCar()
         {
-            var random = new Random().Next(0, Count() - 1);
+            var random = new Random().Next(0, Math.Max(Count() - 1, 1));
             return GetCar(random);
         }
 
@@ -54,14 +55,18 @@ namespace CarChooser.Data
         {
             using (var db = Db4oEmbedded.OpenFile(DatabasePath))
             {
-                return db.Query<Car>().Count(c => c.Id > 0);
+                var count = db.Query<Car>().Count(c => c.Id > 0);
+                db.Close();
+                return count;
             }
         }
         public IEnumerable<Car> GetCars(Func<Car, bool> predicate)
         {
             using (var db = Db4oEmbedded.OpenFile(DatabasePath))
             {
-                return db.Query<Car>().Where(predicate).ToList();
+                var list = db.Query<Car>().Where(predicate).ToList();
+                db.Close();
+                return list;
             }
         }
 
@@ -69,7 +74,9 @@ namespace CarChooser.Data
         {
             using (var db = Db4oEmbedded.OpenFile(DatabasePath))
             {
-                return db.Query<Car>().ToList();
+                var allCars = db.Query<Car>().ToList();
+                db.Close();
+                return allCars;
             }
         }
 
@@ -77,7 +84,9 @@ namespace CarChooser.Data
         {
             using (var db = Db4oEmbedded.OpenFile(DatabasePath))
             {
-                return db.Query<Car>().Skip(skip).Take(take).ToList();
+                var allCars = db.Query<Car>().Skip(skip).Take(take).ToList();
+                db.Close();
+                return allCars;
             }
         }
 

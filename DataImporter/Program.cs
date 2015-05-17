@@ -10,7 +10,7 @@ namespace DataImporter
     {
         private static void Main(string[] args)
         {
-            //var browser1 = Browser.SpinUpBrowser();
+            var browser1 = Browser.SpinUpBrowser();
             //var browser2 = Browser.SpinUpBrowser();
 
             //var task1 = Task.Run(() => Parkers(browser2));
@@ -18,10 +18,10 @@ namespace DataImporter
 
             //Task.WaitAll(task1, task2);
 
-            //Images(browser1);
+            Images(browser1);
 
             //new Prestige().ImportManufacturerScores();
-            new ReliabilityIndex().ImportManufacturerScores();
+            //new ReliabilityIndex().ImportManufacturerScores();
 
             Console.WriteLine("Done");
             Console.ReadKey();

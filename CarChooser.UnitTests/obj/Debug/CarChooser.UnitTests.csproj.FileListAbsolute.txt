@@ -39,7 +39,6 @@ C:\Users\ste_000\documents\visual studio 2012\Projects\CarChooser\CarChooser.Uni
 C:\Users\ste_000\documents\visual studio 2012\Projects\CarChooser\CarChooser.UnitTests\bin\Debug\CarChooser.Web.pdb
 C:\Users\ste_000\documents\visual studio 2012\Projects\CarChooser\CarChooser.UnitTests\bin\Debug\CarData.db
 C:\Users\ste_000\Documents\goldilocks\CarChooser.UnitTests\bin\Debug\CarData.db
-C:\Users\ste_000\Documents\goldilocks\CarChooser.UnitTests\bin\Debug\chromedriver.exe
 C:\Users\ste_000\Documents\goldilocks\CarChooser.UnitTests\bin\Debug\CarChooser.UnitTests.dll
 C:\Users\ste_000\Documents\goldilocks\CarChooser.UnitTests\bin\Debug\CarChooser.UnitTests.pdb
 C:\Users\ste_000\Documents\goldilocks\CarChooser.UnitTests\bin\Debug\CarChooser.Data.dll
@@ -124,3 +123,11 @@ C:\Workarea\goldilocks\CarChooser.UnitTests\bin\Debug\Ninject.xml
 C:\Workarea\goldilocks\CarChooser.UnitTests\bin\Debug\Newtonsoft.Json.xml
 C:\Workarea\goldilocks\CarChooser.UnitTests\obj\Debug\CarChooser.UnitTests.dll
 C:\Workarea\goldilocks\CarChooser.UnitTests\obj\Debug\CarChooser.UnitTests.pdb
+C:\Users\ste_000\Documents\goldilocks\CarChooser.UnitTests\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\Users\ste_000\Documents\goldilocks\CarChooser.UnitTests\bin\Debug\System.Web.Helpers.dll
+C:\Users\ste_000\Documents\goldilocks\CarChooser.UnitTests\bin\Debug\System.Web.Razor.dll
+C:\Users\ste_000\Documents\goldilocks\CarChooser.UnitTests\bin\Debug\System.Web.WebPages.Razor.dll
+C:\Users\ste_000\Documents\goldilocks\CarChooser.UnitTests\bin\Debug\System.Web.Helpers.xml
+C:\Users\ste_000\Documents\goldilocks\CarChooser.UnitTests\bin\Debug\System.Web.Razor.xml
+C:\Users\ste_000\Documents\goldilocks\CarChooser.UnitTests\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\ste_000\Documents\goldilocks\CarChooser.UnitTests\bin\Debug\chromedriver.exe

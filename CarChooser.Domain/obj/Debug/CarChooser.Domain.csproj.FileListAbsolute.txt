@@ -7,3 +7,8 @@ C:\Workarea\goldilocks\CarChooser.Domain\bin\Debug\CarChooser.Domain.pdb
 C:\Workarea\goldilocks\CarChooser.Domain\obj\Debug\CarChooser.Domain.csprojResolveAssemblyReference.cache
 C:\Workarea\goldilocks\CarChooser.Domain\obj\Debug\CarChooser.Domain.dll
 C:\Workarea\goldilocks\CarChooser.Domain\obj\Debug\CarChooser.Domain.pdb
+C:\Users\ste_000\Documents\goldilocks\CarChooser.Domain\bin\Debug\CarChooser.Domain.dll
+C:\Users\ste_000\Documents\goldilocks\CarChooser.Domain\bin\Debug\CarChooser.Domain.pdb
+C:\Users\ste_000\Documents\goldilocks\CarChooser.Domain\obj\Debug\CarChooser.Domain.csprojResolveAssemblyReference.cache
+C:\Users\ste_000\Documents\goldilocks\CarChooser.Domain\obj\Debug\CarChooser.Domain.dll
+C:\Users\ste_000\Documents\goldilocks\CarChooser.Domain\obj\Debug\CarChooser.Domain.pdb

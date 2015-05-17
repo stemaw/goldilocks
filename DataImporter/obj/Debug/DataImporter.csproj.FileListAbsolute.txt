@@ -22,7 +22,6 @@ C:\Users\ste_000\documents\visual studio 2012\Projects\CarChooser\DataImporter\b
 C:\Users\ste_000\documents\visual studio 2012\Projects\CarChooser\DataImporter\bin\Debug\Db4objects.Db4o.xml
 C:\Users\ste_000\documents\visual studio 2012\Projects\CarChooser\DataImporter\bin\Debug\CarData.db
 C:\Users\ste_000\Documents\goldilocks\DataImporter\bin\Debug\CarData.db
-C:\Users\ste_000\Documents\goldilocks\DataImporter\bin\Debug\chromedriver.exe
 C:\Users\ste_000\Documents\goldilocks\DataImporter\bin\Debug\DataImporter.exe.config
 C:\Users\ste_000\Documents\goldilocks\DataImporter\bin\Debug\DataImporter.exe
 C:\Users\ste_000\Documents\goldilocks\DataImporter\bin\Debug\DataImporter.pdb
@@ -66,3 +65,4 @@ C:\Workarea\goldilocks\DataImporter\obj\Debug\DataImporter.pdb
 C:\Workarea\goldilocks\DataImporter\bin\Debug\DataImporter.exe.config
 C:\Workarea\goldilocks\DataImporter\bin\Debug\DataImporter.exe
 C:\Workarea\goldilocks\DataImporter\bin\Debug\DataImporter.pdb
+C:\Users\ste_000\Documents\goldilocks\DataImporter\bin\Debug\chromedriver.exe

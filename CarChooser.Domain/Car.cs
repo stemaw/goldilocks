@@ -24,6 +24,8 @@ namespace CarChooser.Domain
 
         public int Attractiveness { get; set; }
 
+        public int Sales { get; set; }
+
         public Car WithPriceScore(int priceScore)
         {
             PriceScore = priceScore;
@@ -60,5 +62,10 @@ namespace CarChooser.Domain
             return this;
         }
 
+        public override string ToString()
+        {
+            return string.Format("Manufactuer:{0} Model:{1} YearFrom:{2} YearTo:{3}", Manufacturer.Name, Model,
+                                 YearFrom, YearTo);
+        }
     }
 }

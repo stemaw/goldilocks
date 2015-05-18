@@ -11,3 +11,6 @@ CarChooser.v12.suo
 CarChooser/bin/**
 DataImporter/obj/
 DataImporter/bin/Debug/CarData.db
+packages/
+CarChooser/obj/
+fuzzy.txt

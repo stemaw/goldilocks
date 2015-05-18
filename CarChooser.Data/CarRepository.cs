@@ -13,6 +13,7 @@ namespace CarChooser.Data
     {
         //private const string DatabasePath = @"CarData.db";
         private const string DatabasePath = @"C:\Users\ste_000\Documents\goldilocks\CarChooser.Data\CarData.db";
+        //private const string DatabasePath2 = @"C:\Users\ste_000\Documents\goldilocks\CarChooser.Data\CarData3.db";
         //private static string DatabasePath
         //{
         //    get
@@ -124,23 +125,6 @@ namespace CarChooser.Data
             }
         }
 
-        // temporary method to deal with db40 being rubbish
-        public void DeleteRubbish()
-        {
-            using (var db = Db4oEmbedded.OpenFile(DatabasePath))
-            {
-                var cars = db.Query<Car>().Where(c => c.Id == 0);
-                foreach (var car in cars)
-                {
-                    var dbId = db.Ext().GetID(car);
-                    var carToDelete = (Car)db.Ext().GetByID(dbId);
-                    db.Delete(carToDelete);
-                    db.Commit();
-                }
-
-            }
-        }
-
         public bool UpdateManufacturerScore(string manufacturer, int score)
         {
             using (var db = Db4oEmbedded.OpenFile(DatabasePath))
@@ -216,5 +200,35 @@ namespace CarChooser.Data
                 return true;
             }
         }
+
+        public void UpdateSales(Car car, int sales)
+        {
+            using (var db = Db4oEmbedded.OpenFile(DatabasePath))
+            {
+                var carToFind = db.Query<Car>().First(c => c.Id == car.Id);
+                var dbId = db.Ext().GetID(carToFind);
+                var carToUpdate = (Car)db.Ext().GetByID(dbId);
+                carToUpdate.Sales = sales;
+                db.Store(carToUpdate);
+            }
+        }
+ 
+        //public void MigrateClean()
+        //{
+        //    var cars = AllCars();
+
+        //    using (var db = Db4oEmbedded.OpenFile(DatabasePath2))
+        //    {
+        //        foreach (var car in cars)
+        //        {
+        //            if (car.Id == 0) continue;
+                    
+        //            var existing = db.Query<Car>().FirstOrDefault(c => car.ToString() == c.ToString());
+                    
+        //            if (existing == null)
+        //            db.Store(car);
+        //        }
+        //    }
+        //}
     }
 }

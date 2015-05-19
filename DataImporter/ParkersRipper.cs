@@ -240,7 +240,7 @@ namespace DataImporter
                 {
                     score = StripScore(rating.FindXPath("div/div[@class='rating']/div").Text);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                 }
 

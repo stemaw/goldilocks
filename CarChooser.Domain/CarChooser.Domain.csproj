@@ -30,8 +30,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MathNet.Numerics, Version=3.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.3.7.0\lib\net40\MathNet.Numerics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,11 +54,17 @@
     <Compile Include="PreviousRejection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RejectionReasons.cs" />
+    <Compile Include="SearchStrategies\AdjudicationFilter.cs" />
+    <Compile Include="ScoreStrategies\CarProfile.cs" />
+    <Compile Include="ScoreStrategies\AdaptiveScorer.cs" />
+    <Compile Include="ScoreStrategies\IEducator.cs" />
+    <Compile Include="ScoreStrategies\VarianceExtension.cs" />
     <Compile Include="Search.cs" />
     <Compile Include="SearchService.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="SearchStrategies\" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

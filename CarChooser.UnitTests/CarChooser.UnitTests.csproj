@@ -83,6 +83,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CarRepoTests.cs" />
+    <Compile Include="CarScoring\AdjudicationFilterTest.cs" />
+    <Compile Include="CarScoring\GoldilocksScorerTest.cs" />
+    <Compile Include="CarScoring\TestCarFactory.cs" />
     <Compile Include="HomeControllerTests.cs" />
     <Compile Include="ImporterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

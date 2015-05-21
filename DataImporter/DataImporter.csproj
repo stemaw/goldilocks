@@ -83,6 +83,7 @@
   <ItemGroup>
     <Compile Include="Browser.cs" />
     <Compile Include="Fuzzy.cs" />
+    <Compile Include="InsuranceGroup.cs" />
     <Compile Include="Licensing.cs" />
     <Compile Include="Prestige.cs" />
     <Compile Include="Dimension.cs" />

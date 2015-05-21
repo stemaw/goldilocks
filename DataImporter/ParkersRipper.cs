@@ -120,6 +120,8 @@ namespace DataImporter
             RipParkers(manufacturerIndex, modelIndex, hasOptionGroups);
         }
 
+    
+
         private static int CalculatePriceScore(decimal price)
         {
             if (price > 100000) return 100;

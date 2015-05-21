@@ -17,7 +17,8 @@ namespace CarChooser.Web.Mappers
                     Derivative = performance.Derivative,
                     Acceleration = performance.Acceleration,
                     Power = performance.Power,
-                    TopSpeed = performance.TopSpeed
+                    TopSpeed = performance.TopSpeed,
+                    InsuranceGroup = performance.InsuranceGroup
                 };
         }
     }

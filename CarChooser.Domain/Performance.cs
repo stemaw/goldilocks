@@ -6,5 +6,7 @@
         public decimal Acceleration { get; set; }
         public int TopSpeed { get; set; }
         public int Power { get; set; }
+
+        public int InsuranceGroup { get; set; }
     }
 }

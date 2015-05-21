@@ -230,5 +230,20 @@ namespace CarChooser.Data
         //        }
         //    }
         //}
+        public void UpdateInsuranceGroup(Car car)
+        {
+            using (var db = Db4oEmbedded.OpenFile(DatabasePath))
+            {
+                var carToFind = db.Query<Car>().First(c => c.Id == car.Id);
+                var dbId = db.Ext().GetID(carToFind);
+                var carToUpdate = (Car)db.Ext().GetByID(dbId);
+                foreach (var perf in car.PerformanceFigures)
+                {
+                    carToUpdate.PerformanceFigures.First(p => p.Derivative == perf.Derivative).InsuranceGroup =
+                        perf.InsuranceGroup;
+                }
+                db.Store(carToUpdate);
+            }
+        }
     }
 }

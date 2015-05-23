@@ -4,15 +4,26 @@ namespace CarChooser.Domain.ScoreStrategies
 {
     public class CarProfile
     {
-        private readonly string _make;
+        public string Make { get; private set; }
         public Dictionary<string, double> Characteristics { get; set; }
-        private string _model;
+        public string Model { get; private set; }
 
         public CarProfile(string make, string model, Dictionary<string, double> characteristics)
         {
-            _make = make;
-            _model = model;
+            Make = make;
+            Model = model;
             Characteristics = characteristics;
+        }
+
+        public static CarProfile From(Car car)
+        {
+            var characteristics = new Dictionary<string, double>();
+
+            characteristics.Add("Top Speed", car.PerformanceFigures[0].TopSpeed);
+            characteristics.Add("Power", car.PerformanceFigures[0].Power);
+            characteristics.Add("Doors", car.GetDoorCount());
+
+            return new CarProfile(car.Manufacturer.Name, car.Model, characteristics);
         }
     }
 }

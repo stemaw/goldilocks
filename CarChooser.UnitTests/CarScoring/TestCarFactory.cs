@@ -16,13 +16,13 @@ namespace CarChooser.UnitTests.CarScoring
 
         public static CarProfile CreateTestCarOnly(int topSpeed, int numberOfDoors, int power, string make, string model)
         {
-            var audi3Characteristics = new Dictionary<string, double>();
+            var characteristics = new Dictionary<string, double>();
 
-            audi3Characteristics.Add("Top Speed", topSpeed);
-            audi3Characteristics.Add("Doors", numberOfDoors);
-            audi3Characteristics.Add("Power", power);
+            characteristics.Add("Top Speed", topSpeed);
+            characteristics.Add("Doors", numberOfDoors);
+            characteristics.Add("Power", power);
 
-            var car = new CarProfile(make, model, audi3Characteristics);
+            var car = new CarProfile(make, model, characteristics);
             return car;
         }
     }

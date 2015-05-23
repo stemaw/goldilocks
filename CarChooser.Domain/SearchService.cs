@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CarChooser.Domain
@@ -6,10 +7,12 @@ namespace CarChooser.Domain
     public class SearchService : ISearchCars
     {
         private readonly IGetCars _carRepository;
+        private readonly IPresentCars _carAdjudicator;
 
-        public SearchService(IGetCars carRepository)
+        public SearchService(IGetCars carRepository, IPresentCars carAdjudicator)
         {
             _carRepository = carRepository;
+            _carAdjudicator = carAdjudicator;
         }
 
         public Car GetCar(Search search)
@@ -37,10 +40,13 @@ namespace CarChooser.Domain
                      && !search.PreviousRejections.Select(r => r.CarId).Contains(c.Id)
                 ;
 
-            var matches = _carRepository.GetCars(predicate)
-                                        .OrderBy(CalculateTotalScore);
+            var concreteOptions = _carRepository.GetCars(predicate)
+                .OrderBy(CalculateTotalScore).ToList();
+            var matches = _carAdjudicator.GetViableCarsFrom( concreteOptions );
 
-            return matches.Any() ? matches.First() : currentCar;
+            if ( matches != null )
+                return matches.Any() ? matches.First() : currentCar;
+            return concreteOptions.First();
         }
 
         private static int CalculateTotalScore(Car car)

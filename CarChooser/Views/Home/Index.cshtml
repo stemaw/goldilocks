@@ -30,30 +30,23 @@
     </header>
 <!-- About Section -->
 
-<section ng-controller="mainController"  id="about" class="container content-section text-center" style="padding: 50px;">
-    <div class="row" style="background-size:cover url('@Url.Content("~/content/carimages")/default.png'"  ng-style="{'background-image': 'url(@Url.Content("~/content/carimages")/'+viewModel.CurrentCar.Id+ '.jpg)'}">
-        <div class="col-lg-12 carHeader">
-            <div class="col-lg-1">
-                <button class="btn"><i class="glyphicon glyphicon-thumbs-down"></i>Dislike</button>
+<section ng-controller="mainController" id="about" class="container content-section text-center" style="padding: 50px;">
+        <div class="row" style="background-size: cover url('@Url.Content("~/content/carimages")/default.png'" ng-style="{'background-image': 'url(@Url.Content("~/content/carimages")/'+viewModel.CurrentCar.Id+ '.jpg)'}">
+            <div class="col-lg-12 carHeader">
+                <div class="col-lg-10 text-primary currentCar">
+                    {{viewModel.CurrentCar.Manufacturer}} {{viewModel.CurrentCar.Model}} ({{viewModel.CurrentCar.YearFrom}})
+                </div>
             </div>
-            <div class="col-lg-10 text-primary currentCar">
-                {{viewModel.CurrentCar.Manufacturer}} {{viewModel.CurrentCar.Model}} ({{viewModel.CurrentCar.YearFrom}})
-            </div>
-            <div class="col-lg-1">
-                <button class="btn"><i class="glyphicon glyphicon-thumbs-up"></i>Like</button>
-            </div>
+            <img class="img-responsive col-lg-8" on-error-src='@Url.Content("~/content/carimages")/default.png' ng-src='@Url.Content("~/content/carimages")/{{viewModel.CurrentCar.Id}}.jpg' style="visibility: hidden; padding-bottom: 80px;"/>
 
-        </div> 
-        <img class="img-responsive col-lg-8"  on-error-src='@Url.Content("~/content/carimages")/default.png' ng-src='@Url.Content("~/content/carimages")/{{viewModel.CurrentCar.Id}}.jpg' style="visibility: hidden; padding-bottom: 80px;"/>
-       
-    </div>
-    <div class="row">
-
-        <div class="col-lg-2" ng-repeat="reason in viewModel.RejectionReasons">
-            <button class="btn btn-circle btn-circle-lg" ng-click="submitRejection(reason)">{{reason | enum}}</button>
         </div>
+        <div class="row">
 
-    </div>
+            <div class="col-lg-2" ng-repeat="reason in viewModel.RejectionReasons">
+                <button class="btn btn-circle btn-circle-lg" ng-click="submitRejection(reason)">{{reason | enum}}</button>
+            </div>
+
+        </div>
 </section>
 
   <section id="contact" class="container content-section text-center">

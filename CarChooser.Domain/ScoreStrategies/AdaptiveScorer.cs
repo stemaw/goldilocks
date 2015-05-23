@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CarChooser.Domain.SearchStrategies;
 
 namespace CarChooser.Domain.ScoreStrategies
 {
     public class AdaptiveScorer : IEducator
     {
+        private readonly IGetCars _carStore;
         private Dictionary<string, List<double>> FactorScores { get; set; }
+        private AdjudicationFilter filter;
+
 
         public AdaptiveScorer()
         {
@@ -18,6 +22,8 @@ namespace CarChooser.Domain.ScoreStrategies
                                {"4-Doors", new List<double>()},
                                {"5-Doors", new List<double>()}
                            };
+
+            filter = new AdjudicationFilter(this);
         }
 
 

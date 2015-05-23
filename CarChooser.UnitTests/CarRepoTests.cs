@@ -46,6 +46,21 @@ namespace CarChooser.UnitTests
             Assert.That(dupes.Any() == false);
         }
 
+
+        [Test]
+        public void ViableCars()
+        {
+            var repo = new CarRepository();
+
+            var cars = repo.AllCars();
+
+            var results = from c in cars
+                          group c by c.Manufacturer.Name + c.Model + c.YearFrom + c.YearTo into g
+                          select new { Car = g.Key, Count = g.Count() };
+            
+
+        }
+
         //[Test]
         //public void Migrate()
         //{

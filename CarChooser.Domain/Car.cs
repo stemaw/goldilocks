@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace CarChooser.Domain
 {
@@ -36,6 +38,20 @@ namespace CarChooser.Domain
         {
             PerformanceScore = performanceScore;
             return this;
+        }
+
+        public int GetDoorCount()
+        {
+            var doors = 0;
+                
+            // Parse this shizzle!
+            if (Model != null)
+            {
+                foreach (Match match in Regex.Matches(Model.Trim(), @"(?<doors>[1-9](\-?d))"))
+                    doors = int.Parse(match.Groups["doors"].ToString().Substring(0, 1));
+                return doors;
+            }
+            return -1;
         }
 
         public Car WithPrestigeScore(int prestigeScore)

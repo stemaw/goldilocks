@@ -11,5 +11,6 @@ namespace CarChooser.Web.Models
         public IEnumerable<CarVM> Likes { get; set; }
         public IEnumerable<CarVM> Dislikes { get; set; }
         public IEnumerable<RejectionVM> PreviousRejections { get; set; }
+        public bool LikeIt {get ; set; }
     }
 }

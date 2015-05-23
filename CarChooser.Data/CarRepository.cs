@@ -12,7 +12,7 @@ namespace CarChooser.Data
     public class CarRepository : IGetCars
     {
         //private const string DatabasePath = @"CarData.db";
-        private const string DatabasePath = @"C:\Users\ste_000\Documents\goldilocks\CarChooser.Data\CarData.db";
+        private const string DatabasePath = @"C:\Workarea\goldilocks\CarChooser.Data\CarData.db";
         //private const string DatabasePath2 = @"C:\Users\ste_000\Documents\goldilocks\CarChooser.Data\CarData3.db";
         //private static string DatabasePath
         //{

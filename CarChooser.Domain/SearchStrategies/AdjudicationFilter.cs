@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CarChooser.Domain.ScoreStrategies;
 
 namespace CarChooser.Domain.SearchStrategies
 {
-    public class AdjudicationFilter
+    public class AdjudicationFilter : IPresentCars
     {
         private readonly AdaptiveScorer _adaptiveScorer;
 
@@ -12,29 +13,37 @@ namespace CarChooser.Domain.SearchStrategies
             _adaptiveScorer = adaptiveScorer;
         }
 
-        public bool IsIncluded(CarProfile car)
+        public bool IsViable(CarProfile car)
         {
-            var include = ( (MeetsCriteria(car, "Top Speed"))
-                        && (MeetsCriteria(car, "2-Doors"))
-                        && (MeetsCriteria(car, "3-Doors"))
-                        && (MeetsCriteria(car, "4-Doors"))
-                        && (MeetsCriteria(car, "5-Doors"))
-                        && (MeetsCriteria(car, "Power")) );
+            var include = ( (IsViable(car, "Top Speed"))
+/*
+                        && (IsViable(car, "2-Doors"))
+                        && (IsViable(car, "3-Doors"))
+                        && (IsViable(car, "4-Doors"))
+                        && (IsViable(car, "5-Doors"))
+*/
+                        && (IsViable(car, "Power")) );
 
             return include;
         }
 
-        private bool MeetsCriteria(CarProfile car, string criteriaName)
+        private bool IsViable(CarProfile carProfile, string criteriaName)
         {
             try
             {
-                return (_adaptiveScorer.Mean(criteriaName) - car.Characteristics[criteriaName]) <
+                return (_adaptiveScorer.Mean(criteriaName) - 
+                    carProfile.Characteristics[criteriaName]) <
                        _adaptiveScorer.StandardDeviation(criteriaName);
             }
             catch (KeyNotFoundException)
             {
                 return true;
             }
+        }
+
+        public List<Car> GetViableCarsFrom(List<Car> carOptions)
+        {
+            return carOptions.Where(c => IsViable(CarProfile.From(c))).Select( c => c).ToList();
         }
     }
 }

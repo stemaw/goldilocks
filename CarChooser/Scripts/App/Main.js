@@ -48,7 +48,8 @@ myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl',
                RejectionReason: reason,
                Likes: $scope.viewModel.Likes,
                Dislikes: $scope.viewModel.Dislikes,
-               PreviousRejections: $scope.viewModel.PreviousRejections
+               PreviousRejections: $scope.viewModel.PreviousRejections,
+               LikeIt: false
            };
 
            $http.post($scope.searchUrl, postData).

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CarChooser.Domain;
 using FluentAssertions;
+using Moq;
 using NUnit.Framework;
 
 namespace CarChooser.UnitTests
@@ -17,7 +18,7 @@ namespace CarChooser.UnitTests
         [TestCase(2, RejectionReasons.TooCommon, "320d")]
         public void ItShouldFindADifferentCar(int currentCarId, RejectionReasons reason, string expectedModel)
         {
-            var service = new SearchService(this);
+            var service = new SearchService(this, Mock.Of<IPresentCars>());
             var result = service.GetCar(new Search {CurrentCarId = currentCarId, RejectionReason = reason});
 
             result.Model.Should().Be(expectedModel);

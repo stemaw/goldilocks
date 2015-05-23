@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+using CarChooser.Domain.ScoreStrategies;
 using CarChooser.Web.App_Start;
 
 namespace CarChooser.Web
@@ -10,6 +11,11 @@ namespace CarChooser.Web
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+        }
+
+        protected void Session_OnStart()
+        {
+            Session["Scorer"] = new AdaptiveScorer();
         }
     }
 }

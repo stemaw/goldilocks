@@ -1,6 +1,8 @@
 ﻿using System;
+using CarChooser.Domain;
 using CarChooser.Domain.ScoreStrategies;
 using NUnit.Framework;
+using Moq;
 
 namespace CarChooser.UnitTests.CarScoring
 {

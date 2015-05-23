@@ -1,5 +1,6 @@
 using CarChooser.Data;
 using CarChooser.Domain;
+using CarChooser.Domain.SearchStrategies;
 using CarChooser.Web.Mappers;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(CarChooser.Web.App_Start.NinjectWebCommon), "Start")]
@@ -73,6 +74,7 @@ namespace CarChooser.Web.App_Start
             kernel.Bind<IManageCars>().To<CarService>();
             kernel.Bind<IMapCarPerformanceFigures>().To<CarPerformanceVMMapper>();
             kernel.Bind<IMapCarRatings>().To<CarRatingsMapper>();
+            kernel.Bind<IPresentCars>().To<AdjudicationFilter>();
         }        
     }
 }

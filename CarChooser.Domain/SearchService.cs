@@ -17,11 +17,12 @@ namespace CarChooser.Domain
 
         public Car GetCar(Search search)
         {
-            if (search.CurrentCarId == 0) return _carRepository.GetDefaultCar();
-
-            var currentCar = _carRepository.GetCar(search.CurrentCarId);
-
-            search.PreviousRejections.Add(new PreviousRejection{ CarId = search.CurrentCarId, Reason = search.RejectionReason});
+            if (search.CurrentCarId > 0)
+                return _carRepository.GetCar(search.CurrentCarId);
+            if (search.CurrentCarId < 0)
+            {
+                return _carRepository.GetDefaultCar();
+            }
 
             SetMinPerformance(search);
             SetMinPrestige(search);
@@ -40,20 +41,14 @@ namespace CarChooser.Domain
                      && !search.PreviousRejections.Select(r => r.CarId).Contains(c.Id)
                 ;
 
-            var concreteOptions = _carRepository.GetCars(predicate)
-                .OrderBy(CalculateTotalScore).ToList();
+            var concreteOptions = _carRepository.GetCars(predicate).ToList();
             var matches = _carAdjudicator.GetViableCarsFrom( concreteOptions );
 
-            if ( matches != null )
-                return matches.Any() ? matches.First() : currentCar;
-            return concreteOptions.First();
+            if (( matches == null ) || (!matches.Any()))
+                return concreteOptions.First();
+            return matches.First();
         }
 
-        private static int CalculateTotalScore(Car car)
-        {
-            return car.AttractivenessScore + car.PerformanceScore + car.PrestigeScore + car.PriceScore + car.SizeScore +
-                   car.ReliabilityScore;
-        }
 
         private void SetMaxPrice(Search search)
         {

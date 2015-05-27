@@ -61,6 +61,7 @@ namespace CarChooser.Domain.ScoreStrategies
                 FactorScores["Top Speed"].Add(entry*car.Characteristics["Top Speed"]);
                 FactorScores["Power"].Add(entry*car.Characteristics["Power"]);
 
+/*
                 var desiredDoors = (int) car.Characteristics["Doors"];
 
                 for (var doors = 2; doors <= 5; doors++)
@@ -71,6 +72,7 @@ namespace CarChooser.Domain.ScoreStrategies
 
                 if (doILikeIt)
                     FactorScores[doorsCriteria][length] = 1;
+*/
             }
             return true;
         }

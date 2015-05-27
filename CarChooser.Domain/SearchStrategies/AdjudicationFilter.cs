@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CarChooser.Domain.ScoreStrategies;
 
@@ -31,7 +32,7 @@ namespace CarChooser.Domain.SearchStrategies
         {
             try
             {
-                return (_adaptiveScorer.Mean(criteriaName) - 
+                return Math.Abs(_adaptiveScorer.Mean(criteriaName) - 
                     carProfile.Characteristics[criteriaName]) <
                        _adaptiveScorer.StandardDeviation(criteriaName);
             }
@@ -43,7 +44,9 @@ namespace CarChooser.Domain.SearchStrategies
 
         public List<Car> GetViableCarsFrom(List<Car> carOptions)
         {
-            return carOptions.Where(c => IsViable(CarProfile.From(c))).Select( c => c).ToList();
+            var viableCars = carOptions.Where(c => IsViable(CarProfile.From(c))).Select( c => c).ToList();
+            
+            return viableCars;
         }
     }
 }

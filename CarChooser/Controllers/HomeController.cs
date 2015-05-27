@@ -28,7 +28,7 @@ namespace CarChooser.Web.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var result = _searchService.GetCar(new Search());
+            var result = _searchService.GetCar(new Search(){CurrentCarId = -1});
             
             var model = _searchVMMapper.Map(result);
             
@@ -40,26 +40,24 @@ namespace CarChooser.Web.Controllers
         {
             var search = _searchMapper.Map(request);
 
-            var adaptiveScorer = (AdaptiveScorer)Session["AdaptiveScorere"];
-            var performanceVms = request.CurrentCar.Performance;
+            var adaptiveScorer = (AdaptiveScorer)Session["Scorer"];
+            var currentCar = _searchService.GetCar(search);
+            var performanceVms = currentCar.PerformanceFigures;
 
             var carProfile = new CarProfile(request.CurrentCar.Manufacturer, 
                 request.CurrentCar.Model, 
                 new Dictionary<string, double>());
+             
+            var perfIndicator = performanceVms[0]; // Just taking the first variant. Not enough. Cars need categorisation by variant.
 
-            foreach( var perfIndicator in performanceVms )
-            {
-                carProfile.Characteristics.Add("Power", perfIndicator.Power);
-                carProfile.Characteristics.Add("Top Speed", perfIndicator.TopSpeed);
-            }
+            carProfile.Characteristics.Add("Power", perfIndicator.Power);
+            carProfile.Characteristics.Add("Top Speed", perfIndicator.TopSpeed);
 
-            //carProfile.Characteristics.Add("Doors", request.CurrentCar.GetDoorCount());
-
-            bool like = ( request.RejectionReason != string.Empty );
+            var like = ( request.RejectionReason != string.Empty );
 
             adaptiveScorer.Learn(carProfile, like);
 
-            var result = _searchService.GetCar(search);
+            var result = _searchService.GetCar(new Search()); // Just get the next one as scorer kicks in at service.
 
             var model = _searchVMMapper.Map(request, result, search);
 

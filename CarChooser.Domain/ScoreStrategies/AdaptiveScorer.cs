@@ -6,24 +6,19 @@ namespace CarChooser.Domain.ScoreStrategies
 {
     public class AdaptiveScorer : IEducator
     {
-        private readonly IGetCars _carStore;
         private Dictionary<string, List<double>> FactorScores { get; set; }
-        private AdjudicationFilter filter;
-
 
         public AdaptiveScorer()
         {
             FactorScores = new Dictionary<string, List<double>>
                            {
-                               {"Top Speed", new List<double>()},
-                               {"Power", new List<double>()},
-                               {"2-Doors", new List<double>()},
-                               {"3-Doors", new List<double>()},
-                               {"4-Doors", new List<double>()},
-                               {"5-Doors", new List<double>()}
+                               {"Performance Review", new List<double>()},
+                               {"Prestige Review", new List<double>()},
+                               {"Reliability Review", new List<double>()},
+                               {"Attractiveness Review", new List<double>()},
+                               {"Size Review", new List<double>()},
+                               {"Price Review", new List<double>()}
                            };
-
-            filter = new AdjudicationFilter(this);
         }
 
 
@@ -52,27 +47,16 @@ namespace CarChooser.Domain.ScoreStrategies
 
         public bool Learn(CarProfile car, bool doILikeIt)
         {
-            var entry = 0;
-
             if (doILikeIt)
             {
-                entry = 1;
+                var entry = 1;
 
-                FactorScores["Top Speed"].Add(entry*car.Characteristics["Top Speed"]);
-                FactorScores["Power"].Add(entry*car.Characteristics["Power"]);
-
-/*
-                var desiredDoors = (int) car.Characteristics["Doors"];
-
-                for (var doors = 2; doors <= 5; doors++)
-                    FactorScores[string.Format("{0}-Doors", doors)].Add(0);
-
-                var doorsCriteria = string.Format("{0}-Doors", desiredDoors);
-                var length = FactorScores[doorsCriteria].Count - 1;
-
-                if (doILikeIt)
-                    FactorScores[doorsCriteria][length] = 1;
-*/
+                FactorScores["Performance Review"].Add(entry * car.Characteristics["Performance Review"]);
+                FactorScores["Prestige Review"].Add(entry * car.Characteristics["Prestige Review"]);
+                FactorScores["Reliability Review"].Add(entry * car.Characteristics["Reliability Review"]);
+                FactorScores["Attractiveness Review"].Add(entry * car.Characteristics["Attractiveness Review"]);
+                FactorScores["Size Review"].Add(entry * car.Characteristics["Size Review"]);
+                FactorScores["Price Review"].Add(entry * car.Characteristics["Price Review"]);
             }
             return true;
         }

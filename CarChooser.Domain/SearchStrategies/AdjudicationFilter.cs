@@ -16,14 +16,12 @@ namespace CarChooser.Domain.SearchStrategies
 
         public bool IsViable(CarProfile car)
         {
-            var include = ( (IsViable(car, "Top Speed"))
-/*
-                        && (IsViable(car, "2-Doors"))
-                        && (IsViable(car, "3-Doors"))
-                        && (IsViable(car, "4-Doors"))
-                        && (IsViable(car, "5-Doors"))
-*/
-                        && (IsViable(car, "Power")) );
+            var include = ((IsViable(car, "Performance Review"))
+                        && (IsViable(car, "Prestige Review"))
+                        && (IsViable(car, "Reliability Review"))
+                        && (IsViable(car, "Attractiveness Review"))
+                        && (IsViable(car, "Size Review"))
+                        && (IsViable(car, "Price Review")) );
 
             return include;
         }

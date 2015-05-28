@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using CarChooser.Domain;
 using CarChooser.Domain.ScoreStrategies;
+using CarChooser.Domain.SearchStrategies;
 using CarChooser.Web.Mappers;
 using CarChooser.Web.Models;
 using Newtonsoft.Json;
@@ -28,7 +29,8 @@ namespace CarChooser.Web.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var result = _searchService.GetCar(new Search(){CurrentCarId = -1});
+            var adaptiveScorer = (AdaptiveScorer)Session["Scorer"];
+            var result = _searchService.GetCar(new Search() { CurrentCarId = -1 }, new AdjudicationFilter(adaptiveScorer));
             
             var model = _searchVMMapper.Map(result);
             
@@ -41,23 +43,13 @@ namespace CarChooser.Web.Controllers
             var search = _searchMapper.Map(request);
 
             var adaptiveScorer = (AdaptiveScorer)Session["Scorer"];
-            var currentCar = _searchService.GetCar(search);
-            var performanceVms = currentCar.PerformanceFigures;
-
-            var carProfile = new CarProfile(request.CurrentCar.Manufacturer, 
-                request.CurrentCar.Model, 
-                new Dictionary<string, double>());
-             
-            var perfIndicator = performanceVms[0]; // Just taking the first variant. Not enough. Cars need categorisation by variant.
-
-            carProfile.Characteristics.Add("Power", perfIndicator.Power);
-            carProfile.Characteristics.Add("Top Speed", perfIndicator.TopSpeed);
-
+            var currentCar = _searchService.GetCar(search, new AdjudicationFilter(adaptiveScorer));
+            var carProfile = CarProfile.From(currentCar);
             var like = ( request.RejectionReason != string.Empty );
 
             adaptiveScorer.Learn(carProfile, like);
 
-            var result = _searchService.GetCar(new Search()); // Just get the next one as scorer kicks in at service.
+            var result = _searchService.GetCar(new Search(), new AdjudicationFilter(adaptiveScorer)); // Just get the next one as scorer kicks in at service.
 
             var model = _searchVMMapper.Map(request, result, search);
 

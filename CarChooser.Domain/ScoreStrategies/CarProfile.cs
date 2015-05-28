@@ -19,9 +19,17 @@ namespace CarChooser.Domain.ScoreStrategies
         {
             var characteristics = new Dictionary<string, double>();
 
-            characteristics.Add("Top Speed", car.PerformanceFigures[0].TopSpeed);
+/*            characteristics.Add("Top Speed", car.PerformanceFigures[0].TopSpeed);
             characteristics.Add("Power", car.PerformanceFigures[0].Power);
-            characteristics.Add("Doors", car.GetDoorCount());
+            characteristics.Add("Doors", car.GetDoorCount());*/
+
+            // Review scores - Note, these are statistically unsound.
+            characteristics.Add("Performance Review", car.PerformanceScore);
+            characteristics.Add("Prestige Review", car.PrestigeScore);
+            characteristics.Add("Reliability Review", car.ReliabilityScore);
+            characteristics.Add("Attractiveness Review", car.AttractivenessScore);
+            characteristics.Add("Size Review", car.SizeScore);
+            characteristics.Add("Price Review", car.PriceScore);
 
             return new CarProfile(car.Manufacturer.Name, car.Model, characteristics);
         }

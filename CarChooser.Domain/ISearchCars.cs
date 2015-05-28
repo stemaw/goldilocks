@@ -4,7 +4,7 @@ namespace CarChooser.Domain
 {
     public interface ISearchCars
     {
-        Car GetCar(Search search);
+        Car GetCar(Search search, IPresentCars carAdjudicator);
     }
 
     public interface IPresentCars

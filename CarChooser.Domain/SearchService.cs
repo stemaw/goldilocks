@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CarChooser.Domain.SearchStrategies;
 
 namespace CarChooser.Domain
 {
     public class SearchService : ISearchCars
     {
         private readonly IGetCars _carRepository;
-        private readonly IPresentCars _carAdjudicator;
 
-        public SearchService(IGetCars carRepository, IPresentCars carAdjudicator)
+        public SearchService(IGetCars carRepository)
         {
             _carRepository = carRepository;
-            _carAdjudicator = carAdjudicator;
         }
 
-        public Car GetCar(Search search)
+        public Car GetCar(Search search, IPresentCars carAdjudicator)
         {
             if (search.CurrentCarId > 0)
                 return _carRepository.GetCar(search.CurrentCarId);
@@ -42,7 +41,7 @@ namespace CarChooser.Domain
                 ;
 
             var concreteOptions = _carRepository.GetCars(predicate).ToList();
-            var matches = _carAdjudicator.GetViableCarsFrom( concreteOptions );
+            var matches = carAdjudicator.GetViableCarsFrom( concreteOptions );
 
             if (( matches == null ) || (!matches.Any()))
                 return concreteOptions.First();

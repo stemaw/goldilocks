@@ -18,8 +18,8 @@ namespace CarChooser.UnitTests
         [TestCase(2, RejectionReasons.TooCommon, "320d")]
         public void ItShouldFindADifferentCar(int currentCarId, RejectionReasons reason, string expectedModel)
         {
-            var service = new SearchService(this, Mock.Of<IPresentCars>());
-            var result = service.GetCar(new Search {CurrentCarId = currentCarId, RejectionReason = reason});
+            var service = new SearchService(this);
+            var result = service.GetCar(new Search {CurrentCarId = currentCarId, RejectionReason = reason}, Mock.Of<IPresentCars>());
 
             result.Model.Should().Be(expectedModel);
         }

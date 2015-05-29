@@ -1,6 +1,6 @@
 using CarChooser.Data;
 using CarChooser.Domain;
-using CarChooser.Domain.SearchStrategies;
+using CarChooser.Domain.ScoreStrategies;
 using CarChooser.Web.Mappers;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(CarChooser.Web.App_Start.NinjectWebCommon), "Start")]
@@ -73,7 +73,7 @@ namespace CarChooser.Web.App_Start
             kernel.Bind<IMapSearchVMs>().To<SearchVMMapper>().InSingletonScope();
             kernel.Bind<IManageCars>().To<CarService>().InSingletonScope();
             kernel.Bind<IMapCarRatings>().To<CarRatingsMapper>().InSingletonScope();
-            kernel.Bind<IPresentCars>().To<AdjudicationFilter>();
+            kernel.Bind<IFilter>().To<AdaptiveScorer>();
         }        
     }
 }

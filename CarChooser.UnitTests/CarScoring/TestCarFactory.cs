@@ -5,7 +5,7 @@ namespace CarChooser.UnitTests.CarScoring
 {
     public class TestCarFactory
     {
-        public static CarProfile PrepScorerWithCar(IEducator scorer, int topSpeed, int numberOfDoors, int power, string make, string model, bool doILikeIt)
+        public static CarProfile PrepScorerWithCar(ILearn scorer, int topSpeed, int numberOfDoors, int power, string make, string model, bool doILikeIt)
         {
             var car = CreateTestCarOnly(topSpeed, numberOfDoors, power, make, model);
 

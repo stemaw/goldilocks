@@ -1,6 +1,6 @@
 ﻿namespace CarChooser.Domain.ScoreStrategies
 {
-    public interface IEducator
+    public interface ILearn
     {
         bool Learn(CarProfile car, bool doILikeIt);
     }

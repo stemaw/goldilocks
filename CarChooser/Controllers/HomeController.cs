@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using CarChooser.Domain;
 using CarChooser.Domain.ScoreStrategies;
-using CarChooser.Domain.SearchStrategies;
 using CarChooser.Web.Mappers;
 using CarChooser.Web.Models;
 using Newtonsoft.Json;
@@ -15,7 +12,6 @@ namespace CarChooser.Web.Controllers
         private readonly ISearchCars _searchService;
         private readonly IMapSearchRequests _searchMapper;
         private readonly IMapSearchVMs _searchVMMapper;
-        private readonly IPresentCars _carFilter;
 
         public HomeController(ISearchCars searchService, 
             IMapSearchRequests searchMapper, 
@@ -30,7 +26,7 @@ namespace CarChooser.Web.Controllers
         public ActionResult Index()
         {
             var adaptiveScorer = (AdaptiveScorer)Session["Scorer"];
-            var result = _searchService.GetCar(new Search() { CurrentCarId = -1 }, new AdjudicationFilter(adaptiveScorer));
+            var result = _searchService.GetCar(new Search { CurrentCarId = -1 }, adaptiveScorer);
             
             var model = _searchVMMapper.Map(result);
             
@@ -43,13 +39,13 @@ namespace CarChooser.Web.Controllers
             var search = _searchMapper.Map(request);
 
             var adaptiveScorer = (AdaptiveScorer)Session["Scorer"];
-            var currentCar = _searchService.GetCar(search, new AdjudicationFilter(adaptiveScorer));
+            var currentCar = _searchService.GetCar(search, adaptiveScorer);
             var carProfile = CarProfile.From(currentCar);
             var like = request.LikeIt;
 
             adaptiveScorer.Learn(carProfile, like);
 
-            var result = _searchService.GetCar(new Search(), new AdjudicationFilter(adaptiveScorer)); // Just get the next one as scorer kicks in at service.
+            var result = _searchService.GetCar(new Search(), adaptiveScorer); 
 
             var model = _searchVMMapper.Map(request, result, search);
 

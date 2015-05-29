@@ -6,10 +6,16 @@ namespace CarChooser.Web.Models
     public class CarVM
     {
         public string Model { get; set; }
+        public int ModelId { get; set; }
 
         public string Manufacturer { get; set; }
 
-        public IEnumerable<PerformanceVM> Performance { get; set; }
+        public decimal Acceleration { get; set; }
+        public int TopSpeed { get; set; }
+        public int Power { get; set; }
+        public string Derivative { get; set; }
+
+        public int InsuranceGroup { get; set; }
 
         public long Id { get; set; }
 
@@ -22,7 +28,5 @@ namespace CarChooser.Web.Models
         public int YearTo { get; set; }
 
         public IEnumerable<RatingVM> Ratings { get; set; }
-
-        public int Attractiveness { get; set; }
     }
 }

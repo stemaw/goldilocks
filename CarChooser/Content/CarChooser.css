@@ -18,7 +18,79 @@
     border-radius: 15px;
 }
 .carHeader {
-    background-color: black;
-    opacity: 0.5;
+    background-color: rgba(0,0,0,0.5);
     width:100%
+}
+
+.bg-cover {
+    background-size: cover;
+}
+
+.btn-circle-like
+{
+    background-color: rgba(74, 255, 0, 0.2);
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.42;
+    border-radius: 15px;
+    padding-right: 0;
+}
+
+.btn-circle-like:hover,
+.btn-circle-like:focus {
+    outline: 0;
+    color: #fff;
+    background-color: rgba(71, 229, 7, 0.9);
+}
+
+.btn-circle-dislike
+{
+    background-color: rgba(255, 0, 0, 0.2);
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.42;
+    border-radius: 15px;
+    padding-right: 0;
+}
+
+.btn-circle-dislike:hover,
+.btn-circle-dislike:focus {
+    outline: 0;
+    color: #fff;
+    background-color: rgba(229, 7, 7, 0.9);
+}
+
+.bg-dislike {
+    background-color: rgba(229, 7, 7, 0.4);
+}
+.bgimage
+{
+    background-size: 100%;
+    
+}
+
+.bgimage-inside {
+    padding-top: 75%
+}
+
+.performance {
+    margin-top: 20px;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    border: 2px solid #3d3d3d;
+    border-radius: 10px;
+    background-color: rgba(55, 54, 54, 0.4);
+  
+}
+.performance td {
+    padding: 10px;
+}
+
+.performance tr td:first-child {
+    color:#7cbcf3
 }

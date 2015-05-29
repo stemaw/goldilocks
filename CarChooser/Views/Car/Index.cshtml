@@ -23,31 +23,26 @@
     <div ng-repeat="car in viewModel">
         <div ng-show="CurrentCarIndex === $index" class="row">
             <div class="row carHeader text-primary currentCar">
-                [{{car.Id}}] - {{car.Manufacturer}} {{car.Model}} ({{car.YearFrom}} to {{car.YearFrom}})
+                [{{car.Id}}] - {{car.Manufacturer}} {{car.Derivative}} ({{car.YearFrom}} to {{car.YearFrom}})
             </div>
             <div class="row">
                 <div class="col-lg-4">
                     <table>
-                        <thead></thead>
-                        <tbody ng-repeat="performance in car.Performance">
-                            <tr>
-                                <td class="text-left text-primary" colspan="2">{{performance.Derivative}}</td>
-                            </tr>
                             <tr>
                                 <td class="text-left">0-60</td>
-                                <td class="text-right">{{performance.Acceleration}}</td>
+                                <td class="text-right">{{car.Acceleration}}</td>
                             </tr>
                             <tr>
                                 <td class="text-left">Top Speed</td>
-                                <td class="text-right">{{performance.TopSpeed}}</td>
+                                <td class="text-right">{{car.TopSpeed}}</td>
                             </tr>
                             <tr>
                                 <td class="text-left">Power</td>
-                                <td class="text-right">{{performance.Power}}</td>
+                                <td class="text-right">{{car.Power}}</td>
                             </tr>
                             <tr>
                                 <td class="text-left">Insurance</td>
-                                <td class="text-right">{{performance.InsuranceGroup}}</td>
+                                <td class="text-right">{{car.InsuranceGroup}}</td>
                             </tr>
                         </tbody>
                     </table>

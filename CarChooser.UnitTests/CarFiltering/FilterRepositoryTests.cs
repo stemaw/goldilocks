@@ -12,18 +12,12 @@ namespace CarChooser.UnitTests.CarFiltering
         public void WhenSuppliedWithCarsThenItIsMappedToCarProfile()
         {
             var car = new Car()
-                      {
-                          Id = 132,
-                          Manufacturer = new Manufacturer(){Name = "Audi", PrestigeIndex = 14, ReliabilityIndex = 65},
-                          PerformanceFigures = new List<Performance>()
-                                               {
-                                                   new Performance()
-                                                   {
-                                                       TopSpeed = 112,
-                                                       Power = 84
-                                                   }
-                                               }
-                      };
+                {
+                    Id = 132,
+                    Manufacturer = new Manufacturer() {Name = "Audi", PrestigeIndex = 14, ReliabilityIndex = 65},
+                    TopSpeed = 112,
+                    Power = 84
+                };
 
             var carProfile = CarProfile.From(car);
 

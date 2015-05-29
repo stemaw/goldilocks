@@ -33,15 +33,9 @@ namespace CarChooser.UnitTests
         {
             return new List<Car>
                 {
-                    new Car{ Id = 1, Manufacturer = new Manufacturer{ Name = "BMW", Score = 0}, Model = "320d"}
-                        .WithPriceScore(50)
-                        .WithPrestigeScore(60)
-                        .WithSizeScore(60),
-
-                    new Car{Id = 2, Manufacturer = new Manufacturer{ Name = "Kia", Score = 0}, Model = "Ceed"}
-                        .WithPriceScore(20)
-                        .WithPrestigeScore(20)
-                        .WithSizeScore(40)
+                    new Car{ Id = 1, Manufacturer = new Manufacturer{ Name = "BMW", Score = 0}, Model = "320d", PriceScore = 50, PrestigeScore = 60, SizeScore = 60},
+                        
+                    new Car{Id = 2, Manufacturer = new Manufacturer{ Name = "Kia", Score = 0}, Model = "Ceed", PriceScore = 20, PrestigeScore = 20, SizeScore = 40}
 
                 };
         }
@@ -67,6 +61,12 @@ namespace CarChooser.UnitTests
         }
 
         public Car GetDefaultCar()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public IEnumerable<Car> GetCars(Search search)
         {
             throw new NotImplementedException();
         }

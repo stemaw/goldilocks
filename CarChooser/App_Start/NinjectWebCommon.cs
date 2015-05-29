@@ -66,14 +66,13 @@ namespace CarChooser.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<ISearchCars>().To<SearchService>();
-            kernel.Bind<IGetCars>().To<CarRepository>();
-            kernel.Bind<IMapCarVMs>().To<CarVMMapper>();
-            kernel.Bind<IMapSearchRequests>().To<SearchMapper>();
-            kernel.Bind<IMapSearchVMs>().To<SearchVMMapper>();
-            kernel.Bind<IManageCars>().To<CarService>();
-            kernel.Bind<IMapCarPerformanceFigures>().To<CarPerformanceVMMapper>();
-            kernel.Bind<IMapCarRatings>().To<CarRatingsMapper>();
+            kernel.Bind<ISearchCars>().To<SearchService>().InSingletonScope();
+            kernel.Bind<IGetCars>().To<CarRepository>().InSingletonScope();
+            kernel.Bind<IMapCarVMs>().To<CarVMMapper>().InSingletonScope();
+            kernel.Bind<IMapSearchRequests>().To<SearchMapper>().InSingletonScope();
+            kernel.Bind<IMapSearchVMs>().To<SearchVMMapper>().InSingletonScope();
+            kernel.Bind<IManageCars>().To<CarService>().InSingletonScope();
+            kernel.Bind<IMapCarRatings>().To<CarRatingsMapper>().InSingletonScope();
             kernel.Bind<IPresentCars>().To<AdjudicationFilter>();
         }        
     }

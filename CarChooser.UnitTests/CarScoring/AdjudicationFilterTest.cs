@@ -122,33 +122,21 @@ namespace CarChooser.UnitTests.CarScoring
             var filter = new AdjudicationFilter(scorer);
 
             var includedCar = new Car()
-                       {
-                           Manufacturer = new Manufacturer(){Name ="Audi"},
-                           Model = "A1 Sportsback 1.2 TFSI Contract Edition Plus 3d",
-                           PerformanceFigures = new List<Performance>()
-                                                {
-                                                    new Performance()
-                                                    {
-                                                        Power = 84,
-                                                        TopSpeed = 112
-                                                    }
-                                                }
-                       };
+                {
+                    Manufacturer = new Manufacturer() {Name = "Audi"},
+                    Model = "A1 Sportsback 1.2 TFSI Contract Edition Plus 3d",
+                    Power = 84,
+                    TopSpeed = 112
+                };
 
 
             var excludedCar1 = new Car()
-            {
-                Manufacturer = new Manufacturer { Name = "Toyota" },
-                Model = "Hilux",
-                PerformanceFigures = new List<Performance>
-                                                {
-                                                    new Performance
-                                                    {
-                                                        Power = 32,
-                                                        TopSpeed = 23
-                                                    }
-                                                }
-            };
+                {
+                    Manufacturer = new Manufacturer {Name = "Toyota"},
+                    Model = "Hilux",
+                    Power = 32,
+                    TopSpeed = 23
+                };
 
             var carList = new List<Car>()
                                 {
@@ -176,21 +164,15 @@ namespace CarChooser.UnitTests.CarScoring
             var filter = new AdjudicationFilter(scorer);
 
             var carList = new List<Car>()
-                                {
-                                    new Car()
-                                    {
-                                        Manufacturer = new Manufacturer(){Name ="Toyota" },
-                                        Model = "Avensys 5d",
-                                        PerformanceFigures = new List<Performance>()
-                                                             {
-                                                                 new Performance()
-                                                                 {
-                                                                     Power = 23,
-                                                                     TopSpeed = 37
-                                                                 }
-                                                             }
-                                    }
-                                };
+                {
+                    new Car()
+                        {
+                            Manufacturer = new Manufacturer() {Name = "Toyota"},
+                            Model = "Avensys 5d",
+                            Power = 23,
+                            TopSpeed = 37
+                        }
+                };
 
 
             var viableList = filter.GetViableCarsFrom(carList);

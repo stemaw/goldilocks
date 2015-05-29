@@ -8,7 +8,7 @@ namespace CarChooser.Domain
         
         public long CurrentCarId { get; set; }
         
-        public RejectionReasons RejectionReason { get; set; }
+        public RejectionReasons? RejectionReason { get; set; }
         
         public IEnumerable<long> Likes { get; set; }
         

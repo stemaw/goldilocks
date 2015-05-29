@@ -45,7 +45,7 @@ namespace CarChooser.Web.Controllers
             var adaptiveScorer = (AdaptiveScorer)Session["Scorer"];
             var currentCar = _searchService.GetCar(search, new AdjudicationFilter(adaptiveScorer));
             var carProfile = CarProfile.From(currentCar);
-            var like = ( request.RejectionReason != string.Empty );
+            var like = request.LikeIt;
 
             adaptiveScorer.Learn(carProfile, like);
 

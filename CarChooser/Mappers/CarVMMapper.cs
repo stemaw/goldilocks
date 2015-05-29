@@ -11,12 +11,10 @@ namespace CarChooser.Web.Mappers
 
     public class CarVMMapper : IMapCarVMs
     {
-        private readonly IMapCarPerformanceFigures _performanceVMMapper;
         private readonly IMapCarRatings _carRatingsMapper;
 
-        public CarVMMapper(IMapCarPerformanceFigures performanceVMMapper, IMapCarRatings carRatingsMapper)
+        public CarVMMapper(IMapCarRatings carRatingsMapper)
         {
-            _performanceVMMapper = performanceVMMapper;
             _carRatingsMapper = carRatingsMapper;
         }
 
@@ -25,16 +23,20 @@ namespace CarChooser.Web.Mappers
             return new CarVM
                 {
                     Id = car.Id,
+                    ModelId = car.ModelId,
                     Model = car.Model,
                     Manufacturer = car.Manufacturer.Name,
                     Ratings = car.Ratings.Select(r => _carRatingsMapper.Map(r)),
-                    Performance = car.PerformanceFigures.Select(cp => _performanceVMMapper.Map(cp)),
+                    Acceleration = car.Acceleration,
+                    Derivative = car.Name,
+                    Power = car.Power,
+                    InsuranceGroup = car.InsuranceGroup,
+                    TopSpeed = car.TopSpeed,
                     Height = car.Height,
                     Width = car.Width,
                     Length = car.Length,
                     YearFrom = car.YearFrom,
                     YearTo = car.YearTo,
-                    Attractiveness = car.Attractiveness
                 };
         }
     }

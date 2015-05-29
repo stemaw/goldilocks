@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using CarChooser.Data;
@@ -19,7 +20,7 @@ namespace DataImporter
 
         private readonly CarRepository _carRepo = new CarRepository();
 
-        public long CurrentCar;
+        public long CurrentModel;
 
         public InsuranceGroup(BrowserSession browser)
         {
@@ -31,55 +32,53 @@ namespace DataImporter
             const string url = "http://www.parkers.co.uk/cars/insurance/car-insurance-groups/";
 
             _browser.Visit(url);
+            
+            CurrentModel = startingId;
 
-            CurrentCar = startingId;
+            var cars = _carRepo.AllCars().Where(c => c.InsuranceGroup == 0).ToList();
 
-            var cars = _carRepo.AllCars().Skip(startingId);
+            var models = from car in cars
+                         group car by car.ModelId
+                         into g
+                         select new {ModelId = g.Key, Derivates = g.ToList()};
 
-            foreach (var car in cars)
+            foreach (var model in models)
             {
                 try
                 {
-                    DoSearch(car);
+                    var firstMatch = cars.First(c => c.ModelId == model.ModelId);
 
-                    if (GetGroups(car))
-                    {
-                        UpdateCar(car);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Failed to get groups for {0}", car.ToString());
-                    }
+                    DoSearch(firstMatch);
 
+                    GetGroups(model.Derivates);
+                    
                     _browser.GoBack();
 
-                    Console.WriteLine(CurrentCar++);
+                    Console.WriteLine(CurrentModel++);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("failed somewhere for {0} {1}{1} {2}", car, Environment.NewLine, ex);
+                    Console.WriteLine("failed somewhere for {0} {1}{1} {2}", model, Environment.NewLine, ex);
                 }
 
             }
         }
-
+        
         private void UpdateCar(Car car)
         {
             _carRepo.UpdateInsuranceGroup(car);
         }
 
-        private bool GetGroups(Car car)
+        private void GetGroups(IEnumerable<Car> derivatives)
         {
-            var tables = _browser.FindAllCss(".infoTable");
+            var tables = _browser.FindAllCss(".infoTable").ToList();
             int attempts = 0;
             while (!tables.Any() || attempts > 10)
             {
                 attempts++;
                 Thread.Sleep(1000);
-                tables = _browser.FindAllCss(".infoTable tbody tr:nth-child(2)");
+                tables = _browser.FindAllCss(".infoTable tbody tr:nth-child(2)").ToList();
             }
-
-            bool updated = false;
 
             foreach (var table in tables)
             {
@@ -94,17 +93,23 @@ namespace DataImporter
 
                     int.TryParse(insuranceGroupText, out insuranceGroup);
 
-                    var matchingDerivative = car.PerformanceFigures.FirstOrDefault(p => p.Derivative == derivativeName);
+                    var matchingDerivative = derivatives.FirstOrDefault(d => d.Name.ToLower().Trim() == derivativeName.ToLower().Trim());
 
                     if (matchingDerivative != null)
                     {
                         matchingDerivative.InsuranceGroup = insuranceGroup;
+                        
+                        UpdateCar(matchingDerivative);
+
                         Console.WriteLine("{0} Ins {1}", derivativeName, insuranceGroup);
-                        updated = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Failed to find match for {0}", derivativeName);    
                     }
                 }
             }
-            return updated;
+            
         }
 
         private void DoSearch(Car car)

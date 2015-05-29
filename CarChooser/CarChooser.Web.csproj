@@ -1587,7 +1587,6 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CarController.cs" />
-    <Compile Include="Mappers\CarPerformanceVMMapper.cs" />
     <Compile Include="Mappers\CarVMMapper.cs" />
     <Compile Include="Mappers\IMapCarRatings.cs" />
     <Compile Include="Mappers\CarRatingsMapper.cs" />

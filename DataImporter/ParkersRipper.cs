@@ -94,33 +94,45 @@ namespace DataImporter
 
             var performance = GetPerformance();
 
-            var car = new Car{ Id = 0, Manufacturer = new Manufacturer { Name = manufacturerName, Score = 50 }, Model = modelAndYear.ModelName}
-                .WithAttractivenessScore(50)
-                .WithPerformanceScore(Convert.ToInt32(carRatings["Performance"] * 20))
-                .WithReliabilityScore(Convert.ToInt32(carRatings["Reliability"] * 20))
-                .WithSizeScore(CalculateSizeScore(dimensions))
-                .WithPriceScore(CalculatePriceScore(price))
-                .WithPrestigeScore(50);
+            foreach (var perf in performance)
+            {
+                var car = new Car
+                    {
+                        Id = 0,
+                        Manufacturer = new Manufacturer
+                            {
+                                Name = manufacturerName,
+                                Score = 50
+                            },
+                        Model = modelAndYear.ModelName,
+                        Name = perf.Derivative,
+                        PerformanceScore = Convert.ToInt32(carRatings["Performance"]*20),
+                        ReliabilityScore = Convert.ToInt32(carRatings["Reliability"]*20),
+                        SizeScore = CalculateSizeScore(dimensions),
+                        PriceScore = CalculatePriceScore(price),
+                        PrestigeScore = 50,
+                        Price = price,
+                        Length = dimensions.Length,
+                        Width = dimensions.Width,
+                        Height = dimensions.Height,
+                        Ratings = carRatings,
+                        YearFrom = modelAndYear.YearFrom,
+                        YearTo = modelAndYear.YearTo
+                    };
 
-            car.Price = price;
-            car.Length = dimensions.Length;
-            car.Width = dimensions.Width;
-            car.Height = dimensions.Height;
-            car.Ratings = carRatings;
-            car.YearFrom = modelAndYear.YearFrom;
-            car.YearTo = modelAndYear.YearTo;
-            car.PerformanceFigures = performance.ToList();
+                new CarRepository().Save(car);
+                
+                Console.WriteLine("Successfully ripped {0} {1} : Manufacturer {2} Model {3}", car.Manufacturer.Name, car.Model, CurrentManufacturer, CurrentModel);
 
-            new CarRepository().Save(car);
+            }
 
             modelIndex++;
 
-            Console.WriteLine("Successfully ripped {0} {1} : Manufacturer {2} Model {3}", car.Manufacturer.Name, car.Model, CurrentManufacturer, CurrentModel);
-
+            
             RipParkers(manufacturerIndex, modelIndex, hasOptionGroups);
         }
 
-    
+
 
         private static int CalculatePriceScore(decimal price)
         {

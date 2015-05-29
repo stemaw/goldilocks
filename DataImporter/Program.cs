@@ -24,7 +24,7 @@ namespace DataImporter
             //new ReliabilityIndex().ImportManufacturerScores();
             //new Licensing().ImportSalesData();
 
-            new InsuranceGroup(browser1).RipInsuranceGroup(17);
+            new InsuranceGroup(browser1).RipInsuranceGroup(0);
 
             Console.WriteLine("Done");
             Console.ReadKey();

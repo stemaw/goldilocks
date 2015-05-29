@@ -49,7 +49,7 @@ myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl',
                Likes: $scope.viewModel.Likes,
                Dislikes: $scope.viewModel.Dislikes,
                PreviousRejections: $scope.viewModel.PreviousRejections,
-               LikeIt: false
+               LikeIt: reason == 'like'
            };
 
            $http.post($scope.searchUrl, postData).

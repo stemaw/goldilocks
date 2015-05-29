@@ -19,7 +19,7 @@ namespace CarChooser.UnitTests
         [Test]
         public void ShouldReturnDefaultCar()
         {
-            var controller = new HomeController(this, new SearchMapper(), new SearchVMMapper(new CarVMMapper(new CarPerformanceVMMapper(), new CarRatingsMapper())));
+            var controller = new HomeController(this, new SearchMapper(), new SearchVMMapper(new CarVMMapper(new CarRatingsMapper())));
             var result = controller.Index() as ViewResult;
             result.Model.Should().BeOfType<SearchResultVM>(); 
             

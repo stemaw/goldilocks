@@ -1,249 +1,173 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using CarChooser.Domain;
-using Db4objects.Db4o;
+using Newtonsoft.Json;
+using Npgsql;
 
 
 namespace CarChooser.Data
 {
     public class CarRepository : IGetCars
     {
-        //private const string DatabasePath = @"CarData.db";
-        private const string DatabasePath = @"C:\Workarea\goldilocks\CarChooser.Data\CarData.db";
-        //private const string DatabasePath2 = @"C:\Users\ste_000\Documents\goldilocks\CarChooser.Data\CarData3.db";
-        //private static string DatabasePath
-        //{
-        //    get
-        //    {
-        //        var codeBase = Assembly.GetExecutingAssembly().CodeBase;
-        //        var uri = new UriBuilder(codeBase);
-        //        var path = Uri.UnescapeDataString(uri.Path);
-        //        return Path.Combine(Path.GetDirectoryName(path), "CarData.db");
-        //    }
-        //}
+        //private const string ConnectionString = @"Server=goldilocks.clstkqqph5qy.eu-west-1.rds.amazonaws.com;Port=5432;User Id=postgres;Password=postgres;Database=goldilocks;";
+        private const string ConnectionString = @"Server=localhost;Port=5432;User Id=postgres;Password=admin;Database=gold;";
 
         public Car GetCar(long currentCarId)
         {
-            using (var db = Db4oEmbedded.OpenFile(DatabasePath))
+            using (var conn = new NpgsqlConnection(ConnectionString))
             {
-                return db.Query<Car>().FirstOrDefault(c => c.Id == currentCarId);
+                conn.Open();
+                var command = new NpgsqlCommand("select car from cars where id = " + currentCarId, conn);
+                var result = (string)command.ExecuteScalar();
+                return JsonConvert.DeserializeObject<Car>(result);
             }
         }
 
         public void UpdateAttractiveness(int id, int score)
         {
-            using (var db = Db4oEmbedded.OpenFile(DatabasePath))
+            var car = GetCar(id);
+            car.AttractivenessScore = score;
+
+            var json = JsonConvert.SerializeObject(car);
+            using (var conn = new NpgsqlConnection(ConnectionString))
             {
-                var car = db.Query<Car>().FirstOrDefault(c => c.Id == id);
-                var dbId = db.Ext().GetID(car);
-                car = (Car)db.Ext().GetByID(dbId);
-                car.Attractiveness = score;
-                db.Store(car);
-                db.Close();
+                conn.Open();
+                var command = new NpgsqlCommand(string.Format("UPDATE cars SET car={0} WHERE id = {1}", json, id), conn);
+                command.ExecuteNonQuery();
             }
         }
+
 
         public Car GetDefaultCar()
         {
-            var random = new Random().Next(0, Math.Max(Count() - 1, 1));
-            return GetCar(random);
-        }
-
-        private static int Count()
-        {
-            using (var db = Db4oEmbedded.OpenFile(DatabasePath))
+            const int defaultId = 100;
+            using (var conn = new NpgsqlConnection(ConnectionString))
             {
-                var count = db.Query<Car>().Count(c => c.Id > 0);
-                db.Close();
-                return count;
+                conn.Open();
+                var command = new NpgsqlCommand("select car from cars where id = " + defaultId, conn);
+                var result = (string)command.ExecuteScalar();
+                return JsonConvert.DeserializeObject<Car>(result);
             }
         }
+
         public IEnumerable<Car> GetCars(Func<Car, bool> predicate)
         {
-            using (var db = Db4oEmbedded.OpenFile(DatabasePath))
-            {
-                var list = db.Query<Car>().Where(predicate).ToList();
-                db.Close();
-                return list;
-            }
+            return AllCars().Where(predicate);
         }
 
+        private IEnumerable<Car> _allCars;
         public IEnumerable<Car> AllCars()
         {
-            using (var db = Db4oEmbedded.OpenFile(DatabasePath))
+            if (_allCars != null) return _allCars;
+
+            var allCars = new List<Car>();
+            using (var conn = new NpgsqlConnection(ConnectionString))
             {
-                var allCars = db.Query<Car>().ToList();
-                db.Close();
-                return allCars;
+                conn.Open();
+                var command = new NpgsqlCommand("select car from cars", conn);
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var json = reader.GetString(0);
+                    allCars.Add(JsonConvert.DeserializeObject<Car>(json));
+                }
             }
+
+            _allCars = allCars;
+            return _allCars;
         }
 
         public IEnumerable<Car> AllCars(int skip, int take)
         {
-            using (var db = Db4oEmbedded.OpenFile(DatabasePath))
-            {
-                var allCars = db.Query<Car>().Skip(skip).Take(take).ToList();
-                db.Close();
-                return allCars;
-            }
+            return AllCars().Skip(skip).Take(take);
         }
 
         public void Save(Car car)
         {
-            using (var db = Db4oEmbedded.OpenFile(DatabasePath))
+            var json = JsonConvert.SerializeObject(car).Replace("'","''");
+            using (var conn = new NpgsqlConnection(ConnectionString))
             {
-                if (car.Id == 0)
-                {
-                    car.Id = db.Query<Car>().Max(c => c.Id) + 1;
-                    db.Store(car);
-                }
-
-                db.Store(car);
+                conn.Open();
+                var command = new NpgsqlCommand(string.Format("UPDATE cars SET car='{0}' WHERE id = {1}", json, car.Id), conn);
+                command.ExecuteNonQuery();
             }
         }
 
         public Car GetCar(string manufacturer, string model, int yearFrom, int yearTo)
         {
-            using (var db = Db4oEmbedded.OpenFile(DatabasePath))
-            {
-                return db.Query<Car>().FirstOrDefault(c => c.Manufacturer.Name == manufacturer && c.Model == model
-                    && c.YearFrom == yearFrom && c.YearTo == yearTo);
-            }
-        }
-
-        public void Delete(Car car)
-        {
-            using (var db = Db4oEmbedded.OpenFile(DatabasePath))
-            {
-                var dbId = db.Ext().GetID(car);
-                car = (Car)db.Ext().GetByID(dbId);
-                db.Delete(car);
-                db.Commit();
-            }
+            return
+                AllCars()
+                    .FirstOrDefault(
+                        c =>
+                        c.Manufacturer.Name == manufacturer && c.Model == model && c.YearFrom == yearTo && c.YearTo ==
+                        yearTo);
         }
 
         public bool UpdateManufacturerScore(string manufacturer, int score)
         {
-            using (var db = Db4oEmbedded.OpenFile(DatabasePath))
+            var cars = GetManufacturersCars(manufacturer);
+            if (!cars.ToList().Any())
             {
-                var cars = db.Query<Car>().Where(c => c.Manufacturer.Name.ToLower() == manufacturer.ToLower());
-                if (!cars.ToList().Any())
-                {
-                    if (manufacturer == "MG")
-                    {
-                        cars = db.Query<Car>().Where(c => c.Manufacturer.Name == "MG");
-                    }
-                    else
-                    {
-                        cars =
-                            db.Query<Car>()
-                              .Where(
-                                  c =>
-                                  c.Manufacturer.Name.Length > 3 &&
-                                  c.Manufacturer.Name.Substring(0, 3) == manufacturer.Substring(0, 3));
-                    }
-                }
-                if (!cars.ToList().Any())
-                {
-                    return false;
-                }
-
-                foreach (var car in cars)
-                {
-                    var dbId = db.Ext().GetID(car);
-                    var carToUpdate = (Car) db.Ext().GetByID(dbId);
-                    carToUpdate.Manufacturer.ReliabilityIndex = score;
-                    db.Store(carToUpdate);
-                }
-
-                return true;
+                return false;
             }
+
+            foreach (var car in cars)
+            {
+                car.Manufacturer.ReliabilityIndex = score;
+                Save(car);
+            }
+
+            return true;
+
         }
 
         public bool UpdatePrestiage(string manufacturer, int score)
         {
-            using (var db = Db4oEmbedded.OpenFile(DatabasePath))
+            var cars = GetManufacturersCars(manufacturer);
+
+            if (!cars.ToList().Any())
             {
-                var cars = db.Query<Car>().Where(c => c.Manufacturer.Name.ToLower() == manufacturer.ToLower());
-                if (!cars.ToList().Any())
-                {
-                    if (manufacturer == "MG")
-                    {
-                        cars = db.Query<Car>().Where(c => c.Manufacturer.Name == "MG");
-                    }
-                    else
-                    {
-                        cars =
-                            db.Query<Car>()
-                              .Where(
-                                  c =>
-                                  c.Manufacturer.Name.Length > 3 &&
-                                  c.Manufacturer.Name.Substring(0, 3) == manufacturer.Substring(0, 3));
-                    }
-                }
-                if (!cars.ToList().Any())
-                {
-                    return false;
-                }
-
-                foreach (var car in cars)
-                {
-                    var dbId = db.Ext().GetID(car);
-                    var carToUpdate = (Car)db.Ext().GetByID(dbId);
-                    carToUpdate.Manufacturer.PrestigeIndex = score;
-                    db.Store(carToUpdate);
-                }
-
-                return true;
+                return false;
             }
+
+            foreach (var car in cars)
+            {
+                car.Manufacturer.PrestigeIndex = score;
+                Save(car);
+            }
+
+            return true;
+
+        }
+
+        private IEnumerable<Car> GetManufacturersCars(string manufacturer)
+        {
+            var cars = AllCars().Where(c => c.Manufacturer.Name.ToLower() == manufacturer.ToLower());
+            if (!cars.ToList().Any())
+            {
+                if (manufacturer == "MG")
+                {
+                    cars = AllCars().Where(c => c.Manufacturer.Name == "MG");
+                }
+                else
+                {
+                    cars = AllCars().Where(c =>
+                                           c.Manufacturer.Name.Length > 3 &&
+                                           c.Manufacturer.Name.Substring(0, 3) == manufacturer.Substring(0, 3));
+                }
+            }
+            return cars;
         }
 
         public void UpdateSales(Car car, int sales)
         {
-            using (var db = Db4oEmbedded.OpenFile(DatabasePath))
-            {
-                var carToFind = db.Query<Car>().First(c => c.Id == car.Id);
-                var dbId = db.Ext().GetID(carToFind);
-                var carToUpdate = (Car)db.Ext().GetByID(dbId);
-                carToUpdate.Sales = sales;
-                db.Store(carToUpdate);
-            }
+            Save(car);
         }
- 
-        //public void MigrateClean()
-        //{
-        //    var cars = AllCars();
 
-        //    using (var db = Db4oEmbedded.OpenFile(DatabasePath2))
-        //    {
-        //        foreach (var car in cars)
-        //        {
-        //            if (car.Id == 0) continue;
-                    
-        //            var existing = db.Query<Car>().FirstOrDefault(c => car.ToString() == c.ToString());
-                    
-        //            if (existing == null)
-        //            db.Store(car);
-        //        }
-        //    }
-        //}
         public void UpdateInsuranceGroup(Car car)
         {
-            using (var db = Db4oEmbedded.OpenFile(DatabasePath))
-            {
-                var carToFind = db.Query<Car>().First(c => c.Id == car.Id);
-                var dbId = db.Ext().GetID(carToFind);
-                var carToUpdate = (Car)db.Ext().GetByID(dbId);
-                foreach (var perf in car.PerformanceFigures)
-                {
-                    carToUpdate.PerformanceFigures.First(p => p.Derivative == perf.Derivative).InsuranceGroup =
-                        perf.InsuranceGroup;
-                }
-                db.Store(carToUpdate);
-            }
+            Save(car);
         }
     }
 }

@@ -19,10 +19,6 @@ namespace CarChooser.Domain.ScoreStrategies
         {
             var characteristics = new Dictionary<string, double>();
 
-/*            characteristics.Add("Top Speed", car.PerformanceFigures[0].TopSpeed);
-            characteristics.Add("Power", car.PerformanceFigures[0].Power);
-            characteristics.Add("Doors", car.GetDoorCount());*/
-
             // Review scores - Note, these are statistically unsound.
             characteristics.Add("Performance Review", car.PerformanceScore);
             characteristics.Add("Prestige Review", car.PrestigeScore);

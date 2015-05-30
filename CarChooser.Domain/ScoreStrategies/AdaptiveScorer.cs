@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ExceptionServices;
+using System.Runtime.Remoting.Messaging;
+using MathNet.Numerics.LinearAlgebra.Double;
+using MathNet.Numerics.LinearAlgebra.Storage;
 
 namespace CarChooser.Domain.ScoreStrategies
 {
@@ -12,12 +16,13 @@ namespace CarChooser.Domain.ScoreStrategies
         {
             FactorScores = new Dictionary<string, List<double>>
                            {
-                               {"Performance Review", new List<double>()},
-                               {"Prestige Review", new List<double>()},
-                               {"Reliability Review", new List<double>()},
-                               {"Attractiveness Review", new List<double>()},
-                               {"Size Review", new List<double>()},
-                               {"Price Review", new List<double>()}
+                               // Note, added zero entries so we get a deviation.
+                               {"Performance Review", new List<double>(){0.0}},
+                               {"Prestige Review", new List<double>(){0.0}},
+                               {"Reliability Review", new List<double>(){0.0}},
+                               {"Attractiveness Review", new List<double>(){0.0}},
+                               {"Size Review", new List<double>(){0.0}},
+                               {"Price Review", new List<double>(){0.0}}
                            };
         }
 
@@ -60,37 +65,37 @@ namespace CarChooser.Domain.ScoreStrategies
             }
             return true;
         }
-        public bool IsViable(CarProfile car)
+        
+        
+        public double ScoreTheCar(CarProfile car)
         {
-            var include = ((IsViable(car, "Performance Review"))
-                        && (IsViable(car, "Prestige Review"))
-                        && (IsViable(car, "Reliability Review"))
-                        && (IsViable(car, "Attractiveness Review"))
-                        && (IsViable(car, "Size Review"))
-                        && (IsViable(car, "Price Review")));
+            IList<double> residuals = new List<double>();
 
-            return include;
-        }
-
-        private bool IsViable(CarProfile carProfile, string criteriaName)
-        {
-            try
-            { 
-                if ( FactorScores[criteriaName].Count >= 12 )
-                    return Math.Abs(Mean(criteriaName) -
-                        carProfile.Characteristics[criteriaName]) <
-                           StandardDeviation(criteriaName);
-                return true;
-            }
-            catch (KeyNotFoundException)
+            // Build array or CarProfile characteristic differences for each car relative to sigma (signed not absolute)
+            foreach (var key in car.Characteristics.Keys)
             {
-                return true;
+                // Take a residual relative to standard deviation (note, this adaptively changes)
+                residuals.Add( Math.Abs(car.Characteristics[key] - FactorScores[key].StandardDeviation())/ FactorScores[key].StandardDeviation());
             }
+
+            var coefficients = (Vector) Vector.Build.DenseOfArray(residuals.ToArray());
+
+            var carElements = (Vector)Vector.Build.DenseOfArray(car.Characteristics.Values.ToArray());
+
+            var coefficientMatrix =
+                (Matrix) Matrix.Build.DenseOfRowArrays(new List<double[]> {residuals.ToArray()});
+
+            var carMatrix = (Matrix)Matrix.Build.DenseOfColumnArrays(new List<double[]> { car.Characteristics.Values.ToArray() });
+            var scoreMatrix = (Matrix) (coefficientMatrix * carMatrix);
+
+            return scoreMatrix[0, 0];
         }
 
         public List<Car> Filter(List<Car> carOptions)
         {
-            var viableCars = carOptions.Where(c => IsViable(CarProfile.From(c))).Select(c => c).ToList();
+            var viableCars = carOptions.OrderBy(c => ScoreTheCar(CarProfile.From(c))).ToList();
+
+            var carScores = viableCars.Select(c => ScoreTheCar(CarProfile.From(c)));
 
             return viableCars;
         }

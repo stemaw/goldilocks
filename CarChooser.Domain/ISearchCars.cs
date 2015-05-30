@@ -4,11 +4,11 @@ namespace CarChooser.Domain
 {
     public interface ISearchCars
     {
-        Car GetCar(Search search, IPresentCars carAdjudicator);
+        Car GetCar(Search search, IFilter judge);
     }
 
-    public interface IPresentCars
+    public interface IFilter
     {
-        List<Car> GetViableCarsFrom(List<Car> carOptions);
+        List<Car> Filter(List<Car> carOptions);
     }
 }

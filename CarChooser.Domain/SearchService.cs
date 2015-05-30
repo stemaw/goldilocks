@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using CarChooser.Domain.ScoreStrategies;
 
 namespace CarChooser.Domain
 {
@@ -12,7 +13,7 @@ namespace CarChooser.Domain
             _carRepository = carRepository;
         }
 
-        public Car GetCar(Search search, IPresentCars carAdjudicator)
+        public Car GetCar(Search search, IFilter judge)
         {
             if (search.CurrentCarId > 0)
                 return _carRepository.GetCar(search.CurrentCarId);
@@ -39,11 +40,11 @@ namespace CarChooser.Domain
                 ;
 
             var concreteOptions = _carRepository.GetCars(predicate).ToList();
-            var matches = carAdjudicator.GetViableCarsFrom( concreteOptions );
+            var matches = judge.Filter(concreteOptions);
 
-            if (( matches == null ) || (!matches.Any()))
+            if ((matches == null) || (!matches.Any()))
                 return concreteOptions.First();
-            return matches.First();
+            return matches.Skip(new Random().Next(matches.Count)).Take(1).First();
         }
 
 

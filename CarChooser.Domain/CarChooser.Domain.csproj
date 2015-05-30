@@ -54,15 +54,16 @@
     <Compile Include="PreviousRejection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RejectionReasons.cs" />
-    <Compile Include="SearchStrategies\AdjudicationFilter.cs" />
     <Compile Include="ScoreStrategies\CarProfile.cs" />
     <Compile Include="ScoreStrategies\AdaptiveScorer.cs" />
-    <Compile Include="ScoreStrategies\IEducator.cs" />
+    <Compile Include="ScoreStrategies\ILearn.cs" />
     <Compile Include="ScoreStrategies\VarianceExtension.cs" />
     <Compile Include="Search.cs" />
     <Compile Include="SearchService.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="SearchStrategies\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

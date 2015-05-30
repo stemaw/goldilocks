@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using CarChooser.Domain.SearchStrategies;
 
 namespace CarChooser.Domain.ScoreStrategies
 {
-    public class AdaptiveScorer : IEducator
+    public class AdaptiveScorer : ILearn, IFilter
     {
         private Dictionary<string, List<double>> FactorScores { get; set; }
 
@@ -59,6 +59,40 @@ namespace CarChooser.Domain.ScoreStrategies
                 FactorScores["Price Review"].Add(entry * car.Characteristics["Price Review"]);
             }
             return true;
+        }
+        public bool IsViable(CarProfile car)
+        {
+            var include = ((IsViable(car, "Performance Review"))
+                        && (IsViable(car, "Prestige Review"))
+                        && (IsViable(car, "Reliability Review"))
+                        && (IsViable(car, "Attractiveness Review"))
+                        && (IsViable(car, "Size Review"))
+                        && (IsViable(car, "Price Review")));
+
+            return include;
+        }
+
+        private bool IsViable(CarProfile carProfile, string criteriaName)
+        {
+            try
+            { 
+                if ( FactorScores[criteriaName].Count >= 12 )
+                    return Math.Abs(Mean(criteriaName) -
+                        carProfile.Characteristics[criteriaName]) <
+                           StandardDeviation(criteriaName);
+                return true;
+            }
+            catch (KeyNotFoundException)
+            {
+                return true;
+            }
+        }
+
+        public List<Car> Filter(List<Car> carOptions)
+        {
+            var viableCars = carOptions.Where(c => IsViable(CarProfile.From(c))).Select(c => c).ToList();
+
+            return viableCars;
         }
     }
 }

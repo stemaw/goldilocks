@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace CarChooser.Domain.ScoreStrategies
@@ -7,6 +8,7 @@ namespace CarChooser.Domain.ScoreStrategies
         public string Make { get; private set; }
         public Dictionary<string, double> Characteristics { get; set; }
         public string Model { get; private set; }
+        public Car OriginalCar { get; private set; }
 
         public CarProfile(string make, string model, Dictionary<string, double> characteristics)
         {
@@ -17,17 +19,32 @@ namespace CarChooser.Domain.ScoreStrategies
 
         public static CarProfile From(Car car)
         {
-            var characteristics = new Dictionary<string, double>();
+            var characteristics = new Dictionary<string, double>
+                                  {
+                                      {"Performance Review", car.PerformanceScore},
+                                      {"Prestige Review", car.PrestigeScore},
+                                      {"Reliability Review", car.ReliabilityScore},
+                                      {"Attractiveness Review", car.AttractivenessScore},
+                                      {"Size Review", car.SizeScore},
+                                      {"Price Review", car.PriceScore},
+                                      {"Acceleration", (double) car.Acceleration},
+                                      {"TopSpeed", car.TopSpeed},
+                                      {"Power", car.Power},
+                                      {"InsuranceGroup", car.InsuranceGroup},
+                                      {"Price", (double) car.Price},
+                                      {"Length", car.Length},
+                                      {"Width", car.Width},
+                                      {"Height", car.Height},
+                                      {"YearFrom", car.YearFrom},
+                                      {"YearTo", car.YearTo}
+                                  };
 
-            // Review scores - Note, these are statistically unsound.
-            characteristics.Add("Performance Review", car.PerformanceScore);
-            characteristics.Add("Prestige Review", car.PrestigeScore);
-            characteristics.Add("Reliability Review", car.ReliabilityScore);
-            characteristics.Add("Attractiveness Review", car.AttractivenessScore);
-            characteristics.Add("Size Review", car.SizeScore);
-            characteristics.Add("Price Review", car.PriceScore);
 
-            return new CarProfile(car.Manufacturer.Name, car.Model, characteristics);
+            var carProfile = new CarProfile(car.Manufacturer.Name, car.Model, characteristics);
+
+            carProfile.OriginalCar = car;
+
+            return carProfile;
         }
     }
 }

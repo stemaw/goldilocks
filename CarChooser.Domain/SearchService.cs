@@ -30,14 +30,7 @@ namespace CarChooser.Domain
             SetMaxPrice(search);
 
             Func<Car, bool> predicate =
-                c => c.PerformanceScore >= search.MinPerformance
-                     && c.PrestigeScore >= search.MinPrestigeScore
-                     && c.ReliabilityScore >= search.MinReliabilityScore
-                     && c.AttractivenessScore >= search.MinAttractivenessScore
-                     && c.SizeScore >= search.MinSizeScore
-                     && c.PriceScore <= search.MaxPriceScore
-                     && !search.PreviousRejections.Select(r => r.CarId).Contains(c.Id)
-                ;
+                c => true;
 
             var concreteOptions = _carRepository.GetCars(predicate).ToList();
             var matches = judge.Filter(concreteOptions);

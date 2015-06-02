@@ -23,7 +23,7 @@
     <div ng-repeat="car in viewModel">
         <div ng-show="CurrentCarIndex === $index" class="row">
             <div class="row carHeader text-primary currentCar">
-                [{{car.Id}}] - {{car.Manufacturer}} {{car.Derivative}} ({{car.YearFrom}} to {{car.YearFrom}})
+                [{{car.Id}}] - {{car.Manufacturer}} {{car.Model}} {{car.Derivative}} ({{car.YearFrom}} to {{car.YearFrom}})
             </div>
             <div class="row">
                 <div class="col-lg-4">
@@ -48,7 +48,7 @@
                     </table>
                 </div>
                 <div class="col-lg-3">
-                    <img class="img-responsive" ng-click="replaceImage()" ng-src='@Url.Content("~/content/carimages")/{{car.Id}}.jpg' on-error-src='@Url.Content("~/content/carimages")/default.png' style="padding-bottom: 80px;"/>
+                    <img class="img-responsive" ng-click="replaceImage()" ng-src='@Url.Content("~/content/carimages")/{{car.ModelId}}.jpg' on-error-src='@Url.Content("~/content/carimages")/default.png' style="padding-bottom: 80px;"/>
                     <input type="text" style="color: blue" ng-model="car.Attractiveness" ng-blur="updateAttractiveness()"/>
                     <div>Height: {{car.Height}}mm</div>
                     <div>Length: {{car.Length}}mm</div>

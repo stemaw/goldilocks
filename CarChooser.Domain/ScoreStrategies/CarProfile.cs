@@ -22,9 +22,9 @@ namespace CarChooser.Domain.ScoreStrategies
             var characteristics = new Dictionary<string, double>
                                   {
                                       {"Performance Review", car.PerformanceScore},
-                                      {"Prestige Review", car.PrestigeScore},
-                                      {"Reliability Review", car.ReliabilityScore},
-                                      {"Attractiveness Review", car.AttractivenessScore},
+                                      {"Prestige Review", car.Manufacturer.PrestigeIndex},
+                                      {"Reliability Review", car.Manufacturer.ReliabilityIndex},
+                                      {"Sales", car.Sales},
                                       {"Size Review", car.SizeScore},
                                       {"Price Review", car.PriceScore},
                                       {"Acceleration", (double) car.Acceleration},

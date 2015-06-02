@@ -40,10 +40,36 @@
 
        $scope.getCars();
 
-       $scope.replaceImage = function () {
-           var query = $scope.viewModel[$scope.CurrentCarIndex].Manufacturer + '+' + $scope.viewModel[$scope.CurrentCarIndex].Model + '+' + $scope.viewModel[$scope.CurrentCarIndex].Derivative + '+' + $scope.viewModel[$scope.CurrentCarIndex].YearFrom + '+' + $scope.viewModel[$scope.CurrentCarIndex].YearTo;
+       $scope.replaceImage = function() {
+           var site;
+           switch ($scope.viewModel[$scope.CurrentCarIndex].Manufacturer) {
+           case "Alfa Romeo":
+               $window.open('http://www.alfaromeopress.com/gallery');
+           case "Fiat":
+               $window.open('http://www.fiatpress.com/gallery');
+               break;
+           case "Jeep":
+               $window.open('http://www.jeeppress-europe.com/gallery');
+           case "Abarth":
+               $window.open('http://www.abarthpress.com/gallery');
+               break;
+               case "Audi":
+                   //$window.open('https://www.audi-mediacenter.com/en/photos/topics/modelle-16');
+                   site = "http://www.audi-mediacenter.com";
+                   break;
+           case "BMW":
+               site = "http://www.bmw.co.uk";
+               break;
+           case "Citroen":
+               site = "http://www.citroen.co.uk";
+               break;
+           case "Volvo":
+               site = "http://www.media.volvocars.com";
+               break;
+           }
+           
+           var query = $scope.viewModel[$scope.CurrentCarIndex].Manufacturer + '+' + $scope.viewModel[$scope.CurrentCarIndex].Model + '+' + $scope.viewModel[$scope.CurrentCarIndex].Derivative + '+' + $scope.viewModel[$scope.CurrentCarIndex].YearFrom + '+' + $scope.viewModel[$scope.CurrentCarIndex].YearTo + '+site:' + site;
            $window.open('https://www.google.co.uk/search?espv=2&biw=1745&bih=814&source=lnms&tbm=isch&sa=X&ei=j_tNVdvjN8OC7gaxvIE4&ved=0CAYQ_AUoAQ#tbs=isc:black%2Cic:trans%2Cisz:l&tbm=isch&q=' + query);
-           $scope.replacingImage = true;
        };
 
      //  $scope.uploadImage = function () {

@@ -6,6 +6,7 @@ namespace CarChooser.Domain
 {
     public class Car
     {
+        public string VEDBand { get; set; }
         public int Id { get; set; }
         public int ModelId { get;set; }
 
@@ -39,6 +40,24 @@ namespace CarChooser.Domain
         public int AttractivenessScore { get; set; }
         public int ReliabilityScore { get; set; }
         public int SizeScore { get; set; }
+
+        public int Mpg { get; set; }
+
+        public int EngineSize { get; set; }
+
+        public int LuggageCapacity { get; set; }
+
+        public string Transmission { get; set; }
+
+        public int Weight { get; set; }
+
+        public int Cylinders { get; set; }
+
+        public int Emissions { get; set; }
+
+        public int Torque { get; set; }
+
+        public int EuroEmissionsStandard { get; set; }
 
         public int GetDoorCount()
         {

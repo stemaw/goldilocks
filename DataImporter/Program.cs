@@ -10,7 +10,7 @@ namespace DataImporter
     {
         private static void Main(string[] args)
         {
-            var browser1 = Browser.SpinUpBrowser();
+            //var browser1 = Browser.SpinUpBrowser();
             //var browser2 = Browser.SpinUpBrowser();
 
             //var task1 = Task.Run(() => Parkers(browser2));
@@ -24,7 +24,19 @@ namespace DataImporter
             //new ReliabilityIndex().ImportManufacturerScores();
             //new Licensing().ImportSalesData();
 
-            new InsuranceGroup(browser1).RipInsuranceGroup(0);
+            //new InsuranceGroup(browser1).RipInsuranceGroup(0);
+            BrowserSession browser1 = null;
+        omg:
+            try
+            {
+                browser1 = Browser.SpinUpBrowser();
+                new MPGRipper(browser1).Rip();
+            }
+            catch (Exception)
+            {
+                if (browser1 != null) browser1.Dispose();
+                goto omg;
+            }
 
             Console.WriteLine("Done");
             Console.ReadKey();

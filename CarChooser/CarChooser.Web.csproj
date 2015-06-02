@@ -824,6 +824,7 @@
     <Content Include="Content\less\grayscale.less" />
     <Content Include="Content\less\mixins.less" />
     <Content Include="Content\less\variables.less" />
+    <None Include="Properties\PublishProfiles\AWS-ZIP.pubxml" />
     <None Include="Properties\PublishProfiles\aws.pubxml" />
     <None Include="Properties\PublishProfiles\CarChooser.pubxml" />
     <Content Include="Icon.png" />

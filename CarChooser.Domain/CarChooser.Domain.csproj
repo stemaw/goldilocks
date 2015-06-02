@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="CarService.cs" />
     <Compile Include="Car.cs" />
+    <Compile Include="IFilter.cs" />
     <Compile Include="IGetCars.cs" />
     <Compile Include="IManageCars.cs" />
     <Compile Include="ISearchCars.cs" />

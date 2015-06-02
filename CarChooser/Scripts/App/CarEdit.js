@@ -41,7 +41,7 @@
        $scope.getCars();
 
        $scope.replaceImage = function () {
-           var query = $scope.viewModel[$scope.CurrentCarIndex].Manufacturer + '+' + $scope.viewModel[$scope.CurrentCarIndex].Model + '+' + $scope.viewModel[$scope.CurrentCarIndex].YearFrom;
+           var query = $scope.viewModel[$scope.CurrentCarIndex].Manufacturer + '+' + $scope.viewModel[$scope.CurrentCarIndex].Model + '+' + $scope.viewModel[$scope.CurrentCarIndex].Derivative + '+' + $scope.viewModel[$scope.CurrentCarIndex].YearFrom + '+' + $scope.viewModel[$scope.CurrentCarIndex].YearTo;
            $window.open('https://www.google.co.uk/search?espv=2&biw=1745&bih=814&source=lnms&tbm=isch&sa=X&ei=j_tNVdvjN8OC7gaxvIE4&ved=0CAYQ_AUoAQ#tbs=isc:black%2Cic:trans%2Cisz:l&tbm=isch&q=' + query);
            $scope.replacingImage = true;
        };

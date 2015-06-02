@@ -23,7 +23,7 @@
     <div ng-repeat="car in viewModel">
         <div ng-show="CurrentCarIndex === $index" class="row">
             <div class="row carHeader text-primary currentCar">
-                [{{car.Id}}] - {{car.Manufacturer}} {{car.Model}} {{car.Derivative}} ({{car.YearFrom}} to {{car.YearFrom}})
+                [{{car.ModelId}}] - {{car.Manufacturer}} {{car.Model}} {{car.Derivative}} ({{car.YearFrom}} to {{car.YearTo}})
             </div>
             <div class="row">
                 <div class="col-lg-4">

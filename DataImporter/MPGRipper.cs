@@ -102,7 +102,11 @@ namespace DataImporter
             {
                 var derivativeTable = table.FindAllCss("tbody tr:not(:first-child) ");
 
-                Parallel.ForEach(derivativeTable, d => ScrapeDerivative(derivatives, d));
+                foreach (var derivative in derivativeTable)
+                {
+                    ScrapeDerivative(derivatives, derivative);
+                }
+                //Parallel.ForEach(derivativeTable, d => ScrapeDerivative(derivatives, d));
             }
         }
 
@@ -169,7 +173,7 @@ namespace DataImporter
 
                 var torque = GetElement("Torque", tab);
 
-                if (!string.IsNullOrEmpty(torque))
+                if (!string.IsNullOrEmpty(torque) && torque.Contains("Nm"))
                     matchingDerivative.Torque = Convert.ToInt32(torque.Split('N')[0].Trim());
 
                 var euroEmissions = GetElement("Euro Emissions Standard", tab);

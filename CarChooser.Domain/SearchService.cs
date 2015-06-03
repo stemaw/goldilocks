@@ -35,9 +35,14 @@ namespace CarChooser.Domain
             var concreteOptions = _carRepository.GetCars(predicate).ToList();
             var matches = judge.Filter(concreteOptions);
 
-            if ((matches == null) || (!matches.Any()))
-                return concreteOptions.First();
-            return matches.Skip(new Random().Next(matches.Count)).Take(1).First();
+            var seed = concreteOptions.Count;
+
+            if ((matches != null) && (matches.Any()))
+                seed = matches.Count;
+            else
+                matches = concreteOptions;
+
+            return matches.Skip(new Random().Next(seed)).Take(1).First();
         }
 
 

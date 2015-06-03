@@ -18,12 +18,7 @@ namespace CarChooser.Domain.ScoreStrategies
             FactorScores = new Dictionary<string, List<double>>
                            {
                                // Note, added zero entries so we get a deviation.
-                               {"Performance Review", new List<double>(){0.0} },
-                               {"Prestige Review", new List<double>(){0.0} },
-                               {"Reliability Review", new List<double>(){0.0} },
                                {"Sales", new List<double>(){0.0} },
-                               {"Size Review", new List<double>(){0.0} },
-                               {"Price Review", new List<double>(){0.0} },
                                {"Acceleration", new List<double>(){0.0} },
                                {"TopSpeed", new List<double>(){0.0} },
                                {"Power", new List<double>(){0.0} },
@@ -105,11 +100,7 @@ namespace CarChooser.Domain.ScoreStrategies
         public List<Car> Filter(List<Car> carOptions)
         {
             Func<Car, bool> predicate =
-              c => IsCandidate("Performance Review", CarProfile.From(c))
-                   && IsCandidate("Prestige Review", CarProfile.From(c))
-                   && IsCandidate("Sales", CarProfile.From(c))
-                   && IsCandidate("Size Review", CarProfile.From(c))
-                   && IsCandidate("Price Review", CarProfile.From(c))
+              c => IsCandidate("Sales", CarProfile.From(c))
                    && IsCandidate("Acceleration", CarProfile.From(c))
                    && IsCandidate("TopSpeed", CarProfile.From(c))
                    && IsCandidate("Power", CarProfile.From(c))

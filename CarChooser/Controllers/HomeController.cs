@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using CarChooser.Domain;
+using CarChooser.Domain.Audit;
 using CarChooser.Domain.ScoreStrategies;
 using CarChooser.Web.Mappers;
 using CarChooser.Web.Models;
@@ -12,14 +13,17 @@ namespace CarChooser.Web.Controllers
         private readonly ISearchCars _searchService;
         private readonly IMapSearchRequests _searchMapper;
         private readonly IMapSearchVMs _searchVMMapper;
+        private readonly IRecordDecisions _recordDecisions;
 
         public HomeController(ISearchCars searchService, 
             IMapSearchRequests searchMapper, 
-            IMapSearchVMs searchVMMapper)
+            IMapSearchVMs searchVMMapper,
+            IRecordDecisions recordDecisions)
         {
             _searchService = searchService;
             _searchMapper = searchMapper;
             _searchVMMapper = searchVMMapper;
+            _recordDecisions = recordDecisions;
         }
 
         [HttpGet]
@@ -48,6 +52,18 @@ namespace CarChooser.Web.Controllers
             var result = _searchService.GetCar(new Search(), adaptiveScorer); 
 
             var model = _searchVMMapper.Map(request, result, search);
+
+            string rejectionReason = "";
+
+            if( !like )
+                rejectionReason = request.RejectionReason;
+
+            _recordDecisions.RecordDecision(new DecisionEntry()
+            {
+                CarId = currentCar.Id,
+                DislikeReason = rejectionReason
+            });
+
 
             return new JsonResult {Data = JsonConvert.SerializeObject(model)};
         }     

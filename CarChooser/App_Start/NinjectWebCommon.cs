@@ -1,5 +1,7 @@
+using System.Web.SessionState;
 using CarChooser.Data;
 using CarChooser.Domain;
+using CarChooser.Domain.Audit;
 using CarChooser.Domain.ScoreStrategies;
 using CarChooser.Web.Mappers;
 
@@ -74,6 +76,7 @@ namespace CarChooser.Web.App_Start
             kernel.Bind<IManageCars>().To<CarService>().InSingletonScope();
             kernel.Bind<IMapCarRatings>().To<CarRatingsMapper>().InSingletonScope();
             kernel.Bind<IFilter>().To<AdaptiveScorer>();
+            kernel.Bind<IRecordDecisions>().To<DecisionRepository>();
         }        
     }
 }

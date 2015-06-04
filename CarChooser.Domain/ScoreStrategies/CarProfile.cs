@@ -34,7 +34,6 @@ namespace CarChooser.Domain.ScoreStrategies
                                       {"YearTo", car.YearTo}
                                   };
 
-
             var carProfile = new CarProfile(car.Manufacturer.Name, car.Model, characteristics);
 
             carProfile.OriginalCar = car;

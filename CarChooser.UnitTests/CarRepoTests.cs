@@ -29,6 +29,7 @@ namespace CarChooser.UnitTests
         //}
 
         [Test]
+        [Ignore]
         public void FindDupes()
         {
             var repo = new CarRepository();

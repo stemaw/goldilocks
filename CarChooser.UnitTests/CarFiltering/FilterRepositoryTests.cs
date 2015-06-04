@@ -21,7 +21,7 @@ namespace CarChooser.UnitTests.CarFiltering
 
             var carProfile = CarProfile.From(car);
 
-            Assert.That(carProfile.Characteristics["Top Speed"], Is.EqualTo(112));
+            Assert.That(carProfile.Characteristics["TopSpeed"], Is.EqualTo(112));
             Assert.That(carProfile.Characteristics["Power"], Is.EqualTo(84));
         }
 

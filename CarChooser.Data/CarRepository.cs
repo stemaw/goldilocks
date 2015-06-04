@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using CarChooser.Domain;
 using Newtonsoft.Json;
@@ -10,8 +11,10 @@ namespace CarChooser.Data
 {
     public class CarRepository : IGetCars
     {
-        private const string ConnectionString = @"Server=goldilocks.clstkqqph5qy.eu-west-1.rds.amazonaws.com;Port=5432;User Id=postgres;Password=postgres;Database=goldilocks;Timeout=60";
+        //private const string ConnectionString = @"Server=goldilocks.clstkqqph5qy.eu-west-1.rds.amazonaws.com;Port=5432;User Id=postgres;Password=postgres;Database=goldilocks;Timeout=60";
         // private const string ConnectionString = @"Server=localhost;Port=5432;User Id=postgres;Password=admin;Database=gold;";
+
+        private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["dbconnection"].ToString();
 
         public Car GetCar(long currentCarId)
         {

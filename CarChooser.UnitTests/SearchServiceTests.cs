@@ -14,8 +14,8 @@ namespace CarChooser.UnitTests
     [TestFixture]
     public class SearchServiceTests : IGetCars
     {
-        [TestCase(1, RejectionReasons.TooExpensive, "Ceed")]
-        [TestCase(2, RejectionReasons.TooCommon, "320d")]
+        [TestCase(1, RejectionReasons.TooCommon, "320d")]
+        [TestCase(2, RejectionReasons.TooExpensive, "Ceed")]
         public void ItShouldFindADifferentCar(int currentCarId, RejectionReasons reason, string expectedModel)
         {
             var service = new SearchService(this);

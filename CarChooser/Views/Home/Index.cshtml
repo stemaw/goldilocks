@@ -32,7 +32,7 @@
 
 <section ng-controller="mainController" id="about" class="container content-section text-center" style="padding: 50px;">
     <div class="row">
-        <div class="col-lg-12 bgimage" style="background-image: url('@Url.Content("~/content/carimages")/default.png'" ng-style="{'background-image': 'url(@Url.Content("~/content/carimages")/'+viewModel.CurrentCar.ModelId+ '.jpg)'}">
+        <div class="col-lg-12 bgimage" style="background-image: url('@Url.Content("~/content/carimages")/default.png'; background-repeat: no-repeat;" ng-style="{'background-image': 'url(@Url.Content("~/content/carimages")/'+viewModel.CurrentCar.ModelId+ '.jpg)', 'background-repeat' : 'no-repeat'}">
             <div class="carHeader">
                 <div class="text-primary currentCar">
                     {{viewModel.CurrentCar.Manufacturer}} {{viewModel.CurrentCar.Model}} {{viewModel.CurrentCar.Derivative}} ({{viewModel.CurrentCar.YearFrom}})

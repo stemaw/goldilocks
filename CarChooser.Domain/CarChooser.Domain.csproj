@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audit\DecisionEntry.cs" />
+    <Compile Include="Audit\IRecordDecisions.cs" />
     <Compile Include="CarService.cs" />
     <Compile Include="Car.cs" />
     <Compile Include="IFilter.cs" />

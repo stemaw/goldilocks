@@ -61,7 +61,8 @@ namespace CarChooser.Web.Controllers
             _recordDecisions.RecordDecision(new DecisionEntry()
             {
                 CarId = currentCar.Id,
-                DislikeReason = rejectionReason
+                DislikeReason = rejectionReason,
+                SessionId = Session.SessionID
             });
 
 

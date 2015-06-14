@@ -30,5 +30,25 @@ namespace CarChooser.Web.Models
         public IEnumerable<RatingVM> Ratings { get; set; }
 
         public string Image { get; set; }
+
+        public int Mpg { get; set; }
+
+        public int EngineSize { get; set; }
+
+        public int LuggageCapacity { get; set; }
+
+        public string Transmission { get; set; }
+
+        public int Weight { get; set; }
+
+        public int Cylinders { get; set; }
+
+        public int Emissions { get; set; }
+
+        public int Torque { get; set; }
+
+        public int EuroEmissionsStandard { get; set; }
+
+        public decimal Price { get; set; }
     }
 }

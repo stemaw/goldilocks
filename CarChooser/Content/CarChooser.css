@@ -66,6 +66,27 @@
     background-color: rgba(229, 7, 7, 0.9);
 }
 
+.btn-circle-compare
+{
+    background-color: rgba(0, 29, 255, 0.2);
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.42;
+    border-radius: 15px;
+    padding-right: 0;
+    margin-bottom: 75px;
+}
+
+.btn-circle-compare:hover,
+.btn-circle-compare:focus {
+    outline: 0;
+    color: #fff;
+    background-color: rgba(0, 29, 255, 0.9);
+}
+
 .bg-dislike {
     background-color: rgba(229, 7, 7, 0.4);
 }
@@ -94,3 +115,16 @@
 .performance tr td:first-child {
     color:#7cbcf3
 }
+
+.iffyTip {
+     overflow:hidden;
+     white-space:nowrap;
+     text-overflow:ellipsis;
+}
+
+.bottom-align-text {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    vertical-align: middle;
+  }

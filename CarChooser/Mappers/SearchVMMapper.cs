@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using CarChooser.Domain;
 using CarChooser.Web.Models;
 
@@ -18,8 +19,8 @@ namespace CarChooser.Web.Mappers
             return new SearchResultVM
                 {
                     CurrentCar = _carMapper.Map(result),
-                    Dislikes = request.Likes,
-                    Likes = request.Dislikes,
+                    Dislikes = request.Dislikes,
+                    Likes = request.Likes,
                     PreviousRejections = search.PreviousRejections.Select(r =>
                                                                   new RejectionVM
                                                                       {
@@ -34,6 +35,7 @@ namespace CarChooser.Web.Mappers
         {
             return new SearchResultVM
             {
+                Likes = new List<CarVM>(),
                 CurrentCar = _carMapper.Map(result),
             };
         }

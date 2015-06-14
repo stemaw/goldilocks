@@ -35,16 +35,20 @@ myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl',
    function ($scope, $http, viewModel, searchUrl) {
        $scope.viewModel = viewModel;
        $scope.searchUrl = searchUrl;
+       $scope.comparisons = [];
+       
+       if (viewModel.Likes.Length > 0) {
+           $scope.CarA = viewModel.Likes[0];
+       }
+       if (viewModel.Likes.Length > 1) {
+           $scope.CarB = viewModel.Likes[1];
+       }
        
        $scope.submitRejection = function (reason) {
-           $scope.sending = true;
+           $scope.doingStuff = true;
 
            var postData = {
-               CurrentCar: {
-                   Id: $scope.viewModel.CurrentCar.Id,
-                   Manufacturer: $scope.viewModel.CurrentCar.Manufacturer,
-                   Model: $scope.viewModel.CurrentCar.Model,
-               },
+               CurrentCar: $scope.viewModel.CurrentCar,
                RejectionReason: reason,
                Likes: $scope.viewModel.Likes,
                Dislikes: $scope.viewModel.Dislikes,
@@ -55,12 +59,37 @@ myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl',
            $http.post($scope.searchUrl, postData).
                success(function (data, status, headers, config) {
                    $scope.viewModel = JSON.parse(data);
-                   $scope.sending = false;
+                   $scope.doingStuff = false;
                }).
                error(function (data, status, headers, config) {
                    $scope.failedToSend = true;
-                   $scope.sending = false;
+                   $scope.doingStuff = false;
                });
+       };
+
+       $scope.selectToCompare = function (index) {
+
+           var carId = $scope.viewModel.Likes[index].Id;
+           for (var i = 0; i < $scope.comparisons.length; i++) {
+               if ($scope.comparisons[i].Id == carId ) {
+                   return $scope.comparisons.splice(i, 1);
+               }
+           }
+           return $scope.comparisons.push($scope.viewModel.Likes[index]);
+       };
+
+       $scope.removeLike = function(id) {
+           for (var i = 0; i < $scope.comparisons.length; i++) {
+               if ($scope.comparisons[i].Id == id) {
+                   $scope.comparisons.splice(i, 1);
+               }
+           }
+           
+           for (var j = 0; j < $scope.viewModel.Likes.length; j++) {
+               if ($scope.viewModel.Likes[j].Id == id) {
+                   $scope.viewModel.Likes.splice(j, 1);
+               }
+           }
        };
    }]
 );

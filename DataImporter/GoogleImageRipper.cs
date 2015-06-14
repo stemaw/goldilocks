@@ -58,8 +58,12 @@ namespace DataImporter
             }
             catch (Exception)
             {
-                _exclude.Add("site:" + siteUrl);
-                
+                var siteToExclude = "site:" + siteUrl;
+                if (!_exclude.Contains(siteToExclude))
+                {
+                    _exclude.Add(siteToExclude);
+                }
+
                 Browser.GoBack();
 
                 goto retry;

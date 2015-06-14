@@ -37,6 +37,16 @@ namespace CarChooser.Web.Mappers
                     Length = car.Length,
                     YearFrom = car.YearFrom,
                     YearTo = car.YearTo,
+                    Cylinders = car.Cylinders,
+                    Emissions = car.Emissions,
+                    EngineSize = car.EngineSize,
+                    EuroEmissionsStandard = car.EuroEmissionsStandard,
+                    LuggageCapacity = car.LuggageCapacity,
+                    Mpg = car.Mpg,
+                    Torque = car.Torque,
+                    Transmission = car.Transmission,
+                    Weight = car.Weight,
+                    Price = car.Price
                 };
         }
     }

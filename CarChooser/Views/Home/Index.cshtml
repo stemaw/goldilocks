@@ -29,52 +29,133 @@
     </div>
 </header>
 <!-- About Section -->
-
-<section ng-controller="mainController" id="about" class="container content-section text-center" style="padding: 50px;">
-    <div class="row">
-        <div class="col-lg-12 bgimage" style="background-repeat: no-repeat;" ng-style="{'background-image': 'url('+viewModel.CurrentCar.Image+')', 'background-repeat' : 'no-repeat'}">
-            <div class="carHeader">
-                <div class="text-primary currentCar">
-                    {{viewModel.CurrentCar.Manufacturer}} {{viewModel.CurrentCar.Model}} {{viewModel.CurrentCar.Derivative}} ({{viewModel.CurrentCar.YearFrom}})
+<div ng-controller="mainController">
+ 
+    <section id="about" class="container content-section text-center" style="padding: 50px;">
+        <div class="row">
+            <div class="col-lg-12 bgimage" style="background-repeat: no-repeat;" ng-style="{'background-image': 'url('+viewModel.CurrentCar.Image+')', 'background-repeat' : 'no-repeat'}">
+                <div class="carHeader">
+                    <div class="text-primary currentCar">
+                        {{viewModel.CurrentCar.Manufacturer}} {{viewModel.CurrentCar.Model}} {{viewModel.CurrentCar.Derivative}} ({{viewModel.CurrentCar.YearFrom}})
+                    </div>
                 </div>
-            </div>
-            <div class="pull-left performance">
-                <table>
-                    <tr>
-                        <td class="text-left">0-60</td>
-                        <td class="text-right">{{viewModel.CurrentCar.Acceleration}}s</td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">Top Speed</td>
-                        <td class="text-right">{{viewModel.CurrentCar.TopSpeed}}mph</td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">Power</td>
-                        <td class="text-right">{{viewModel.CurrentCar.Power}}bhp</td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">Insurance</td>
-                        <td class="text-right">{{viewModel.CurrentCar.InsuranceGroup}}</td>
-                    </tr>
-
-                </table>
-            </div>
-            <div class="pull-right">
-                <button class="btn btn-circle btn-circle-like" ng-click="viewModel.ShowDislike=false;submitRejection('like')"><i class="glyphicon glyphicon-thumbs-up"></i>like</button>
-            </div>
-            <div class="pull-right">
-                <button class="btn btn-circle btn-circle-dislike" ng-click="viewModel.ShowDislike=!viewModel.ShowDislike"><i class="glyphicon glyphicon-thumbs-down"></i>dislike</button>
-            </div>
-
-            <div class="bg-dislike row col-lg-12 text-center" ng-show="viewModel.ShowDislike">
-                <div class="col-lg-2" ng-repeat="reason in viewModel.RejectionReasons">
-                    <button class="btn btn-circle btn-circle-lg" ng-click="submitRejection(reason)">{{reason | enum}}</button>
+                <div class="pull-left performance">
+                    <table>
+                        <tr>
+                            <td class="text-left">Price</td>
+                            <td class="text-right" ng-show="viewModel.CurrentCar.Price > 0">{{viewModel.CurrentCar.Price | currency : "£" : 0}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">0-60</td>
+                            <td class="text-right">{{viewModel.CurrentCar.Acceleration}} secs</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Top Speed</td>
+                            <td class="text-right">{{viewModel.CurrentCar.TopSpeed}} mph</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Power</td>
+                            <td class="text-right">{{viewModel.CurrentCar.Power}} bhp</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Insurance</td>
+                            <td class="text-right">{{viewModel.CurrentCar.InsuranceGroup}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Mpg</td>
+                            <td class="text-right">{{viewModel.CurrentCar.Mpg}} mpg</td>
+                        </tr>
+                    </table>
                 </div>
+                <div class="pull-right">
+                    <button class="btn btn-circle btn-circle-like" ng-click="viewModel.ShowDislike=false;submitRejection('like')"><i class="glyphicon glyphicon-thumbs-up"></i><br />like</button>
+                </div>
+                <div class="pull-right">
+                    <button class="btn btn-circle btn-circle-dislike" ng-click="viewModel.ShowDislike=!viewModel.ShowDislike"><i class="glyphicon glyphicon-thumbs-down"></i><br />dislike</button>
+                </div>
+
+                <div class="bg-dislike row col-lg-12 text-center" ng-show="viewModel.ShowDislike">
+                    <div class="col-lg-2" ng-repeat="reason in viewModel.RejectionReasons">
+                        <button class="btn btn-circle btn-circle-lg" ng-click="submitRejection(reason)">{{reason | enum}}</button>
+                    </div>
+                </div>
+                
+                 <div class="bottom-align-text" ng-show="viewModel.Likes.length > 1">
+                    <button class="btn btn-circle btn-circle-compare page-scroll" href="#compare">Compare<br/><i class="fa fa-angle-double-down animated"></i></button>
+                </div>
+    <div class="bgimage-inside"></div>
             </div>
-            <div class="bgimage-inside"></div>
+
         </div>
-    </div>
-</section>
+    </section>
+
+
+    <section ng-show="viewModel.Likes.length > 0" id="compare" class="container-fluid content-section text-center" style="padding: 50px;">
+        <div class="row">
+
+            <div class="col-lg-3 center-block">
+                <div class="text-primary currentCar">click to compare</div>
+                <div ng-repeat="car in viewModel.Likes track by $index">
+                    <a class="iffyTip" ng-click="selectToCompare($index)">
+                        {{car.Manufacturer}} {{car.Model}} {{car.Derivative}} ({{car.YearFrom}})
+                    </a>
+                    <i title="Remove from likes" ng-click="removeLike(car.Id)" class="glyphicon glyphicon-thumbs-down"></i>
+                    <hr />
+                </div>
+            </div>
+
+            <div ng-repeat="comparison in comparisons" class="col-lg-3">
+
+                <div class="carHeader">
+                    <div class="text-primary currentCar iffyTip">
+                        {{comparison.Manufacturer}} {{comparison.Model}} {{comparison.Derivative}} {{comparison.YearFrom}}
+                    </div>
+                </div>
+                <img alt="{{comparison.Manufacturer}} {{comparison.Model}} {{comparison.Derivative}} {{comparison.YearFrom}}" ng-src="{{comparison.Image}}" class="img-responsive" />
+
+                <div class="performance">
+                    <table>
+                        <tr>
+                            <td class="text-left">0-60</td>
+                            <td class="text-right">{{comparison.Acceleration}} secs</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Top Speed</td>
+                            <td class="text-right">{{comparison.TopSpeed}} mph</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Power</td>
+                            <td class="text-right">{{comparison.Power}} bhp</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Engine</td>
+                            <td class="text-right">{{comparison.EngineSize}} cc</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Insurance</td>
+                            <td class="text-right">{{comparison.InsuranceGroup}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Consumption</td>
+                            <td class="text-right">{{comparison.Mpg}} mpg</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Boot</td>
+                            <td class="text-right">{{comparison.LuggageCapacity}} litres</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Emmissions</td>
+                            <td class="text-right">{{comparison.Emissions}} g/km</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</div>
+
 
 <section id="contact" class="container content-section text-center">
     <div class="row">

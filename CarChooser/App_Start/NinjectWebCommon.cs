@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using System.Web.SessionState;
 using CarChooser.Data;
 using CarChooser.Domain;
@@ -53,6 +54,10 @@ namespace CarChooser.Web.App_Start
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
                 RegisterServices(kernel);
+
+                // warmup
+                kernel.Get<IGetCars>().AllCars();
+
                 return kernel;
             }
             catch

@@ -28,7 +28,13 @@ namespace CarChooser.Domain.ScoreStrategies
                                {"Width", new List<double>(){0.0} },
                                {"Height", new List<double>(){0.0} },
                                {"YearFrom", new List<double>(){0.0} },
-                               {"YearTo", new List<double>(){0.0} }
+                               {"YearTo", new List<double>(){0.0} },
+                               {"LuggageCapacity", new List<double>(){0.0} },
+                               {"Mpg", new List<double>(){0.0} },
+                               {"Torque", new List<double>(){0.0} },
+                               {"Weight", new List<double>(){0.0} },
+                               {"Emissions", new List<double>(){0.0} },
+                               {"EngineSize", new List<double>(){0.0} },
                            };
         }
 

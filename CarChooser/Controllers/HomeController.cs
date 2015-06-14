@@ -53,18 +53,12 @@ namespace CarChooser.Web.Controllers
 
             var model = _searchVMMapper.Map(request, result, search);
 
-            string rejectionReason = "";
-
-            if( !like )
-                rejectionReason = request.RejectionReason;
-
             _recordDecisions.RecordDecision(new DecisionEntry()
             {
                 CarId = currentCar.Id,
-                DislikeReason = rejectionReason,
+                DislikeReason = like ? string.Empty : "dislike",
                 SessionId = Session.SessionID
             });
-
 
             return new JsonResult {Data = JsonConvert.SerializeObject(model)};
         }     

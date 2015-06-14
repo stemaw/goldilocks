@@ -93,6 +93,7 @@
     <Compile Include="CarScoring\GoldilocksScorerTest.cs" />
     <Compile Include="CarScoring\TestCarDoorCount.cs" />
     <Compile Include="CarScoring\TestCarFactory.cs" />
+    <Compile Include="CarTests.cs" />
     <Compile Include="HomeControllerTests.cs" />
     <Compile Include="ImporterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

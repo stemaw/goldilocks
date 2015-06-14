@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
+using System.Threading;
+using CarChooser.Domain;
 using Coypu;
 
 namespace DataImporter
@@ -8,20 +12,31 @@ namespace DataImporter
     public class GoogleImageRipper
     {
         private BrowserSession Browser { get; set; }
+        private readonly List<string> _exclude;
 
         public GoogleImageRipper(BrowserSession browser)
         {
             Browser = browser;
+            
+            _exclude = new List<string>
+                {
+                    "site:http://zombiedrive.com/",
+                    "interior"
+                };
         }
 
-        public void RipImage(long id, string make, ModelWithYear model)
+        public void RipImage(Car car)
         {
-            if (File.Exists(GetImageName(id))) return;
+            Thread.Sleep(200);
 
+            var compositeId = car.ModelId + "-" + car.Id;
+
+            if (File.Exists(GetImageName(compositeId))) return;
+ retry:           
             var url =
                 string.Format(
-                    "https://www.google.co.uk/search?tbs=isc:black%2Cic:trans%2Cisz:l&tbm=isch&q={0}+{1}+{2}&cad=h#q={0}+{1}+{2}&tbs=isz:l&tbm=isch&tbas=0",
-                    make, model.ModelName, model.YearFrom);
+                    "https://www.google.co.uk/search?tbs=isc:black%2Cic:trans%2Cisz:l&tbm=isch&q={0}+{1}+{2}+{3}+-{4}&cad=h#q={0}+{1}+{2}+{3}+-{4}&tbs=isz:l&tbm=isch&tbas=0",
+                    car.Manufacturer.Name, car.Model, ReplaceStuff(car.LessCrypticName), car.YearFrom, string.Join("+-", _exclude));
             //var url =
             //    string.Format(
             //        "https://www.google.co.uk/search?q={0}+{1}+{2}&espv=2&biw=1745&bih=814&source=lnms&tbm=isch&sa=X&ei=j_tNVdvjN8OC7gaxvIE4&ved=0CAYQ_AUoAQ#tbs=isc:black%2Cic:trans%2Cisz:l&tbm=isch&q={0}+{1}+{2}",
@@ -34,29 +49,35 @@ namespace DataImporter
             Browser.ClickLink("View image");
 
             string imageUrl;
+            string siteUrl = null;
             try
             {
+                siteUrl = Browser.Location.Host;
+
                 imageUrl = Browser.FindXPath("//img")["src"];
             }
             catch (Exception)
             {
+                _exclude.Add("site:" + siteUrl);
+                
                 Browser.GoBack();
 
-                Browser.FindCss("#rg_s > div:nth-child(2) > a > img").Click();
-
-                Browser.ClickLink("View image");
-
-                imageUrl = Browser.FindXPath("//img")["src"];
+                goto retry;
             }
             
             using (var webClient = new WebClient())
             {
-                webClient.DownloadFile(imageUrl, GetImageName(id));
+                webClient.DownloadFile(imageUrl, GetImageName(compositeId));
             }
-            Console.WriteLine("Successfully found image for {0} {1}", make, model.ModelName);
+            Console.WriteLine("Successfully found image for {0} {1} {2}", car.Manufacturer.Name, car.Model, car.LessCrypticName);
         }
 
-        private static string GetImageName(long id)
+        private string ReplaceStuff(string lessCrypticName)
+        {
+            return Regex.Replace(lessCrypticName, @"\([^)]+\)", "");
+        }
+
+        private static string GetImageName(string id)
         {
             return string.Format(
                 @"C:\Users\ste_000\Documents\goldilocks\CarChooser\Content\CarImages\{0}.jpg",

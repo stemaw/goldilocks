@@ -112,8 +112,6 @@ namespace DataImporter
 
         private void ScrapeDerivative(IEnumerable<Car> derivatives, SnapshotElementScope derivative)
         {
-
-
             var derivativeName = derivative.FindCss("td:nth-child(1)").Text;
 
             var matchingDerivative = derivatives.FirstOrDefault(d => d.Name.ToLower().Trim() == derivativeName.ToLower().Trim());

@@ -65,7 +65,7 @@ namespace DataImporter
 
             var modelAndYear = GetModelAndYear(modelName);
 
-            var existingCar = new CarRepository().GetCar(manufacturerName, modelAndYear.ModelName, modelAndYear.YearFrom, modelAndYear.YearTo);
+            var existingCar = new CarRepository().GetModel(manufacturerName, modelAndYear.ModelName, modelAndYear.YearFrom, modelAndYear.YearTo);
             if (existingCar != null)
             {
                 modelIndex++;

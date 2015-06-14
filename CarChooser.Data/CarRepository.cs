@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using CarChooser.Domain;
+using HtmlAgilityPack;
 using Newtonsoft.Json;
 using Npgsql;
 
@@ -59,8 +60,8 @@ namespace CarChooser.Data
             return AllCars().Where(predicate);
         }
 
-        private IEnumerable<Car> _allCars;
-        public IEnumerable<Car> AllCars()
+        private List<Car> _allCars;
+        public List<Car> AllCars()
         {
             if (_allCars != null) return _allCars;
 
@@ -88,22 +89,52 @@ namespace CarChooser.Data
 
         public void Save(Car car)
         {
-            var json = JsonConvert.SerializeObject(car).Replace("'","''");
-            using (var conn = new NpgsqlConnection(ConnectionString))
+            var existing = AllCars().FirstOrDefault(c => c.Id == car.Id) != null;
+            
+            if (existing)
             {
-                conn.Open();
-                var command = new NpgsqlCommand(string.Format("UPDATE cars SET car='{0}' WHERE id = {1}", json, car.Id), conn);
-                command.ExecuteNonQuery();
+                var json = JsonConvert.SerializeObject(car).Replace("'", "''");
+                using (var conn = new NpgsqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    var command =
+                        new NpgsqlCommand(string.Format("UPDATE cars SET car='{0}' WHERE id = {1}", json, car.Id), conn);
+                    
+                    command.ExecuteNonQuery();
+                }
+            }
+            else
+            {
+                AllCars().Add(car);
+
+                var json = JsonConvert.SerializeObject(car).Replace("'", "''");
+                using (var conn = new NpgsqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    var command =
+                        new NpgsqlCommand(string.Format("INSERT INTO cars (id, car) VALUES ({0},'{1}')", car.Id, json), conn);
+                    command.ExecuteNonQuery();
+                }
             }
         }
 
-        public Car GetCar(string manufacturer, string model, int yearFrom, int yearTo)
+        public Car GetCar(string manufacturer, string model, int yearFrom, int yearTo, string derivativeName)
         {
             return
                 AllCars()
                     .FirstOrDefault(
                         c =>
-                        c.Manufacturer.Name == manufacturer && c.Model == model && c.YearFrom == yearTo && c.YearTo ==
+                        c.Manufacturer.Name == manufacturer && c.Model == model && c.YearFrom == yearFrom && c.YearTo ==
+                        yearTo && c.Name == derivativeName);
+        }
+
+        public Car GetModel(string manufacturer, string model, int yearFrom, int yearTo)
+        {
+            return
+                AllCars()
+                    .FirstOrDefault(
+                        c =>
+                        c.Manufacturer.Name == manufacturer && c.Model == model && c.YearFrom == yearFrom && c.YearTo ==
                         yearTo);
         }
 
@@ -176,6 +207,16 @@ namespace CarChooser.Data
         public void UpdateMpg(Car car)
         {
             Save(car);
+        }
+
+        public int GetNextModelId()
+        {
+            return AllCars().Max(c => c.ModelId) + 1;
+        }
+
+        public int GetNextDerivativeId()
+        {
+            return AllCars().Max(c => c.Id) + 1;
         }
     }
 }

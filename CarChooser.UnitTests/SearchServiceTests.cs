@@ -29,7 +29,7 @@ namespace CarChooser.UnitTests
             return AllCars().Where(predicate);
         }
 
-        public IEnumerable<Car> AllCars()
+        public List<Car> AllCars()
         {
             return new List<Car>
                 {

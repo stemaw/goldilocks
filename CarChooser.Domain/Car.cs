@@ -59,14 +59,18 @@ namespace CarChooser.Domain
 
         public int EuroEmissionsStandard { get; set; }
 
+        public string ReviewPage { get; set; }
+
+        public string FactsPage { get; set; }
+
         public int GetDoorCount()
         {
             var doors = 0;
                 
             // Parse this shizzle!
-            if (Model != null)
+            if (Name != null)
             {
-                foreach (Match match in Regex.Matches(Model.Trim(), @"(?<doors>[1-9](\-?d))"))
+                foreach (Match match in Regex.Matches(Name.Trim(), @"(?<doors>[1-9](\-?d))"))
                     doors = int.Parse(match.Groups["doors"].ToString().Substring(0, 1));
                 return doors;
             }
@@ -77,6 +81,11 @@ namespace CarChooser.Domain
         {
             return string.Format("Manufactuer:{0} Model:{1} YearFrom:{2} YearTo:{3}", Manufacturer.Name, Model,
                                  YearFrom, YearTo);
+        }
+
+        public string LessCrypticName
+        {
+            get { return Regex.Replace(Name, @"[1-9](\-?d)", GetDoorCount() + " door"); }
         }
     }
 }

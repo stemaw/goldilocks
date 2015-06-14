@@ -31,6 +31,7 @@ namespace DataImporter
         {
             var source = new Dictionary<string, int>();
 
+            source.Add("Abarth", 60);
             source.Add("Honda", 65);
             source.Add("Daihatsu", 20);
             source.Add("Suzuki", 30);

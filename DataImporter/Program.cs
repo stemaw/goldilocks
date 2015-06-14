@@ -25,19 +25,24 @@ namespace DataImporter
             //new Licensing().ImportSalesData();
 
             //new InsuranceGroup(browser1).RipInsuranceGroup(0);
-            BrowserSession browser1 = null;
-        omg:
+#if DEBUG            
+            new AltParkersRipper().RipParkers();
+#else
+    retry:
+
+            BrowserSession browser = null;
             try
             {
-                browser1 = Browser.SpinUpBrowser();
-                new MPGRipper(browser1).Rip();
+                browser = Browser.SpinUpBrowser();
+                Images(browser);
             }
             catch (Exception)
             {
-                if (browser1 != null) browser1.Dispose();
-                goto omg;
+                browser.Dispose();
+                goto retry;
             }
-
+            
+#endif
             Console.WriteLine("Done");
             Console.ReadKey();
 
@@ -54,8 +59,7 @@ namespace DataImporter
             {
                 try
                 {
-                    ripper.RipImage(car.Id, car.Manufacturer.Name,
-                                new ModelWithYear { ModelName = car.Model, YearFrom = car.YearFrom, YearTo = car.YearTo });
+                    ripper.RipImage(car);
                 }
                 catch (Exception ex)
                 {

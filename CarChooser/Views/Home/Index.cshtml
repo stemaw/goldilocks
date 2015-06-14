@@ -96,7 +96,7 @@
             <div class="col-lg-3 center-block">
                 <div class="text-primary currentCar">click to compare</div>
                 <div ng-repeat="car in viewModel.Likes track by $index">
-                    <a class="iffyTip" ng-click="selectToCompare($index)">
+                    <a class="iffyTip" ng-click="selectToCompare($index)" style="cursor:url()">
                         {{car.Manufacturer}} {{car.Model}} {{car.Derivative}} ({{car.YearFrom}})
                     </a>
                     <i title="Remove from likes" ng-click="removeLike(car.Id)" class="glyphicon glyphicon-thumbs-down"></i>
@@ -148,7 +148,7 @@
                             <td class="text-right">{{comparison.LuggageCapacity}} litres</td>
                         </tr>
                         <tr>
-                            <td class="text-left">Emmissions</td>
+                            <td class="text-left">Emissions</td>
                             <td class="text-right">{{comparison.Emissions}} g/km</td>
                         </tr>
                     </table>

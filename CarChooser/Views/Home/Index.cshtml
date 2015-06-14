@@ -116,6 +116,10 @@
                 <div class="performance">
                     <table>
                         <tr>
+                            <td class="text-left">Price</td>
+                            <td class="text-right" ng-show="comparison.Price > 0">{{comparison.Price | currency : "£" : 0}}</td>
+                        </tr>
+                        <tr>
                             <td class="text-left">0-60</td>
                             <td class="text-right">{{comparison.Acceleration}} secs</td>
                         </tr>

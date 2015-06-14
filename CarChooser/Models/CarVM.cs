@@ -28,5 +28,7 @@ namespace CarChooser.Web.Models
         public int YearTo { get; set; }
 
         public IEnumerable<RatingVM> Ratings { get; set; }
+
+        public string Image { get; set; }
     }
 }

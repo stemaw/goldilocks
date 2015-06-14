@@ -33,7 +33,9 @@ namespace CarChooser.Web.Controllers
             var result = _searchService.GetCar(new Search { CurrentCarId = -1 }, adaptiveScorer);
             
             var model = _searchVMMapper.Map(result);
-            
+
+            model.CurrentCar.Image = GetBestImage(result);
+
             return View(model);
         }
 
@@ -53,6 +55,8 @@ namespace CarChooser.Web.Controllers
 
             var model = _searchVMMapper.Map(request, result, search);
 
+            model.CurrentCar.Image = GetBestImage(result);
+            
             _recordDecisions.RecordDecision(new DecisionEntry()
             {
                 CarId = currentCar.Id,
@@ -61,6 +65,24 @@ namespace CarChooser.Web.Controllers
             });
 
             return new JsonResult {Data = JsonConvert.SerializeObject(model)};
-        }     
+        }
+
+        private string GetBestImage(Car model)
+        {
+            const string imageRoot = "/content/carimages/";
+            var physicalRoot = Server.MapPath(imageRoot);
+       
+            const string derivativeFormat = "{0}{1}-{2}.jpg";
+            var derivativePath = string.Format(derivativeFormat, physicalRoot, model.ModelId, model.Id);
+            
+            if (System.IO.File.Exists(derivativePath)) return string.Format(derivativeFormat, imageRoot, model.ModelId, model.Id);
+
+            const string modelFormat = "{0}{1}.jpg";
+            var modelPath = string.Format(modelFormat, physicalRoot, model.ModelId);
+
+            if (System.IO.File.Exists(modelPath)) return string.Format(modelFormat, imageRoot, model.ModelId);
+
+            return imageRoot + "default.png";
+        }
     }
 }

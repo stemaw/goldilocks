@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using CarChooser.Data;
 using Coypu;
@@ -25,9 +26,7 @@ namespace DataImporter
             //new Licensing().ImportSalesData();
 
             //new InsuranceGroup(browser1).RipInsuranceGroup(0);
-#if DEBUG            
-            new AltParkersRipper().RipParkers();
-#else
+
     retry:
 
             BrowserSession browser = null;
@@ -42,7 +41,7 @@ namespace DataImporter
                 goto retry;
             }
             
-#endif
+
             Console.WriteLine("Done");
             Console.ReadKey();
 
@@ -53,19 +52,49 @@ namespace DataImporter
         {
             var ripper = new GoogleImageRipper(browser);
 
-            var cars = new CarRepository().AllCars();
+            var modelLevel = true;
 
-            foreach (var car in cars)
+            var allCars = new CarRepository().AllCars();
+
+            if (modelLevel)
             {
-                try
+                var models = from car in allCars
+                             group car by car.ModelId
+                             into g
+                             select new {ModelId = g.Key, Derivates = g.ToList()};
+
+                foreach (var model in models)
                 {
-                    ripper.RipImage(car);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
+                    var car = allCars.First(c => c.ModelId == model.ModelId);
+
+                    {
+                        try
+                        {
+                            ripper.RipImage(car, modelLevel);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex);
+                        }
+
+                    }
                 }
             }
+            else
+            {
+                foreach (var car in allCars)
+                {
+                    try
+                    {
+                        ripper.RipImage(car, modelLevel);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                }
+            }
+
         }
 
         private static void Parkers(BrowserSession browser)

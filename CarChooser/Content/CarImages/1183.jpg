@@ -1,0 +1,323 @@
+<!doctype html>
+<html>
+<head>
+	<!--0.0135-->	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Jaguar xjs. Best photos and information of model.</title>
+	
+		<meta name="description" content="Photos and description of Jaguar xjs,Jaguar. Everything you want to know about this car." />
+
+	<script type="text/javascript" src="http://www.motorstown.com/files/js/jquery.js"></script>
+	<link rel="shortcut icon" href="/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="http://www.motorstown.com/files/style.css" />
+	<script type="text/javascript" charset="utf-8"> 
+		$(document).ready(function() {
+			//frame breakout       
+			if (top.location != location) {
+				top.location.href = document.location.href ;
+			}
+			$("a[rel^=#]").overlay({expose: {color: '#fff', loadSpeed: 200, opacity: 0.5}});
+			$("img[rel^=#]").overlay({expose: {color: '#fff', loadSpeed: 200, opacity: 0.5}});
+		});
+	</script>
+	<script>
+		function mopen(eid){
+			closeAll();
+			document.getElementById(eid).style.display="block";
+			var left=(document.width-560)/2;
+			var top=(window.innerHeight-document.getElementById(eid).offsetHeight)/2;
+			if(top<0)top=10
+			if(left<0)left=10
+			document.getElementById(eid).style.left=left+"px";
+			document.getElementById(eid).style.top=top+"px";
+			return false;
+		}
+		function mclose(id){
+			eid=document.getElementById(id);
+			if(eid)eid.style.display="none";
+			return false;
+		}
+		function closeAll(){
+			var a=Array('signup','login','restore','setings','upload');
+			for(b in a){
+				mclose(a[b]);
+			}
+		}
+	</script>
+	<script src="http://www.motorstown.com/files/js/jquery.min.js"></script>  
+	<script src="http://www.motorstown.com/files/js/jquery.tools.min.js"></script> 
+</head> 
+<body style="background-image:url(/files/background.jpg);">
+  <div class="container">
+
+    <header class="header clearfix">
+		<div class="logo" style="float:left;">
+			<a href="http://www.motorstown.com"><img alt="Pictures and ratings for exiting cars and bikes!" title="Pictures and ratings for exiting cars and bikes!" src="/files/images/logo.png" /></a>
+			<br /><span style="color:black;">Together, we can make the best auto encyclopedia!</span>
+		</div>
+		<table style="display:block;text-align:center;float:right;width:70%;">
+		<tr>
+			<td></td>
+			<td style="text-align: center;padding-top:25px;">
+				All cars &nbsp;
+				<a href='http://www.motorstown.com/letter-a/' class='button'>a</a> <a href='http://www.motorstown.com/letter-b/' class='button'>b</a> <a href='http://www.motorstown.com/letter-c/' class='button'>c</a> <a href='http://www.motorstown.com/letter-d/' class='button'>d</a> <a href='http://www.motorstown.com/letter-e/' class='button'>e</a> <a href='http://www.motorstown.com/letter-f/' class='button'>f</a> <a href='http://www.motorstown.com/letter-g/' class='button'>g</a> <a href='http://www.motorstown.com/letter-h/' class='button'>h</a> <a href='http://www.motorstown.com/letter-i/' class='button'>i</a> <a href='http://www.motorstown.com/letter-j/' class='button'>j</a> <a href='http://www.motorstown.com/letter-k/' class='button'>k</a> <a href='http://www.motorstown.com/letter-l/' class='button'>l</a> <a href='http://www.motorstown.com/letter-m/' class='button'>m</a> <a href='http://www.motorstown.com/letter-n/' class='button'>n</a> <a href='http://www.motorstown.com/letter-o/' class='button'>o</a> <a href='http://www.motorstown.com/letter-p/' class='button'>p</a> <a href='http://www.motorstown.com/letter-q/' class='button'>q</a> <a href='http://www.motorstown.com/letter-r/' class='button'>r</a> <a href='http://www.motorstown.com/letter-s/' class='button'>s</a> <a href='http://www.motorstown.com/letter-t/' class='button'>t</a> <a href='http://www.motorstown.com/letter-u/' class='button'>u</a> <a href='http://www.motorstown.com/letter-v/' class='button'>v</a> <a href='http://www.motorstown.com/letter-w/' class='button'>w</a> <a href='http://www.motorstown.com/letter-x/' class='button'>x</a> <a href='http://www.motorstown.com/letter-y/' class='button'>y</a> <a href='http://www.motorstown.com/letter-z/' class='button'>z</a> 		
+			</td>
+			<td>
+				<nav class="menu_main">
+						<div style='margin-left:14px;'>
+	<a href="http://www.motorstown.com/html/contacts.html">Contacts</a> &nbsp;
+			<a href='http://www.motorstown.com/?act=signup'>Signup</a> &nbsp;
+		<a href='http://www.motorstown.com/?act=login'>Login</a>
+		&nbsp;<a href="/about.htm">About us</a>
+	</div>				</nav>
+			</td>
+		</tr>
+		</table>
+
+				
+    </header>
+
+    <div class="info">
+		<table class="maintbl"><tr>
+							<td class="ri">
+						<div class="zag">Photo of the day:</div>
+	<div style="width:200px">
+		<a href="http://www.motorstown.com/730-daihatsu-yrv.html">
+			<img src="/images/daihatsu-yrv-01.jpg" style="width:200px" border="0" title="daihatsu yrv" alt="daihatsu yrv" />
+		</a>
+	</div>
+	<div class="zag">Equipment packages of jaguar xjs:</div><div class='mbrdr'><a href='http://www.motorstown.com/10742-jaguar-xjs-6.0.html'>Jaguar xjs 6.0</a></div><div class='mbrdr'><a href='http://www.motorstown.com/10876-jaguar-xjs-4.0.html'>Jaguar xjs 4.0</a></div><div class='mbrdr'><a href='http://www.motorstown.com/11014-jaguar-xjs-3.6.html'>Jaguar xjs 3.6</a></div><div class='mbrdr'><a href='http://www.motorstown.com/11049-jaguar-xjs-he.html'>Jaguar xjs he</a></div><div class='mbrdr'><a href='http://www.motorstown.com/12567-jaguar-xjs-estate.html'>Jaguar xjs estate</a></div><div class='mbrdr'><a href='http://www.motorstown.com/12683-jaguar-xjs-5.3.html'>Jaguar xjs 5.3</a></div><div class='mbrdr'><a href='http://www.motorstown.com/17903-jaguar-xjs-cabriolet.html'>Jaguar xjs cabriolet</a></div><div class='mbrdr'><a href='http://www.motorstown.com/47340-jaguar-xjs-v12.html'>Jaguar xjs v12</a></div><div class='mbrdr'><a href='http://www.motorstown.com/47354-jaguar-xjs-convertible.html'>Jaguar xjs convertible</a></div><div class='mbrdr'><a href='http://www.motorstown.com/47399-jaguar-xjs-lynx.html'>Jaguar xjs lynx</a></div>			<br/><b><a href='http://www.motorstown.com/opt/9141-jaguar%2Bxjs-page-1.html'>See all Jaguar xjs Equipment packages</a></b>
+		<br/><br/>	<div class="zag">Other jaguar:</div><div class='mbrdr'><a href='http://www.motorstown.com/4810-jaguar-4.2.html'>Jaguar 4.2</a></div><div class='mbrdr'><a href='http://www.motorstown.com/8866-jaguar-mark.html'>Jaguar mark</a></div><div class='mbrdr'><a href='http://www.motorstown.com/9073-jaguar-xf.html'>Jaguar xf</a></div><div class='mbrdr'><a href='http://www.motorstown.com/9088-jaguar-xj.html'>Jaguar xj</a></div><div class='mbrdr'><a href='http://www.motorstown.com/9322-jaguar-xfr.html'>Jaguar xfr</a></div><div class='mbrdr'><a href='http://www.motorstown.com/9331-jaguar-xj6.html'>Jaguar xj6</a></div><div class='mbrdr'><a href='http://www.motorstown.com/9333-jaguar-xj8.html'>Jaguar xj8</a></div><div class='mbrdr'><a href='http://www.motorstown.com/9336-jaguar-xjr.html'>Jaguar xjr</a></div><div class='mbrdr'><a href='http://www.motorstown.com/9338-jaguar-xk.html'>Jaguar xk</a></div><div class='mbrdr'><a href='http://www.motorstown.com/9343-jaguar-xkr.html'>Jaguar xkr</a></div>	<br/><br/>				</td>
+						<td>
+				<div class="crumbs"></div>
+					<script type="text/javascript" src="http://www.motorstown.com/files/js/gallery.js"></script>
+	<table width='100%'>
+		<tr>
+			<td style="padding-left:50px">
+				<h1 style="float:left;margin-top:0;margin-right:5px;margin-bottom:5px;">Jaguar xjs</h1>
+									<img width=32 height=32 src="http://www.motorstown.com/files/w64h641339870384Success64.png"/>
+					<div title="" style="float:right;background: #569800 url('http://www.motorstown.com/files/button_green_bg.png') repeat-x 0 100%;
+					color: white;text-shadow: #487E01 0 1px 1px;" class="verified"><div style="padding:5px;">
+						<span class="tooltip">
+							This page is approved by R0bbj0b							&nbsp;<em>This page is about Jaguar xjs was validated by user R0bbj0b. 
+							We trust this user, so I think this page tested and the data on it - reliable. 
+							If you find errors or mistakes - can you tell us about it. Or become a moderator and do it yourself.<i></i></em></span>
+					</div></div>
+					
+				
+<!--placeadd-->
+
+				<br/>
+	
+									<div style="clear:both;" class="button">Jaguar xjs found on brand <a href="http://www.motorstown.com/apb-26-Jaguar/">Jaguar</a> - <a href="http://www.motorstown.com/apm-411-Xjs/">Xjs</a></div>
+				
+				<table width="100%"><tr>
+					<td>
+						<table><tr><td>
+							<div>
+											
+									<i>Jaguar xjs</i> relates to the amazing brand <b><a href="http://www.motorstown.com/jaguar/">Jaguar</a></b>.
+															</div>
+							<table>
+								<tr><td>Site ID - 10695</td></tr>
+								<tr><td>Views - 22997</td></tr>
+								<tr><td>Rating - 5530</td></tr>
+							</table><br/>
+										
+					
+					<script type="text/javascript"><!--
+					google_ad_client = "ca-pub-3655265145072064";
+					postRectSmall=1; 
+					google_ad_slot = "2326672340";
+					google_ad_width = 300;
+					google_ad_height = 250;
+					//-->
+					</script>
+					<script type="text/javascript"
+					src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+					</script>
+					
+									</td><td style="vertical-align:bottom;">
+							<!-- postRect -->
+							<script type="text/javascript"><!--
+							google_ad_client = "ca-pub-3655265145072064";
+							rect=1;
+							google_ad_slot = "5841922281";
+							google_ad_width = 336;
+							google_ad_height = 280;
+							//-->
+							</script>
+							<script type="text/javascript"
+							src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+							</script>
+							
+						</td></tr></table>
+												<div id="review">
+							<h4>Review:</h4>
+							The production of Jaguar XJS was launched in the year 1975. Since that year each new modification contributed t the overall heritage of luxury grand tourer cars. This very model was designed to be replaced in the year 1996 by the outstanding E-class jaguar. So XJS is regarded a predecessor to the classical lineup of luxury cars.
+The original variant of jaguar XJS was a 2-door coupe, equipped with 5.3-liter V12 engine. The innovations, which followed next years, brought within the versions, equipped with 4.0-liter power plants, coupled to 3-speed, and later to 4-speed automatic gearbox. The car could deliver 304 horsepower. There were variants with manual transmission, but they were left out. The maximum speed of 142 m/h was produced by the original versions. The last years of the production were marked by establishing a brand-new High Efficiency engine. With such a power plant the car was able to produce 249 km/h with 6 sec of dynamics. <img src="/images/jaguar-xjs-09.jpg" title="Jaguar XJS" alt="Jaguar XJS" style="width:100%">
+The exterior parameters changed over the time of the production of XJS. The standard 2-door coupe was coupled to convertible after the year 1981. The standard dimensions of the car suggest it to be not a compact vehicle. But the general impression of its size is compensated by its short length. The convertibles were equipped with extended-sized doors with low seating, which for some is very uncomfortable.  But the general ergonomic design of the seats is almost ideal. According to experts, the seating responds to the main demands of safety measures.
+The central console with leather steering upholstery is easy to handle. The instrument panel has very decent design of all the options, available at the press of the button. The audio system deserves special appraisal because of its premium class. <img src="/images/jaguar-xjs-10.jpg" title="Jaguar XJS" alt="Jaguar XJS" style="width:100%">
+The car had given birth to a brand-new generation of tourers. Jaguar XJS remains popular among car-lovers and simply those, willing to try the beasty 6-liter engine on the highway. The quality of the original Jaguar is beyond doubt, as the main object of redesign was traditionally the engine.							<hr />
+						</div>
+												<table id="ex4"><tr>								<td>
+									<a href="/imgs/10695-jaguar-xjs-1.html" class="overlay-enable" data-pid="10695" data-url="jaguar-xjs-01.jpg">
+										<img class="ex4" src="/images/jaguar-xjs-01.jpg" style="width:150px;height:100px;" border="0" title="jaguar xjs" alt="jaguar xjs" />
+									</a>
+								</td>								<td>
+									<a href="/imgs/10695-jaguar-xjs-2.html" class="overlay-enable" data-pid="10695" data-url="jaguar-xjs-02.jpg">
+										<img class="ex4" src="/images/jaguar-xjs-02.jpg" style="width:150px;height:100px;" border="0" title="jaguar xjs" alt="jaguar xjs" />
+									</a>
+								</td>								<td>
+									<a href="/imgs/10695-jaguar-xjs-3.html" class="overlay-enable" data-pid="10695" data-url="jaguar-xjs-03.jpg">
+										<img class="ex4" src="/images/jaguar-xjs-03.jpg" style="width:150px;height:100px;" border="0" title="jaguar xjs" alt="jaguar xjs" />
+									</a>
+								</td>								<td>
+									<a href="/imgs/10695-jaguar-xjs-4.html" class="overlay-enable" data-pid="10695" data-url="jaguar-xjs-04.jpg">
+										<img class="ex4" src="/images/jaguar-xjs-04.jpg" style="width:150px;height:100px;" border="0" title="jaguar xjs" alt="jaguar xjs" />
+									</a>
+								</td></tr><tr>								<td>
+									<a href="/imgs/10695-jaguar-xjs-5.html" class="overlay-enable" data-pid="10695" data-url="jaguar-xjs-05.jpg">
+										<img class="ex4" src="/images/jaguar-xjs-05.jpg" style="width:150px;height:100px;" border="0" title="jaguar xjs" alt="jaguar xjs" />
+									</a>
+								</td>								<td>
+									<a href="/imgs/10695-jaguar-xjs-6.html" class="overlay-enable" data-pid="10695" data-url="jaguar-xjs-06.jpg">
+										<img class="ex4" src="/images/jaguar-xjs-06.jpg" style="width:150px;height:100px;" border="0" title="jaguar xjs" alt="jaguar xjs" />
+									</a>
+								</td>								<td>
+									<a href="/imgs/10695-jaguar-xjs-7.html" class="overlay-enable" data-pid="10695" data-url="jaguar-xjs-07.jpg">
+										<img class="ex4" src="/images/jaguar-xjs-07.jpg" style="width:150px;height:100px;" border="0" title="jaguar xjs" alt="jaguar xjs" />
+									</a>
+								</td>								<td>
+									<a href="/imgs/10695-jaguar-xjs-8.html" class="overlay-enable" data-pid="10695" data-url="jaguar-xjs-08.jpg">
+										<img class="ex4" src="/images/jaguar-xjs-08.jpg" style="width:150px;height:100px;" border="0" title="jaguar xjs" alt="jaguar xjs" />
+									</a>
+								</td></tr><tr>								<td>
+									<a href="/imgs/10695-jaguar-xjs-10.html" class="overlay-enable" data-pid="10695" data-url="jaguar-xjs-10.jpg">
+										<img class="ex4" src="/images/jaguar-xjs-10.jpg" style="width:150px;height:100px;" border="0" title="jaguar xjs" alt="jaguar xjs" />
+									</a>
+								</td></tr></table>						<br/>
+							<div id="respond" name="respond">
+		<h3 style="text-align: left;">What do you think about this vehicle?</h3>
+				<form action="" method="post" id="commentform">
+			<div id="formContent">
+				<label for="author">Your name (required):</label>
+				<input type="text" name="author" id="author" value="" size="22" tabindex="1" aria-required="true">
+				<br />
+				<label for="comment">Comment (required):</label>
+				<textarea name="comment" id="comment" tabindex="4" rows="8"></textarea><br />
+				<input name="submit" type="submit" id="submit" value="Send" style="margin-top:5px;" />
+			</div>
+			<div class="cleaner">&nbsp;</div>
+		</form>
+	</div>
+		<div class="commentsList">
+			</div>
+					</td>
+					<td width="200px" style="padding-left:20px;">
+												<i>Jaguar xjs</i> Options:<br /><a href='http://www.motorstown.com/tag-3932-jaguar%2Bxjs-page-1.html'>
+								Jaguar xjs
+							</a><br />																	<style>
+			.newsbox{margin-top:5px;text-align:center;}
+		.newsbox img{width:150px;display:block;margin:0 24px;}
+		hr.spacer{margin:20px 0;}
+		</style>
+	<hr class="spacer" />	<div class="zag">More news</div>
+	<div class="newsbox">
+					<div>
+				<a href="http://www.motorstown.com/news/4700-honda’s-n-truckn-camp:-the-cat-from-japan-is-a-micro-recreation-of-wild-imagination.html">
+											<img src="/thumbs200/newsImages/honda’s-n-truckn-camp:-the-cat-from-japan-is-a-micro-recreation-of-wild-imagination-1.jpg" alt="Honda’s N-TRUCK/N-CAMP: the cat from Japan is a micro recreation of wild imagination" />
+									</a>
+				<a href="http://www.motorstown.com/news/4700-honda’s-n-truckn-camp:-the-cat-from-japan-is-a-micro-recreation-of-wild-imagination.html">
+					Honda’s N-TRUCK/N-CAMP: the cat from Japan is a micro recreation of wild imagination				</a>
+				<br><p class=\"MsoNormal\" style=\"text-align: justify; line-height: 150%;\"><span lang=\"EN-US\">As a m			<hr/>
+			</div>
+					<div>
+				<a href="http://www.motorstown.com/news/4701-how-would-you-configure-your-wrangler-ish-2015-jeep-renegade.html">
+											<img src="/thumbs200/newsImages/how-would-you-configure-your-wrangler-ish-2015-jeep-renegade-1.jpg" alt="How would you configure your Wrangler-ish 2015 Jeep Renegade?" />
+									</a>
+				<a href="http://www.motorstown.com/news/4701-how-would-you-configure-your-wrangler-ish-2015-jeep-renegade.html">
+					How would you configure your Wrangler-ish 2015 Jeep Renegade?				</a>
+				<br><p class=\"MsoNormal\" style=\"text-align: justify; line-height: 150%;\"><span lang=\"EN-US\">Releas			<hr/>
+			</div>
+					<div>
+				<a href="http://www.motorstown.com/news/4702-2015-volvo-v60-cross-country,-the-smaller-and-sexier-brethren-of-the-xc70.html">
+											<img src="/thumbs200/newsImages/2015-volvo-v60-cross-country,-the-smaller-and-sexier-brethren-of-the-xc70-1.jpg" alt="2015 Volvo V60 Cross Country, the smaller and sexier brethren of the XC70" />
+									</a>
+				<a href="http://www.motorstown.com/news/4702-2015-volvo-v60-cross-country,-the-smaller-and-sexier-brethren-of-the-xc70.html">
+					2015 Volvo V60 Cross Country, the smaller and sexier brethren of the XC70				</a>
+				<br><p class=\"MsoNormal\" style=\"text-align: justify; line-height: 150%;\"><span lang=\"EN-US\">We lik			<hr/>
+			</div>
+					<div>
+				<a href="http://www.motorstown.com/news/4703-volkswagen-golf-1.8t-tsi-automatic,-the-american-centric-hatch-hopes-to-do-better-than-the-passat.html">
+											<img src="/thumbs200/newsImages/volkswagen-golf-1.8t-tsi-automatic,-the-american-centric-hatch-hopes-to-do-better-than-the-passat-1.jpg" alt="Volkswagen Golf 1.8T TSI Automatic, the American-centric hatch hopes to do better than the Passat" />
+									</a>
+				<a href="http://www.motorstown.com/news/4703-volkswagen-golf-1.8t-tsi-automatic,-the-american-centric-hatch-hopes-to-do-better-than-the-passat.html">
+					Volkswagen Golf 1.8T TSI Automatic, the American-centric hatch hopes to do better than the Passat				</a>
+				<br><p class=\"MsoNormal\" style=\"line-height: 150%;\"><span lang=\"EN-US\">Apart from being the global			<hr/>
+			</div>
+					<div>
+				<a href="http://www.motorstown.com/news/4704-as-the-deadline-over-the-gm-ignition-switch-claims-climb-over-4,000-.html">
+											<img src="/thumbs200/newsImages/as-the-deadline-over-the-gm-ignition-switch-claims-climb-over-4,000--1.jpg" alt="As the deadline over the GM ignition switch claims climb over 4,000 " />
+									</a>
+				<a href="http://www.motorstown.com/news/4704-as-the-deadline-over-the-gm-ignition-switch-claims-climb-over-4,000-.html">
+					As the deadline over the GM ignition switch claims climb over 4,000 				</a>
+				<br><p class=\"MsoNormal\" style=\"text-align: justify; line-height: 150%;\"><span lang=\"EN-US\">As the			<hr/>
+			</div>
+				<div style="margin:0;color:#7F7F7F;font-size:0.8em;width:100%;text-align:right;"><a href="/news/">>>show all news</a></div>
+	</div>
+						</td>
+				</tr></table>
+			</td>
+		</tr>
+	</table>
+			</td>
+		</tr></table>
+    </div>
+    
+    <footer class="footer clearfix">
+		<div style="text-align:center;width:100%;font-size:12px;font-weight:bold;background-color:#EFEFEF;opacity: 0.8;padding: 4px;">MotorsTowN.com&nbsp;2015			&nbsp;|&nbsp;<a style="color:black;" href="/html/terms.html" title="MotorsTowN.com Terms of Service">Terms of Service</a>
+			&nbsp;|&nbsp;<a style="color:black;" href="/html/privacy.html" title="MotorsTowN.com Privacy Policy">Privacy Policy</a>
+		</div>
+    </footer>
+
+  </div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41199970-1', 'motorstown.com');
+  ga('send', 'pageview');
+</script>
+<img style="display:none;" src="/s.gif?ref=&uri=%2Fimages%2Fjaguar-xjs-09.jpg&t=1434460914"/>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter25981771 = new Ya.Metrika({id:25981771,
+                    webvisor:true,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    trackHash:true});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/25981771" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</body>
+</html>

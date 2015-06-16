@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -13,6 +14,8 @@ namespace DataImporter
     {
         private BrowserSession Browser { get; set; }
         private readonly List<string> _exclude;
+        private string[] _files
+            ;
 
         public GoogleImageRipper(BrowserSession browser)
         {
@@ -25,14 +28,34 @@ namespace DataImporter
                 };
         }
 
-        public void RipImage(Car car)
+        
+        public void RipImage(Car car, bool modelLevel)
         {
+            if (_files == null)
+                _files = Directory.GetFiles(@"C:\Users\ste_000\Documents\goldilocks\CarChooser\Content\CarImages\");
+            
             Thread.Sleep(200);
 
-            var compositeId = car.ModelId + "-" + car.Id;
+            var idToUse = car.ModelId.ToString();
 
-            if (File.Exists(GetImageName(compositeId))) return;
- retry:           
+            if (!modelLevel)
+            {
+                idToUse = car.ModelId + "-" + car.Id;
+            }
+
+            var imageName = GetImageName(idToUse);
+
+            if (File.Exists(imageName)) return;
+
+            if (modelLevel)
+            {
+                var match = _files.FirstOrDefault(f => f.Replace(@"C:\Users\ste_000\Documents\goldilocks\CarChooser\Content\CarImages\","").StartsWith(idToUse + "-"));
+                if (match != null)
+                {
+                    File.Copy(match, imageName);
+                }
+            }
+            retry:           
             var url =
                 string.Format(
                     "https://www.google.co.uk/search?tbs=isc:black%2Cic:trans%2Cisz:l&tbm=isch&q={0}+{1}+{2}+{3}+-{4}&cad=h#q={0}+{1}+{2}+{3}+-{4}&tbs=isz:l&tbm=isch&tbas=0",
@@ -71,7 +94,7 @@ namespace DataImporter
             
             using (var webClient = new WebClient())
             {
-                webClient.DownloadFile(imageUrl, GetImageName(compositeId));
+                webClient.DownloadFile(imageUrl, imageName);
             }
             Console.WriteLine("Successfully found image for {0} {1} {2}", car.Manufacturer.Name, car.Model, car.LessCrypticName);
         }

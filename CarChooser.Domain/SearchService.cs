@@ -8,10 +8,12 @@ namespace CarChooser.Domain
     public class SearchService : ISearchCars
     {
         private readonly IGetCars _carRepository;
+        readonly Random _random;
 
         public SearchService(IGetCars carRepository)
         {
             _carRepository = carRepository;
+            _random = new Random();
         }
 
         public IEnumerable<Car> GetCar(Search search, IFilter judge)
@@ -35,8 +37,8 @@ namespace CarChooser.Domain
             var seed = matches.Count;
 
             const int stopCount = 25;
-
-            return seed <= stopCount ? new List<Car>() : matches.Skip(new Random().Next(seed)).Take(1);
+            
+            return seed <= stopCount ? new List<Car>() : matches.Skip(_random.Next(seed)).Take(1);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Web;
 using CarChooser.Domain;
 using CarChooser.Web.Models;
 
@@ -27,7 +28,7 @@ namespace CarChooser.Web.Mappers
                     Id = car.Id,
                     ModelId = car.ModelId,
                     Model = car.Model,
-                    Manufacturer = car.Manufacturer.Name,
+                    Manufacturer = HttpUtility.HtmlDecode(car.Manufacturer.Name),
                     Ratings = car.Ratings.Select(r => _carRatingsMapper.Map(r)),
                     Acceleration = car.Acceleration,
                     Derivative = car.Name,

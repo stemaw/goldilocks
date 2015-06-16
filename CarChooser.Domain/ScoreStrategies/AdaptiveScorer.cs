@@ -130,9 +130,10 @@ namespace CarChooser.Domain.ScoreStrategies
                      && IsCandidate("Reliability", CarProfile.From(c))
                      && IsCandidate("Doors", CarProfile.From(c));
 
-            var viableCars = carOptions.Where(predicate).Where( c => !(Rejections.Select( d => d.Id ).Contains(c.Id))).OrderBy(c => ScoreTheCar(CarProfile.From(c))).ToList();
+            var viableCars = carOptions.Where(predicate).Where( c => !(Rejections.Select( d => d.Id ).Contains(c.Id)))
+                .OrderBy(c => ScoreTheCar(CarProfile.From(c))).ToList();
             
-            var carScores = viableCars.Select(c => ScoreTheCar(CarProfile.From(c)));
+            //var carScores = viableCars.Select(c => ScoreTheCar(CarProfile.From(c)));
 
             return viableCars;
         }

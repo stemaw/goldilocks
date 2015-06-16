@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Web;
 using CarChooser.Domain;
 using Coypu;
 
@@ -29,7 +31,7 @@ namespace DataImporter
         }
 
         
-        public void RipImage(Car car, bool modelLevel)
+        public void RipImage(Car car, bool modelLevel, bool manualMode)
         {
             if (_files == null)
                 _files = Directory.GetFiles(@"C:\Users\ste_000\Documents\goldilocks\CarChooser\Content\CarImages\");
@@ -59,7 +61,7 @@ namespace DataImporter
             var url =
                 string.Format(
                     "https://www.google.co.uk/search?tbs=isc:black%2Cic:trans%2Cisz:l&tbm=isch&q={0}+{1}+{2}+{3}+-{4}&cad=h#q={0}+{1}+{2}+{3}+-{4}&tbs=isz:l&tbm=isch&tbas=0",
-                    car.Manufacturer.Name, car.Model, ReplaceStuff(car.LessCrypticName), car.YearFrom, string.Join("+-", _exclude));
+                    HttpUtility.HtmlDecode(car.Manufacturer.Name), car.Model, ReplaceStuff(car.LessCrypticName), car.YearFrom, string.Join("+-", _exclude));
             //var url =
             //    string.Format(
             //        "https://www.google.co.uk/search?q={0}+{1}+{2}&espv=2&biw=1745&bih=814&source=lnms&tbm=isch&sa=X&ei=j_tNVdvjN8OC7gaxvIE4&ved=0CAYQ_AUoAQ#tbs=isc:black%2Cic:trans%2Cisz:l&tbm=isch&q={0}+{1}+{2}",
@@ -67,10 +69,21 @@ namespace DataImporter
 
             Browser.Visit(url);
 
-            Browser.FindCss("#rg_s > div:nth-child(1) > a > img").Click();
+            if (!manualMode)
+            {
+                Browser.FindCss("#rg_s > div:nth-child(1) > a > img").Click();
 
-            Browser.ClickLink("View image");
-
+                Browser.ClickLink("View image");
+            }
+            else
+            {
+                var currentHost = Browser.Location.Host;
+                while (Browser.Location.Host == currentHost)
+                {
+                    // wait for manual selection
+                    Thread.Sleep(1000);
+                }
+            }
             string imageUrl;
             string siteUrl = null;
             try

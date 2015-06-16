@@ -70,7 +70,7 @@ namespace DataImporter
                     {
                         try
                         {
-                            ripper.RipImage(car, modelLevel);
+                            ripper.RipImage(car, modelLevel, true);
                         }
                         catch (Exception ex)
                         {
@@ -86,7 +86,7 @@ namespace DataImporter
                 {
                     try
                     {
-                        ripper.RipImage(car, modelLevel);
+                        ripper.RipImage(car, modelLevel, false);
                     }
                     catch (Exception ex)
                     {

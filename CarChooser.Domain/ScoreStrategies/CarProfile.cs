@@ -37,7 +37,10 @@ namespace CarChooser.Domain.ScoreStrategies
                                       {"Torque", car.Torque},
                                       {"Weight", car.Weight},
                                       {"Emissions", car.Emissions},
-                                      {"EngineSize", car.EngineSize}
+                                      {"EngineSize", car.EngineSize},
+                                      {"Doors", car.GetDoorCount()},
+                                      {"Prestige", car.Manufacturer.PrestigeIndex},
+                                      {"Reliability", car.Manufacturer.ReliabilityIndex},
                                   };
 
             var carProfile = new CarProfile(car.Manufacturer.Name, car.Model, characteristics);

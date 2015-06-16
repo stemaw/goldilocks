@@ -36,7 +36,7 @@ namespace CarChooser.Domain
 
             const int stopCount = 25;
 
-            return seed <= stopCount ? null : matches.Skip(new Random().Next(matches.Count)).Take(1);
+            return seed <= stopCount ? new List<Car>() : matches.Skip(new Random().Next(seed)).Take(1);
         }
     }
 }

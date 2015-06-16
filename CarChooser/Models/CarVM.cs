@@ -50,5 +50,19 @@ namespace CarChooser.Web.Models
         public int EuroEmissionsStandard { get; set; }
 
         public decimal Price { get; set; }
+
+        public string FullName { get { return string.Format("{0} {1} {2} {3}", Manufacturer, Model, Derivative, GetYear()); }}
+
+        private string GetYear()
+        {
+            if (YearTo == 0) return string.Format("({0} on)", To2DigitYear(YearFrom));
+
+            return string.Format("({0} - {1})", To2DigitYear(YearFrom), To2DigitYear(YearTo));
+        }
+
+        private static string To2DigitYear(int year)
+        {
+            return year.ToString().Substring(2, 2);
+        }
     }
 }

@@ -7,6 +7,22 @@
     font-size: 30px;
 }
 
+.compareTitle
+{
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 500;
+    letter-spacing: 1px;
+    font-size: 18px;
+}
+
+.compareItem {
+    margin: 10px;
+    border: 1px #9f9f9f solid;
+    height: 200px;
+    width: 200px;
+    padding:4px
+}
+
 .btn-circle-lg
 {
     width: 130px;
@@ -128,3 +144,16 @@
     right: 0;
     vertical-align: middle;
   }
+
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}

@@ -35,6 +35,9 @@ namespace CarChooser.Domain.ScoreStrategies
                                {"Weight", new List<double>(){0.0} },
                                {"Emissions", new List<double>(){0.0} },
                                {"EngineSize", new List<double>(){0.0} },
+                               {"Doors", new List<double>(){0.0} },
+                               {"Prestige", new List<double>(){0.0} },
+                               {"Reliability", new List<double>(){0.0} },
                            };
         }
 
@@ -122,7 +125,10 @@ namespace CarChooser.Domain.ScoreStrategies
                      && IsCandidate("Torque", CarProfile.From(c))
                      && IsCandidate("Weight", CarProfile.From(c))
                      && IsCandidate("Emissions", CarProfile.From(c))
-                     && IsCandidate("EngineSize", CarProfile.From(c));
+                     && IsCandidate("EngineSize", CarProfile.From(c))
+                     && IsCandidate("Prestige", CarProfile.From(c))
+                     && IsCandidate("Reliability", CarProfile.From(c))
+                     && IsCandidate("Doors", CarProfile.From(c));
 
             var viableCars = carOptions.Where(predicate).Where( c => !(Rejections.Select( d => d.Id ).Contains(c.Id))).OrderBy(c => ScoreTheCar(CarProfile.From(c))).ToList();
             

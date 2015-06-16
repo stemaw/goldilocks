@@ -19,7 +19,7 @@
                 <div class="col-md-8 col-md-offset-2">
                     <h1 class="brand-heading">Goldilocker</h1>
                     <p class="intro-text">the new way to choose a car that's just right for you</p>
-                    <p class="intro-text">our system recommends and learns from those who use it</p>
+                    <p class="intro-text">our system recommends and learns from your choices</p>
                     <a href="#choose" class="btn btn-circle page-scroll">
                         <i class="fa fa-angle-double-down animated"></i>
                     </a>
@@ -34,15 +34,15 @@
     <section id="choose" class="container content-section text-center" style="padding: 50px;">
         <div class="row" ng-show="Finished">
             <p>We don't think you'll like anything else so it's time to move to the comparison bit</p>
-             <a href="#compare" class="btn btn-circle page-scroll">
-                        <i class="fa fa-angle-double-down animated"></i>
-                    </a>
+            <a href="#compare" class="btn btn-circle page-scroll">
+                <i class="fa fa-angle-double-down animated"></i>
+            </a>
         </div>
         <div class="row" ng-show="!Finished">
             <div class="col-lg-12 bgimage" style="background-repeat: no-repeat;" ng-style="{'background-image': 'url('+viewModel.CurrentCar.Image+')', 'background-repeat' : 'no-repeat'}">
                 <div class="carHeader">
                     <div class="text-primary currentCar">
-                        {{viewModel.CurrentCar.Manufacturer}} {{viewModel.CurrentCar.Model}} {{viewModel.CurrentCar.Derivative}} ({{viewModel.CurrentCar.YearFrom}})
+                        {{viewModel.CurrentCar.FullName}}
                     </div>
                 </div>
                 <div class="pull-left performance">
@@ -74,12 +74,14 @@
                     </table>
                 </div>
                 <div class="pull-right">
-                    <button class="btn btn-circle btn-circle-like" ng-click="viewModel.ShowDislike=false;submitRejection('like')"><i class="glyphicon glyphicon-thumbs-up"></i>
+                    <button class="btn btn-circle btn-circle-like" ng-click="viewModel.ShowDislike=false;submitRejection('like')">
+                        <i class="glyphicon glyphicon-thumbs-up"></i>
                         <br />
                         like</button>
                 </div>
                 <div class="pull-right">
-                    <button class="btn btn-circle btn-circle-dislike" ng-click="viewModel.ShowDislike=!viewModel.ShowDislike"><i class="glyphicon glyphicon-thumbs-down"></i>
+                    <button class="btn btn-circle btn-circle-dislike" ng-click="viewModel.ShowDislike=!viewModel.ShowDislike">
+                        <i class="glyphicon glyphicon-thumbs-down"></i>
                         <br />
                         dislike</button>
                 </div>
@@ -91,8 +93,10 @@
                 </div>
 
                 <div class="bottom-align-text" ng-show="viewModel.Likes.length > 1">
-                    <button class="btn btn-circle btn-circle-compare page-scroll" href="#compare">Compare<br />
-                        <i class="fa fa-angle-double-down animated"></i></button>
+                    <button class="btn btn-circle btn-circle-compare page-scroll" href="#compare">
+                        Compare<br />
+                        <i class="fa fa-angle-double-down animated"></i>
+                    </button>
                 </div>
                 <div class="bgimage-inside"></div>
             </div>
@@ -102,73 +106,76 @@
 
 
     <section id="compare" class="container-fluid content-section text-center" style="padding: 50px;">
-        <div class="row" ng-show="viewModel.Likes.length > 0">
+        <div ng-show="viewModel.Likes.length > 0">
+            <div class="row row-centered">
 
-            <div class="col-lg-3 center-block">
                 <div class="text-primary currentCar">click to compare</div>
-                <div ng-repeat="car in viewModel.Likes track by $index">
-                    <a class="iffyTip" ng-click="selectToCompare($index)" style="cursor: url()">{{car.Manufacturer}} {{car.Model}} {{car.Derivative}} ({{car.YearFrom}})
-                    </a>
+
+                <div ng-click="selectToCompare($index)" ng-repeat="car in viewModel.Likes track by $index" class="col-centered compareItem col-lg-1">
+                    <a>{{ car.FullName | limitTo: 40 }}{{car.FullName.length > 40 ? '...' : ''}}</a>
                     <i title="Remove from likes" ng-click="removeLike(car.Id)" class="glyphicon glyphicon-thumbs-down"></i>
-                    <hr />
+                    <img alt="{{car.FullName}}" ng-src="{{car.Image}}" class="img-responsive" />
+
                 </div>
             </div>
 
-            <div ng-repeat="comparison in comparisons" class="col-lg-3">
 
-                <div class="carHeader">
-                    <div class="text-primary currentCar iffyTip">
-                        {{comparison.Manufacturer}} {{comparison.Model}} {{comparison.Derivative}} {{comparison.YearFrom}}
+            <div class="row row-centered">
+                <div ng-repeat="comparison in comparisons" class="col-lg-2 col-centered">
+
+                    <div class="carHeader">
+                        <div class="text-primary compareTitle iffyTip">
+                            {{comparison.Manufacturer}} {{comparison.Model}} {{comparison.Derivative}} {{comparison.YearFrom}}
+                        </div>
+                    </div>
+                    <img alt="{{comparison.Manufacturer}} {{comparison.Model}} {{comparison.Derivative}} {{comparison.YearFrom}}" ng-src="{{comparison.Image}}" class="img-responsive" />
+
+                    <div class="performance">
+                        <table>
+                            <tr>
+                                <td class="text-left">Price</td>
+                                <td class="text-right" ng-show="comparison.Price > 0">{{comparison.Price | currency : "£" : 0}}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">0-60</td>
+                                <td class="text-right">{{comparison.Acceleration}} secs</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Top Speed</td>
+                                <td class="text-right">{{comparison.TopSpeed}} mph</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Power</td>
+                                <td class="text-right">{{comparison.Power}} bhp</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Engine</td>
+                                <td class="text-right">{{comparison.EngineSize}} cc</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Insurance</td>
+                                <td class="text-right">{{comparison.InsuranceGroup}}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Consumption</td>
+                                <td class="text-right">{{comparison.Mpg}} mpg</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Boot</td>
+                                <td class="text-right">{{comparison.LuggageCapacity}} litres</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Emissions</td>
+                                <td class="text-right">{{comparison.Emissions}} g/km</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
-                <img alt="{{comparison.Manufacturer}} {{comparison.Model}} {{comparison.Derivative}} {{comparison.YearFrom}}" ng-src="{{comparison.Image}}" class="img-responsive" />
-
-                <div class="performance">
-                    <table>
-                        <tr>
-                            <td class="text-left">Price</td>
-                            <td class="text-right" ng-show="comparison.Price > 0">{{comparison.Price | currency : "£" : 0}}</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">0-60</td>
-                            <td class="text-right">{{comparison.Acceleration}} secs</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Top Speed</td>
-                            <td class="text-right">{{comparison.TopSpeed}} mph</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Power</td>
-                            <td class="text-right">{{comparison.Power}} bhp</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Engine</td>
-                            <td class="text-right">{{comparison.EngineSize}} cc</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Insurance</td>
-                            <td class="text-right">{{comparison.InsuranceGroup}}</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Consumption</td>
-                            <td class="text-right">{{comparison.Mpg}} mpg</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Boot</td>
-                            <td class="text-right">{{comparison.LuggageCapacity}} litres</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">Emissions</td>
-                            <td class="text-right">{{comparison.Emissions}} g/km</td>
-                        </tr>
-                    </table>
-                </div>
             </div>
-
         </div>
-        <div ng-show="viewModel.Likes.length < 2">
+        <div ng-show="viewModel.Likes.length < 1">
             <p>
-                You've not liked any cars yet so there's nothing to compare.  Once you've liked a couple of cars, this section will allow you
+                You've not liked any cars yet so there's nothing to compare.  <br />Once you've liked a couple of cars, this section will allow you
             to choose which cars to compare.
             </p>
         </div>
@@ -180,7 +187,7 @@
 <section id="contact" class="container content-section text-center">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
-            <h2>Contact me</h2>
+            <h2>Contact us</h2>
             <p>Feel free to email us to provide some feedback, give us suggestions, or to just say hello!</p>
             <p>
                 <a href="mailto:enquiry@mawbusinesssolutions.co.uk">enquiry@mawbusinesssolutions.co.uk</a>
@@ -207,7 +214,7 @@
             </p>
             <p>
                 We serve images of cars that the system thinks you may like, and you simply tell us if you like it or not.
-                We then begin to tailor the car suggestions based on both your choices and those that other users have made.  We hope to 
+                We then begin to tailor the car suggestions based on your choices.  We hope to 
                 suggest cars that you'll like and to narrow down to that perfect car for you.
             </p>
             <p>

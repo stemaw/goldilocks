@@ -106,17 +106,23 @@ namespace CarChooser.Domain.ScoreStrategies
         public List<Car> Filter(List<Car> carOptions)
         {
             Func<Car, bool> predicate =
-              c => IsCandidate("Sales", CarProfile.From(c))
-                   && IsCandidate("Acceleration", CarProfile.From(c))
-                   && IsCandidate("TopSpeed", CarProfile.From(c))
-                   && IsCandidate("Power", CarProfile.From(c))
-                   && IsCandidate("InsuranceGroup", CarProfile.From(c))
-                   && IsCandidate("Price", CarProfile.From(c))
-                   && IsCandidate("Length", CarProfile.From(c))
-                   && IsCandidate("Width", CarProfile.From(c))
-                   && IsCandidate("Height", CarProfile.From(c))
-                   && IsCandidate("YearFrom", CarProfile.From(c))
-                   && IsCandidate("YearTo", CarProfile.From(c));
+                c => IsCandidate("Sales", CarProfile.From(c))
+                     && IsCandidate("Acceleration", CarProfile.From(c))
+                     && IsCandidate("TopSpeed", CarProfile.From(c))
+                     && IsCandidate("Power", CarProfile.From(c))
+                     && IsCandidate("InsuranceGroup", CarProfile.From(c))
+                     && IsCandidate("Price", CarProfile.From(c))
+                     && IsCandidate("Length", CarProfile.From(c))
+                     && IsCandidate("Width", CarProfile.From(c))
+                     && IsCandidate("Height", CarProfile.From(c))
+                     && IsCandidate("YearFrom", CarProfile.From(c))
+                     && IsCandidate("YearTo", CarProfile.From(c))
+                     && IsCandidate("LuggageCapacity", CarProfile.From(c))
+                     && IsCandidate("Mpg", CarProfile.From(c))
+                     && IsCandidate("Torque", CarProfile.From(c))
+                     && IsCandidate("Weight", CarProfile.From(c))
+                     && IsCandidate("Emissions", CarProfile.From(c))
+                     && IsCandidate("EngineSize", CarProfile.From(c));
 
             var viableCars = carOptions.Where(predicate).Where( c => !(Rejections.Select( d => d.Id ).Contains(c.Id))).OrderBy(c => ScoreTheCar(CarProfile.From(c))).ToList();
             

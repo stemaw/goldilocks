@@ -59,6 +59,7 @@ myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl',
            $http.post($scope.searchUrl, postData).
                success(function (data, status, headers, config) {
                    $scope.viewModel = JSON.parse(data);
+                   $scope.Finished = $scope.viewModel.CurrentCar == null;
                    $scope.doingStuff = false;
                }).
                error(function (data, status, headers, config) {

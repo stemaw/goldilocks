@@ -20,7 +20,7 @@
                     <h1 class="brand-heading">Goldilocker</h1>
                     <p class="intro-text">the new way to choose a car that's just right for you</p>
                     <p class="intro-text">our system recommends and learns from those who use it</p>
-                    <a href="#about" class="btn btn-circle page-scroll">
+                    <a href="#choose" class="btn btn-circle page-scroll">
                         <i class="fa fa-angle-double-down animated"></i>
                     </a>
                 </div>
@@ -30,9 +30,15 @@
 </header>
 <!-- About Section -->
 <div ng-controller="mainController">
- 
-    <section id="about" class="container content-section text-center" style="padding: 50px;">
-        <div class="row">
+
+    <section id="choose" class="container content-section text-center" style="padding: 50px;">
+        <div class="row" ng-show="Finished">
+            <p>We don't think you'll like anything else so it's time to move to the comparison bit</p>
+             <a href="#compare" class="btn btn-circle page-scroll">
+                        <i class="fa fa-angle-double-down animated"></i>
+                    </a>
+        </div>
+        <div class="row" ng-show="!Finished">
             <div class="col-lg-12 bgimage" style="background-repeat: no-repeat;" ng-style="{'background-image': 'url('+viewModel.CurrentCar.Image+')', 'background-repeat' : 'no-repeat'}">
                 <div class="carHeader">
                     <div class="text-primary currentCar">
@@ -68,10 +74,14 @@
                     </table>
                 </div>
                 <div class="pull-right">
-                    <button class="btn btn-circle btn-circle-like" ng-click="viewModel.ShowDislike=false;submitRejection('like')"><i class="glyphicon glyphicon-thumbs-up"></i><br />like</button>
+                    <button class="btn btn-circle btn-circle-like" ng-click="viewModel.ShowDislike=false;submitRejection('like')"><i class="glyphicon glyphicon-thumbs-up"></i>
+                        <br />
+                        like</button>
                 </div>
                 <div class="pull-right">
-                    <button class="btn btn-circle btn-circle-dislike" ng-click="viewModel.ShowDislike=!viewModel.ShowDislike"><i class="glyphicon glyphicon-thumbs-down"></i><br />dislike</button>
+                    <button class="btn btn-circle btn-circle-dislike" ng-click="viewModel.ShowDislike=!viewModel.ShowDislike"><i class="glyphicon glyphicon-thumbs-down"></i>
+                        <br />
+                        dislike</button>
                 </div>
 
                 <div class="bg-dislike row col-lg-12 text-center" ng-show="viewModel.ShowDislike">
@@ -79,25 +89,25 @@
                         <button class="btn btn-circle btn-circle-lg" ng-click="submitRejection(reason)">{{reason | enum}}</button>
                     </div>
                 </div>
-                
-                 <div class="bottom-align-text" ng-show="viewModel.Likes.length > 1">
-                    <button class="btn btn-circle btn-circle-compare page-scroll" href="#compare">Compare<br/><i class="fa fa-angle-double-down animated"></i></button>
+
+                <div class="bottom-align-text" ng-show="viewModel.Likes.length > 1">
+                    <button class="btn btn-circle btn-circle-compare page-scroll" href="#compare">Compare<br />
+                        <i class="fa fa-angle-double-down animated"></i></button>
                 </div>
-    <div class="bgimage-inside"></div>
+                <div class="bgimage-inside"></div>
             </div>
 
         </div>
     </section>
 
 
-    <section ng-show="viewModel.Likes.length > 0" id="compare" class="container-fluid content-section text-center" style="padding: 50px;">
-        <div class="row">
+    <section id="compare" class="container-fluid content-section text-center" style="padding: 50px;">
+        <div class="row" ng-show="viewModel.Likes.length > 0">
 
             <div class="col-lg-3 center-block">
                 <div class="text-primary currentCar">click to compare</div>
                 <div ng-repeat="car in viewModel.Likes track by $index">
-                    <a class="iffyTip" ng-click="selectToCompare($index)" style="cursor:url()">
-                        {{car.Manufacturer}} {{car.Model}} {{car.Derivative}} ({{car.YearFrom}})
+                    <a class="iffyTip" ng-click="selectToCompare($index)" style="cursor: url()">{{car.Manufacturer}} {{car.Model}} {{car.Derivative}} ({{car.YearFrom}})
                     </a>
                     <i title="Remove from likes" ng-click="removeLike(car.Id)" class="glyphicon glyphicon-thumbs-down"></i>
                     <hr />
@@ -156,6 +166,12 @@
             </div>
 
         </div>
+        <div ng-show="viewModel.Likes.length < 2">
+            <p>
+                You've not liked any cars yet so there's nothing to compare.  Once you've liked a couple of cars, this section will allow you
+            to choose which cars to compare.
+            </p>
+        </div>
     </section>
 
 </div>
@@ -178,6 +194,30 @@
                     <a href="https://plus.google.com/112151541140544832241/posts" class="btn btn-default btn-lg"><i class="fa fa-google-plus fa-fw"></i><span class="network-name">Google+</span></a>
                 </li>
             </ul>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="container content-section text-center">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <h2>What does it do?</h2>
+            <p>
+                We've collated data about all the cars currently available in the UK, both new and used.
+            </p>
+            <p>
+                We serve images of cars that the system thinks you may like, and you simply tell us if you like it or not.
+                We then begin to tailor the car suggestions based on both your choices and those that other users have made.  We hope to 
+                suggest cars that you'll like and to narrow down to that perfect car for you.
+            </p>
+            <p>
+                Once you've indicated a few cars you like, you can use the compare view to easily compare the details of the car such as performance,
+                fuel consumption, emissions, boot size etc... to find the one car that meets your needs.
+            </p>
+            <p>
+                This is currently in 'beta' which means we're still learning what works and what doesn't.  We really value your feedback to help
+                us improve so please don't be shy and get in touch.
+            </p>
         </div>
     </div>
 </section>

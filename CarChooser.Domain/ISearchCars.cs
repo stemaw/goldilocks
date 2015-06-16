@@ -1,7 +1,9 @@
-﻿namespace CarChooser.Domain
+﻿using System.Collections.Generic;
+
+namespace CarChooser.Domain
 {
     public interface ISearchCars
     {
-        Car GetCar(Search search, IFilter judge);
+        IEnumerable<Car> GetCar(Search search, IFilter judge);
     }
 }

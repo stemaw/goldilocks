@@ -20,6 +20,8 @@ namespace CarChooser.Web.Mappers
 
         public CarVM Map(Car car)
         {
+            if (car == null) return null;
+
             return new CarVM
                 {
                     Id = car.Id,

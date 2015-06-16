@@ -19,7 +19,7 @@ namespace CarChooser.UnitTests
         public void ItShouldFindADifferentCar(int currentCarId, RejectionReasons reason, string expectedModel)
         {
             var service = new SearchService(this);
-            var result = service.GetCar(new Search {CurrentCarId = currentCarId, RejectionReason = reason}, Mock.Of<IFilter>());
+            var result = service.GetCar(new Search {CurrentCarId = currentCarId, RejectionReason = reason}, Mock.Of<IFilter>()).First();
 
             result.Model.Should().Be(expectedModel);
         }

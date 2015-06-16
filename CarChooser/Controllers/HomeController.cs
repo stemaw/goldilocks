@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using CarChooser.Domain;
 using CarChooser.Domain.Audit;
 using CarChooser.Domain.ScoreStrategies;
@@ -31,10 +32,11 @@ namespace CarChooser.Web.Controllers
         {
             var adaptiveScorer = (AdaptiveScorer)Session["Scorer"];
             var result = _searchService.GetCar(new Search { CurrentCarId = -1 }, adaptiveScorer);
-            
-            var model = _searchVMMapper.Map(result);
 
-            model.CurrentCar.Image = GetBestImage(result);
+            var car = result.First();
+            var model = _searchVMMapper.Map(car);
+
+            model.CurrentCar.Image = GetBestImage(car);
 
             return View(model);
         }
@@ -45,18 +47,21 @@ namespace CarChooser.Web.Controllers
             var search = _searchMapper.Map(request);
 
             var adaptiveScorer = (AdaptiveScorer)Session["Scorer"];
-            var currentCar = _searchService.GetCar(search, adaptiveScorer);
+            var currentCar = _searchService.GetCar(search, adaptiveScorer).First();
             var carProfile = CarProfile.From(currentCar);
             var like = request.LikeIt;
 
             adaptiveScorer.Learn(carProfile, like);
 
-            var result = _searchService.GetCar(new Search(), adaptiveScorer); 
+            var result = _searchService.GetCar(new Search(), adaptiveScorer).FirstOrDefault(); 
 
             var model = _searchVMMapper.Map(request, result, search);
 
-            model.CurrentCar.Image = GetBestImage(result);
-            
+            if (model.CurrentCar != null)
+            {
+                model.CurrentCar.Image = GetBestImage(result);
+            }
+
             _recordDecisions.RecordDecision(new DecisionEntry()
             {
                 CarId = currentCar.Id,

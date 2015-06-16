@@ -32,9 +32,9 @@ namespace CarChooser.UnitTests
             model.CurrentCar.Model.Should().Be("A5");
         }
 
-        public Car GetCar(Search search, IFilter carAdjudicator)
+        public IEnumerable<Car> GetCar(Search search, IFilter carAdjudicator)
         {
-            return new Car {Id = 1, Manufacturer = new Manufacturer {Name = "Audi", Score = 10}, Model = "A5"};
+            return new List<Car>{ new Car {Id = 1, Manufacturer = new Manufacturer {Name = "Audi", Score = 10}, Model = "A5"}};
         }
     }
 }

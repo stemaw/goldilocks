@@ -74,22 +74,16 @@
                     </table>
                 </div>
                 <div class="pull-right">
-                    <button class="btn btn-circle btn-circle-like" ng-click="viewModel.ShowDislike=false;submitRejection('like')">
+                    <button class="btn btn-circle btn-circle-like" ng-click="submitRejection('like')">
                         <i class="glyphicon glyphicon-thumbs-up"></i>
                         <br />
                         like</button>
                 </div>
                 <div class="pull-right">
-                    <button class="btn btn-circle btn-circle-dislike" ng-click="viewModel.ShowDislike=!viewModel.ShowDislike">
+                    <button class="btn btn-circle btn-circle-dislike" ng-click="submitRejection('TooCommon')">
                         <i class="glyphicon glyphicon-thumbs-down"></i>
                         <br />
                         dislike</button>
-                </div>
-
-                <div class="bg-dislike row col-lg-12 text-center" ng-show="viewModel.ShowDislike">
-                    <div class="col-lg-2" ng-repeat="reason in viewModel.RejectionReasons">
-                        <button class="btn btn-circle btn-circle-lg" ng-click="submitRejection(reason)">{{reason | enum}}</button>
-                    </div>
                 </div>
 
                 <div class="bottom-align-text" ng-show="viewModel.Likes.length > 1">
@@ -124,11 +118,11 @@
                 <div ng-repeat="comparison in comparisons" class="col-lg-2 col-centered">
 
                     <div class="carHeader">
-                        <div class="text-primary compareTitle iffyTip">
-                            {{comparison.Manufacturer}} {{comparison.Model}} {{comparison.Derivative}} {{comparison.YearFrom}}
+                        <div class="text-primary compareTitle iffyTip" title="{{comparison.FullName}}">
+                            {{comparison.FullName}}
                         </div>
                     </div>
-                    <img alt="{{comparison.Manufacturer}} {{comparison.Model}} {{comparison.Derivative}} {{comparison.YearFrom}}" ng-src="{{comparison.Image}}" class="img-responsive" />
+                    <img alt="{{comparison.FullName}}" ng-src="{{comparison.Image}}" class="img-responsive" />
 
                     <div class="performance">
                         <table>

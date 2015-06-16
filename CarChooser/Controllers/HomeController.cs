@@ -30,6 +30,8 @@ namespace CarChooser.Web.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            Session.Abandon();
+
             var adaptiveScorer = (AdaptiveScorer)Session["Scorer"];
             var result = _searchService.GetCar(new Search { CurrentCarId = -1 }, adaptiveScorer);
 

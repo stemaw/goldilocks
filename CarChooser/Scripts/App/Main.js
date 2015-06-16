@@ -19,26 +19,6 @@ myApp.filter('enum', function() {
     };
 });
 
-myApp.filter('cut', function () {
-    return function (value, wordwise, max, tail) {
-        if (!value) return '';
-
-        max = parseInt(max, 10);
-        if (!max) return value;
-        if (value.length <= max) return value;
-
-        value = value.substr(0, max);
-        if (wordwise) {
-            var lastspace = value.lastIndexOf(' ');
-            if (lastspace != -1) {
-                value = value.substr(0, lastspace);
-            }
-        }
-
-        return value + (tail || ' …');
-    };
-});
-
 myApp.directive('onErrorSrc', function () {
     return {
         link: function(scope, element, attrs) {
@@ -56,14 +36,7 @@ myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl',
        $scope.viewModel = viewModel;
        $scope.searchUrl = searchUrl;
        $scope.comparisons = [];
-       
-       if (viewModel.Likes.Length > 0) {
-           $scope.CarA = viewModel.Likes[0];
-       }
-       if (viewModel.Likes.Length > 1) {
-           $scope.CarB = viewModel.Likes[1];
-       }
-       
+
        $scope.submitRejection = function (reason) {
            $scope.doingStuff = true;
 

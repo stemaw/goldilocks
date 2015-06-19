@@ -20,7 +20,7 @@ namespace DataImporter
 
         private readonly CarRepository _carRepo = new CarRepository();
 
-        public long CurrentModel;
+        public int CurrentModel;
 
         public InsuranceGroup(BrowserSession browser)
         {

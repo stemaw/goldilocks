@@ -22,7 +22,7 @@ namespace CarChooser.UnitTests
         [Ignore]
         public void ShouldReturnDefaultCar()
         {
-            var controller = new HomeController(this, new SearchMapper(), new SearchVMMapper(new CarVMMapper(new CarRatingsMapper())), Mock.Of<DecisionRepository>());
+            var controller = new HomeController(this, new SearchMapper(new CarVMMapper(new CarRatingsMapper())), new SearchVMMapper(new CarVMMapper(new CarRatingsMapper())), Mock.Of<DecisionRepository>());
             var result = controller.Index() as ViewResult;
             result.Model.Should().BeOfType<SearchResultVM>(); 
             
@@ -35,6 +35,11 @@ namespace CarChooser.UnitTests
         public IEnumerable<Car> GetCar(Search search, IFilter carAdjudicator)
         {
             return new List<Car>{ new Car {Id = 1, Manufacturer = new Manufacturer {Name = "Audi", Score = 10}, Model = "A5"}};
+        }
+
+        public Car GetCar(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

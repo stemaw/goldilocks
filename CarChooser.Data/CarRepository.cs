@@ -17,7 +17,7 @@ namespace CarChooser.Data
 
         private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["dbconnection"].ToString();
 
-        public Car GetCar(long currentCarId)
+        public Car GetCar(int currentCarId)
         {
             using (var conn = new NpgsqlConnection(ConnectionString))
             {

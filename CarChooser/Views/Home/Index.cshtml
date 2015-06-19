@@ -46,8 +46,8 @@
                     </div>
                 </div>
                 <div class="pull-left performance">
-                    <a class="pull-right" ng-show="showFigures" ng-click="showFigures = false; showReviews = false;"><i class="glyphicon glyphicon-chevron-up"></i></a>
                     <a style="padding:10px" class="pull-right" ng-show="!showFigures" ng-click="showFigures = true">view info <i class="glyphicon glyphicon-chevron-down"></i></a>
+                    <a class="pull-right" ng-show="showFigures" ng-click="showFigures = false; showReviews = false;"><i class="glyphicon glyphicon-chevron-up"></i></a>
                     <table ng-show="showFigures">
                         <tr>
                             <td class="text-left">Price</td>
@@ -78,11 +78,12 @@
                             <td class="text-right">
                                 <a ng-click="showReviews = !showReviews">View<i class="glyphicon glyphicon-chevron-right"></i></a></td>
                         </tr>
-                         <tr>
-                                <td class="text-left">Read more</td>
-                                <td class="text-right"><a href="{{viewModel.CurrentCar.ReviewPage}}" target="_blank">Parkers</a></td>
-                            </tr>
+                        <tr>
+                            <td class="text-left">Read more</td>
+                            <td class="text-right"><a href="{{viewModel.CurrentCar.ReviewPage}}" target="_blank">Parkers</a></td>
+                        </tr>
                     </table>
+                        
                 </div>
                 <div ng-show="showReviews" class="pull-left performance">
                     <table>

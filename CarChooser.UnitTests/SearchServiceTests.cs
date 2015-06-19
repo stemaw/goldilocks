@@ -19,7 +19,7 @@ namespace CarChooser.UnitTests
         public void ItShouldFindADifferentCar(int currentCarId, RejectionReasons reason, string expectedModel)
         {
             var service = new SearchService(this);
-            var result = service.GetCar(new Search {CurrentCarId = currentCarId, RejectionReason = reason}, Mock.Of<IFilter>()).First();
+            var result = service.GetCar(new Search { CurrentCar = new Car() { Id = currentCarId }, RejectionReason = reason }, Mock.Of<IFilter>()).First();
 
             result.Model.Should().Be(expectedModel);
         }
@@ -55,7 +55,7 @@ namespace CarChooser.UnitTests
             throw new NotImplementedException();
         }
 
-        public Car GetCar(long currentCarId)
+        public Car GetCar(int currentCarId)
         {
             return AllCars().First(c => c.Id == currentCarId);
         }

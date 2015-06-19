@@ -5,7 +5,7 @@ namespace CarChooser.Domain
 {
     public interface IGetCars
     {
-        Car GetCar(long currentCarId);
+        Car GetCar(int currentCarId);
         Car GetDefaultCar();
         IEnumerable<Car> GetCars(Func<Car, bool> predicate);
         List<Car> AllCars();

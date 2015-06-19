@@ -18,14 +18,11 @@ namespace CarChooser.Domain
 
         public IEnumerable<Car> GetCar(Search search, IFilter judge)
         {
-            if (search.CurrentCarId > 0)
-                return new List<Car> {_carRepository.GetCar(search.CurrentCarId)};
-            
-            if (search.CurrentCarId < 0)
+            if (search.CurrentCar == null)
             {
-                return new List<Car> {_carRepository.GetDefaultCar()};
+                return new List<Car> { _carRepository.GetDefaultCar() };
             }
-           
+
             var concreteOptions = _carRepository.AllCars().ToList();
             var matches = judge.Filter(concreteOptions);
 
@@ -34,11 +31,31 @@ namespace CarChooser.Domain
                 matches = concreteOptions;
             }
 
+            var otherManufacturers = matches.Where(m => m.Manufacturer.Name != search.CurrentCar.Manufacturer.Name).ToList();
+            if (otherManufacturers.Any() && otherManufacturers.Count > 25)
+            {
+                matches = otherManufacturers;
+            }
+            else
+            {
+                var otherModels = matches.Where(m => m.ModelId != search.CurrentCar.ModelId).ToList();
+
+                if (otherModels.Any() && otherModels.Count > 25)
+                {
+                    matches = otherModels;
+                }    
+            }
+            
             var seed = matches.Count;
 
             const int stopCount = 25;
             
             return seed <= stopCount ? new List<Car>() : matches.Skip(_random.Next(seed)).Take(1);
+        }
+
+        public Car GetCar(int id)
+        {
+            return _carRepository.GetCar(id);
         }
     }
 }

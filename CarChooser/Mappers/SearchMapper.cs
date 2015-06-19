@@ -8,13 +8,20 @@ namespace CarChooser.Web.Mappers
 {
     public class SearchMapper : IMapSearchRequests
     {
+        private readonly IMapCarVMs _carMapper;
+
+        public SearchMapper(IMapCarVMs carMapper)
+        {
+            _carMapper = carMapper;
+        }
+
         public Search Map(SearchRequest request)
         {
             return new Search
             {
                 //RejectionReason = !request.LikeIt ? (RejectionReasons)Enum.Parse(typeof(RejectionReasons), request.RejectionReason) : (RejectionReasons?) null,
-                CurrentCarId = request.CurrentCar.Id,
-                Dislikes = request.Dislikes == null ? new long[0] : request.Dislikes.Select(c => c.Id),
+                CurrentCar = _carMapper.Map(request.CurrentCar),
+                Dislikes = request.Dislikes == null ? new int[0] : request.Dislikes.Select(c => c.Id),
                 Likes = GetLikes(request).Select(l => l.Id).ToList(),
                 PreviousRejections = request.PreviousRejections != null ? request.PreviousRejections.Select(r => 
                 new PreviousRejection

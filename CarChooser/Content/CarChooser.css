@@ -163,7 +163,7 @@
  .myCarousel{ height:300px }
 
  ul[rn-carousel] {
-  width: 400px;
+  width: 350px;
   height: 200px;
   margin: 0 auto;
 }

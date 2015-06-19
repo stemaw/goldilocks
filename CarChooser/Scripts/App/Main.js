@@ -35,6 +35,7 @@ myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl',
    function ($scope, $http, viewModel, searchUrl) {
        $scope.viewModel = viewModel;
        $scope.searchUrl = searchUrl;
+       $scope.showReviews = false;
        $scope.comparisons = [];
 
        $scope.submitRejection = function (reason) {

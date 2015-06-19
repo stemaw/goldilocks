@@ -46,7 +46,9 @@
                     </div>
                 </div>
                 <div class="pull-left performance">
-                    <table>
+                    <a class="pull-right" ng-show="showFigures" ng-click="showFigures = false; showReviews = false;"><i class="glyphicon glyphicon-chevron-up"></i></a>
+                    <a style="padding:10px" class="pull-right" ng-show="!showFigures" ng-click="showFigures = true">view info <i class="glyphicon glyphicon-chevron-down"></i></a>
+                    <table ng-show="showFigures">
                         <tr>
                             <td class="text-left">Price</td>
                             <td class="text-right" ng-show="viewModel.CurrentCar.Price > 0">{{viewModel.CurrentCar.Price | currency : "£" : 0}}</td>
@@ -70,6 +72,23 @@
                         <tr>
                             <td class="text-left">Mpg</td>
                             <td class="text-right">{{viewModel.CurrentCar.Mpg}} mpg</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Ratings</td>
+                            <td class="text-right">
+                                <a ng-click="showReviews = !showReviews">View<i class="glyphicon glyphicon-chevron-right"></i></a></td>
+                        </tr>
+                         <tr>
+                                <td class="text-left">Read more</td>
+                                <td class="text-right"><a href="{{viewModel.CurrentCar.ReviewPage}}" target="_blank">Parkers</a></td>
+                            </tr>
+                    </table>
+                </div>
+                <div ng-show="showReviews" class="pull-left performance">
+                    <table>
+                        <tr ng-repeat="rating in viewModel.CurrentCar.Ratings">
+                            <td class="pull-left">{{rating.Category}}</td>
+                            <td class="text-right">{{rating.Score}}</td>
                         </tr>
                     </table>
                 </div>
@@ -162,6 +181,10 @@
                                 <td class="text-left">Emissions</td>
                                 <td class="text-right">{{comparison.Emissions}} g/km</td>
                             </tr>
+                            <tr>
+                                <td class="text-left">Read more</td>
+                                <td class="text-right"><a href="{{comparison.ReviewPage}}" target="_blank">Parkers</a></td>
+                            </tr>
                         </table>
                     </div>
                 </div>
@@ -169,7 +192,9 @@
         </div>
         <div ng-show="viewModel.Likes.length < 1">
             <p>
-                You haven't liked any cars yet so there's nothing to compare.  <br />Once you've liked a couple of cars, this section will allow you
+                You haven't liked any cars yet so there's nothing to compare. 
+                <br />
+                Once you've liked a couple of cars, this section will allow you
             to choose which cars to compare.
             </p>
         </div>

@@ -49,7 +49,8 @@ namespace CarChooser.Web.Mappers
                     Torque = car.Torque,
                     Transmission = car.Transmission,
                     Weight = car.Weight,
-                    Price = car.Price
+                    Price = car.Price,
+                    ReviewPage = car.ReviewPage,
                 };
         }
     }

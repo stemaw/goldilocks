@@ -53,6 +53,8 @@ namespace CarChooser.Web.Models
 
         public string FullName { get { return string.Format("{0} {1} {2} {3}", Manufacturer, Model, Derivative, GetYear()); }}
 
+        public string ReviewPage { get; set; }
+
         private string GetYear()
         {
             if (YearTo == 0) return string.Format("({0} on)", To2DigitYear(YearFrom));

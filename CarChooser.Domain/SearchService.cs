@@ -31,19 +31,11 @@ namespace CarChooser.Domain
                 matches = concreteOptions;
             }
 
-            var otherManufacturers = matches.Where(m => m.Manufacturer.Name != search.CurrentCar.Manufacturer.Name).ToList();
-            if (otherManufacturers.Any() && otherManufacturers.Count > 25)
+            var otherModels = matches.Where(m => m.Model != search.CurrentCar.Model).ToList();
+            
+            if (otherModels.Any() && otherModels.Count > 25)
             {
-                matches = otherManufacturers;
-            }
-            else
-            {
-                var otherModels = matches.Where(m => m.ModelId != search.CurrentCar.ModelId).ToList();
-
-                if (otherModels.Any() && otherModels.Count > 25)
-                {
-                    matches = otherModels;
-                }    
+                matches = otherModels;
             }
             
             var seed = matches.Count;

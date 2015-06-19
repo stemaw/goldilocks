@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="pull-left performance">
-                    <a style="padding:10px" class="pull-right" ng-show="!showFigures" ng-click="showFigures = true">view info <i class="glyphicon glyphicon-chevron-down"></i></a>
+                    <a style="padding: 10px" class="pull-right" ng-show="!showFigures" ng-click="showFigures = true">view info <i class="glyphicon glyphicon-chevron-down"></i></a>
                     <a class="pull-right" ng-show="showFigures" ng-click="showFigures = false; showReviews = false;"><i class="glyphicon glyphicon-chevron-up"></i></a>
                     <table ng-show="showFigures">
                         <tr>
@@ -83,7 +83,7 @@
                             <td class="text-right"><a href="{{viewModel.CurrentCar.ReviewPage}}" target="_blank">Parkers</a></td>
                         </tr>
                     </table>
-                        
+
                 </div>
                 <div ng-show="showReviews" class="pull-left performance">
                     <table>
@@ -118,23 +118,32 @@
         </div>
     </section>
 
-
     <section id="compare" class="container-fluid content-section text-center" style="padding: 50px;">
         <div ng-show="viewModel.Likes.length > 0">
-            <div class="row row-centered">
+            <div class="row row-centered spacer">
 
-                <div class="text-primary currentCar">click to compare</div>
+                <h2 class="text-primary" style="margin:0px">click to compare</h2>
 
-                <div ng-click="selectToCompare($index)" ng-repeat="car in viewModel.Likes track by $index" class="col-centered compareItem col-lg-1">
-                    <a>{{ car.FullName | limitTo: 40 }}{{car.FullName.length > 40 ? '...' : ''}}</a>
-                    <i title="Remove from likes" ng-click="removeLike(car.Id)" class="glyphicon glyphicon-thumbs-down"></i>
-                    <img alt="{{car.FullName}}" ng-src="{{car.Image}}" class="img-responsive" />
-
+                <div>
+                    <i class="carouselButton glyphicon glyphicon-chevron-left" ng-click="carouselIndex = carouselIndex-1"></i>
+                    <i class="carouselButton glyphicon glyphicon-chevron-right" ng-click="carouselIndex = carouselIndex+1"></i>
                 </div>
+                <div class="col-lg-2 col-centered">
+                    <ul rn-carousel rn-carousel-index="carouselIndex" rn-carousel-transition="hexagon" class="myCarousel">
+                        <li ng-click="selectToCompare($index)" ng-repeat="car in viewModel.Likes track by $index">
+                            <div class="layer">
+                                <a class="text-center">{{ car.FullName | limitTo: 40 }}{{car.FullName.length > 40 ? '...' : ''}}</a>
+                                <i title="Remove from likes" ng-click="removeLike(car.Id)" class="glyphicon glyphicon-thumbs-down"></i>
+                                <img alt="{{car.FullName}}" ng-src="{{car.Image}}" class="col-lg-9 img-responsive" />
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
 
-
             <div class="row row-centered">
+
                 <div ng-repeat="comparison in comparisons" class="col-lg-2 col-centered">
 
                     <div class="carHeader">

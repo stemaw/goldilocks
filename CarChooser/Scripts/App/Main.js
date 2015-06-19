@@ -1,4 +1,4 @@
-﻿var myApp = angular.module('mainApp', ['ngRoute', 'ngResource']);
+﻿var myApp = angular.module('mainApp', ['ngRoute', 'ngResource','angular-carousel']);
 
 myApp.run(['$location', '$rootScope', function ($location, $rootScope) {
     $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
@@ -55,23 +55,11 @@ myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl',
                    $scope.viewModel = JSON.parse(data);
                    $scope.Finished = $scope.viewModel.CurrentCar == null;
                    $scope.doingStuff = false;
-                   startTheClock();
                }).
                error(function (data, status, headers, config) {
                    $scope.failedToSend = true;
                    $scope.doingStuff = false;
                });
-       };
-
-       $scope.startTheClock = function() {
-           stop = $interval(function () {
-               if ($scope.blood_1 > 0 && $scope.blood_2 > 0) {
-                   $scope.blood_1 = $scope.blood_1 - 3;
-                   $scope.blood_2 = $scope.blood_2 - 4;
-               } else {
-                   $scope.stopFight();
-               }
-           }, 100);
        };
        
        $scope.selectToCompare = function (index) {

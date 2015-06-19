@@ -107,6 +107,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\angular-carousel.css" />
+    <Content Include="Content\angular-carousel.js" />
+    <Content Include="Content\angular-carousel.min.css" />
+    <Content Include="Content\angular-carousel.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -209,6 +213,7 @@
     <Content Include="Content\less\grayscale.less" />
     <Content Include="Content\less\mixins.less" />
     <Content Include="Content\less\variables.less" />
+    <Content Include="Content\angular-carousel.css.map" />
     <None Include="Properties\PublishProfiles\AWS-ZIP.pubxml" />
     <None Include="Properties\PublishProfiles\aws.pubxml" />
     <None Include="Properties\PublishProfiles\CarChooser.pubxml" />

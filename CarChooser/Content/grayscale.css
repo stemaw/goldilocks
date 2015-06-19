@@ -166,6 +166,7 @@ a:focus {
 
 .intro .intro-body .intro-text {
     font-size: 18px;
+    text-align: left;
 }
 
 @media(min-width:768px) {

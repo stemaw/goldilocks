@@ -126,6 +126,7 @@
     <Content Include="Content\img\downloads-bg.jpg" />
     <Content Include="Content\img\intro-bg.jpg" />
     <Content Include="Content\img\intro-bg2.jpg" />
+    <Content Include="Content\img\logo-transparent.png" />
     <Content Include="Content\img\map-marker.png" />
     <Content Include="Content\js\bootstrap.js" />
     <Content Include="Content\js\bootstrap.min.js" />

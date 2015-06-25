@@ -33,9 +33,8 @@ namespace CarChooser.Web.Controllers
             Session.Abandon();
 
             var adaptiveScorer = (AdaptiveScorer)Session["Scorer"];
-            var result = _searchService.GetCar(new Search(), adaptiveScorer);
+            var car = _searchService.GetCar(new Search(), adaptiveScorer);
 
-            var car = result.First();
             var model = _searchVMMapper.Map(car);
 
             model.CurrentCar.Image = GetBestImage(car);
@@ -55,13 +54,13 @@ namespace CarChooser.Web.Controllers
 
             adaptiveScorer.Learn(carProfile, like);
 
-            var result = _searchService.GetCar(search, adaptiveScorer).FirstOrDefault(); 
+            var car = _searchService.GetCar(search, adaptiveScorer); 
 
-            var model = _searchVMMapper.Map(request, result, search);
+            var model = _searchVMMapper.Map(request, car, search);
 
             if (model.CurrentCar != null)
             {
-                model.CurrentCar.Image = GetBestImage(result);
+                model.CurrentCar.Image = GetBestImage(car);
             }
 
             _recordDecisions.RecordDecision(new DecisionEntry()

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace CarChooser.Domain.ScoreStrategies
 {
@@ -19,29 +21,7 @@ namespace CarChooser.Domain.ScoreStrategies
 
         public static CarProfile From(Car car)
         {
-            var characteristics = new Dictionary<string, double>
-                                  {
-                                      {"Sales", car.Sales},
-                                      {"Acceleration", (double) car.Acceleration},
-                                      {"TopSpeed", car.TopSpeed},
-                                      {"Power", car.Power},
-                                      {"InsuranceGroup", car.InsuranceGroup},
-                                      {"Price", (double) car.Price},
-                                      {"Length", car.Length},
-                                      {"Width", car.Width},
-                                      {"Height", car.Height},
-                                      {"YearFrom", car.YearFrom},
-                                      {"YearTo", car.YearTo},
-                                      {"LuggageCapacity", car.LuggageCapacity},
-                                      {"Mpg", car.Mpg},
-                                      {"Torque", car.Torque},
-                                      {"Weight", car.Weight},
-                                      {"Emissions", car.Emissions},
-                                      {"EngineSize", car.EngineSize},
-                                      {"Doors", car.GetDoorCount()},
-                                      {"Prestige", car.Manufacturer.PrestigeIndex},
-                                      {"Reliability", car.Manufacturer.ReliabilityIndex},
-                                  };
+            var characteristics = CriteriaBuilder.Build(car);
 
             var carProfile = new CarProfile(car.Manufacturer.Name, car.Model, characteristics);
 

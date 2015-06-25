@@ -15,30 +15,14 @@ namespace CarChooser.Domain.ScoreStrategies
         {
             Rejections = new List<Car>();
 
-            FactorScores = new Dictionary<string, List<double>>
-                           {
-                               // Note, added zero entries so we get a deviation.
-                               {"Sales", new List<double>(){0.0} },
-                               {"Acceleration", new List<double>(){0.0} },
-                               {"TopSpeed", new List<double>(){0.0} },
-                               {"Power", new List<double>(){0.0} },
-                               {"InsuranceGroup", new List<double>(){0.0} },
-                               {"Price", new List<double>(){0.0} },
-                               {"Length", new List<double>(){0.0} },
-                               {"Width", new List<double>(){0.0} },
-                               {"Height", new List<double>(){0.0} },
-                               {"YearFrom", new List<double>(){0.0} },
-                               {"YearTo", new List<double>(){0.0} },
-                               {"LuggageCapacity", new List<double>(){0.0} },
-                               {"Mpg", new List<double>(){0.0} },
-                               {"Torque", new List<double>(){0.0} },
-                               {"Weight", new List<double>(){0.0} },
-                               {"Emissions", new List<double>(){0.0} },
-                               {"EngineSize", new List<double>(){0.0} },
-                               {"Doors", new List<double>(){0.0} },
-                               {"Prestige", new List<double>(){0.0} },
-                               {"Reliability", new List<double>(){0.0} },
-                           };
+            var scoringProperties = CriteriaBuilder.GetScoringProperties();
+
+            FactorScores = new Dictionary<string, List<double>>();
+
+            foreach (var property in scoringProperties)
+            {
+                FactorScores.Add(property.Name, new List<double>(){0.0} );
+            }
         }
 
 
@@ -112,32 +96,20 @@ namespace CarChooser.Domain.ScoreStrategies
                 c =>
                     {
                         var carProfile = CarProfile.From(c);
-                        return IsCandidate("Sales", carProfile)
-                                && IsCandidate("Acceleration", carProfile)
-                                && IsCandidate("TopSpeed", carProfile)
-                                && IsCandidate("Power", carProfile)
-                                && IsCandidate("InsuranceGroup", carProfile)
-                                && IsCandidate("Price", carProfile)
-                                && IsCandidate("Length", carProfile)
-                                && IsCandidate("Width", carProfile)
-                                && IsCandidate("Height", carProfile)
-                                && IsCandidate("YearFrom", carProfile)
-                                && IsCandidate("YearTo", carProfile)
-                                && IsCandidate("LuggageCapacity", carProfile)
-                                && IsCandidate("Mpg", carProfile)
-                                && IsCandidate("Torque", carProfile)
-                                && IsCandidate("Weight", carProfile)
-                                && IsCandidate("Emissions", carProfile)
-                                && IsCandidate("EngineSize", carProfile)
-                                && IsCandidate("Prestige", carProfile)
-                                && IsCandidate("Reliability", carProfile)
-                                && IsCandidate("Doors", carProfile);
+                        var properties = CriteriaBuilder.GetScoringProperties();
+
+                        var result = true;
+
+                        foreach (var propertyInfo in properties)
+                        {
+                            result &= IsCandidate(propertyInfo.Name, carProfile);
+                        }
+
+                        return result;
                     };
 
-            var viableCars = carOptions.Where(predicate).Where(c => !(Rejections.Select(d => d.Model).Contains(c.Model))).ToList();
-                //.OrderBy(c => ScoreTheCar(CarProfile.From(c))).ToList();
-            
-            //var carScores = viableCars.Select(c => ScoreTheCar(CarProfile.From(c)));
+            var viableCars = carOptions.Where(predicate).Where(c => !(Rejections.Select(d => d.Id).Contains(c.Id)))
+                .OrderBy(c => ScoreTheCar(CarProfile.From(c))).ToList();
 
             return viableCars;
         }

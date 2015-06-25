@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using CarChooser.Data;
 using CarChooser.Domain;
@@ -32,9 +28,9 @@ namespace CarChooser.UnitTests
             model.CurrentCar.Model.Should().Be("A5");
         }
 
-        public IEnumerable<Car> GetCar(Search search, IFilter carAdjudicator)
+        public Car GetCar(Search search, IFilter carAdjudicator)
         {
-            return new List<Car>{ new Car {Id = 1, Manufacturer = new Manufacturer {Name = "Audi", Score = 10}, Model = "A5"}};
+            return new Car {Id = 1, Manufacturer = new Manufacturer {Name = "Audi", Score = 10}, Model = "A5"};
         }
 
         public Car GetCar(int id)

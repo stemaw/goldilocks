@@ -13,7 +13,7 @@ namespace CarChooser.UnitTests.CarScoring
                           Model = "A1 Sportsback 1.2 TFSI SE 3d"
                       };
 
-            Assert.That(car.GetDoorCount(), Is.EqualTo(3));
+            Assert.That(car.DoorCount, Is.EqualTo(3));
         }
     }
 }

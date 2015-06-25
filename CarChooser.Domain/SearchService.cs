@@ -16,11 +16,11 @@ namespace CarChooser.Domain
             _random = new Random();
         }
 
-        public IEnumerable<Car> GetCar(Search search, IFilter judge)
+        public Car GetCar(Search search, IFilter judge)
         {
             if (search.CurrentCar == null)
             {
-                return new List<Car> { _carRepository.GetDefaultCar() };
+                return _carRepository.GetDefaultCar();
             }
 
             var concreteOptions = _carRepository.AllCars().ToList();
@@ -42,7 +42,7 @@ namespace CarChooser.Domain
 
             const int stopCount = 25;
             
-            return seed <= stopCount ? new List<Car>() : matches.Skip(_random.Next(seed)).Take(1);
+            return seed <= stopCount ? null : matches.Skip(_random.Next(seed)).Take(1).ElementAt(0);
         }
 
         public Car GetCar(int id)

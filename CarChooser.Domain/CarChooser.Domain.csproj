@@ -59,7 +59,9 @@
     <Compile Include="RejectionReasons.cs" />
     <Compile Include="ScoreStrategies\CarProfile.cs" />
     <Compile Include="ScoreStrategies\AdaptiveScorer.cs" />
+    <Compile Include="ScoreStrategies\CriteriaBuilder.cs" />
     <Compile Include="ScoreStrategies\ILearn.cs" />
+    <Compile Include="ScoreStrategies\ScoreAttribute.cs" />
     <Compile Include="ScoreStrategies\VarianceExtension.cs" />
     <Compile Include="Search.cs" />
     <Compile Include="SearchService.cs" />

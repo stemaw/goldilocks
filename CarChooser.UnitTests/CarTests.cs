@@ -21,7 +21,7 @@ namespace CarChooser.UnitTests
                     Name = input
                 };
 
-            Assert.True(car.GetDoorCount() == expectedDoors, car.GetDoorCount().ToString());
+            Assert.True(car.DoorCount== expectedDoors, car.DoorCount.ToString());
             Assert.True(car.LessCrypticName == expectedOutput, car.LessCrypticName);
         }
     }

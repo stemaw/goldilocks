@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using CarChooser.Domain;
 using FluentAssertions;
 using Moq;
@@ -19,7 +16,7 @@ namespace CarChooser.UnitTests
         public void ItShouldFindADifferentCar(int currentCarId, RejectionReasons reason, string expectedModel)
         {
             var service = new SearchService(this);
-            var result = service.GetCar(new Search { CurrentCar = new Car() { Id = currentCarId }, RejectionReason = reason }, Mock.Of<IFilter>()).First();
+            var result = service.GetCar(new Search { CurrentCar = new Car() { Id = currentCarId }, RejectionReason = reason }, Mock.Of<IFilter>());
 
             result.Model.Should().Be(expectedModel);
         }

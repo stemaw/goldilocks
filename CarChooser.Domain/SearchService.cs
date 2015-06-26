@@ -20,10 +20,10 @@ namespace CarChooser.Domain
         {
             if (search.CurrentCar == null)
             {
-                return _carRepository.GetDefaultCar();
+                return _carRepository.AllCars().Skip(_random.Next(_carRepository.AllCars().Count)).Take(1).First();
             }
 
-            var concreteOptions = _carRepository.AllCars().ToList();
+            var concreteOptions = _carRepository.AllCars();
             var matches = judge.Filter(concreteOptions);
 
             if (matches == null || !matches.Any())
@@ -31,18 +31,27 @@ namespace CarChooser.Domain
                 matches = concreteOptions;
             }
 
-            var otherModels = matches.Where(m => m.Model != search.CurrentCar.Model).ToList();
-            
-            if (otherModels.Any() && otherModels.Count > 25)
+            var previouslySeen = GetPreviousSeenModels(search);
+            var otherModels = matches.Where(m => !previouslySeen.Contains(m.Model)).ToList();
+
+            var stopCount = 25;
+
+            if (otherModels.Any())
             {
                 matches = otherModels;
+                stopCount = 1;
             }
             
             var seed = matches.Count;
 
-            const int stopCount = 25;
-            
             return seed <= stopCount ? null : matches.Skip(_random.Next(seed)).Take(1).ElementAt(0);
+        }
+
+        private List<string> GetPreviousSeenModels(Search search)
+        {
+            return search.PreviousRejections.Select(rejectionId => _carRepository.GetCar(rejectionId.CarId).Model)
+                .Union(search.Likes.Select(id => _carRepository.GetCar(id).Model))
+                .ToList();
         }
 
         public Car GetCar(int id)

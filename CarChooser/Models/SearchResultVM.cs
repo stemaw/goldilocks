@@ -7,7 +7,6 @@ namespace CarChooser.Web.Models
     {
         public CarVM CurrentCar { get; set; }
         public IEnumerable<CarVM> Likes { get; set; }
-        public IEnumerable<CarVM> Dislikes { get; set; }
 
         public IEnumerable<string> RejectionReasons{get { return Enum.GetNames(typeof(Domain.RejectionReasons)); }}
 

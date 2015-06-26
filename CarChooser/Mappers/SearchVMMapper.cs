@@ -19,7 +19,6 @@ namespace CarChooser.Web.Mappers
             return new SearchResultVM
                 {
                     CurrentCar = _carMapper.Map(result),
-                    Dislikes = request.Dislikes,
                     Likes = request.Likes,
                     PreviousRejections = search.PreviousRejections.Select(r =>
                                                                   new RejectionVM

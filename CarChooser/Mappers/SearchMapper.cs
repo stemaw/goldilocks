@@ -19,17 +19,25 @@ namespace CarChooser.Web.Mappers
         {
             return new Search
             {
-                //RejectionReason = !request.LikeIt ? (RejectionReasons)Enum.Parse(typeof(RejectionReasons), request.RejectionReason) : (RejectionReasons?) null,
                 CurrentCar = _carMapper.Map(request.CurrentCar),
-                Dislikes = request.Dislikes == null ? new int[0] : request.Dislikes.Select(c => c.Id),
                 Likes = GetLikes(request).Select(l => l.Id).ToList(),
-                PreviousRejections = request.PreviousRejections != null ? request.PreviousRejections.Select(r => 
-                new PreviousRejection
-                    {
-                        CarId = r.CarId,
-                        //Reason = (RejectionReasons) Enum.Parse(typeof(RejectionReasons), r.Reason)
-                    }).ToList() : null,
+                PreviousRejections = GetRejections(request),
             };
+        }
+
+        private static List<PreviousRejection> GetRejections(SearchRequest request)
+        {
+            if (request.PreviousRejections != null)
+            {
+                var previous = request.PreviousRejections.Select(r => new PreviousRejection {CarId = r.CarId}).ToList();
+                if (!request.LikeIt)
+                {
+                    previous.Add(new PreviousRejection() {CarId = request.CurrentCar.Id});
+                }
+                return previous;
+            }
+
+            return null;
         }
 
         private static IEnumerable<CarVM> GetLikes(SearchRequest request)

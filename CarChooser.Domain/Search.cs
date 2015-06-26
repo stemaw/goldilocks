@@ -12,8 +12,6 @@ namespace CarChooser.Domain
         
         public IEnumerable<int> Likes { get; set; }
         
-        public IEnumerable<int> Dislikes { get; set; }
-
         public List<PreviousRejection> PreviousRejections
         {
             get { return _previousRejections ?? (_previousRejections = new List<PreviousRejection>()); }

@@ -219,6 +219,13 @@
                                 <td class="text-left">Read more</td>
                                 <td class="text-right"><a href="{{comparison.ReviewPage}}" target="_blank">Parkers</a></td>
                             </tr>
+                             <tr>
+                                <td class="text-left">Buy one</td>
+                                 <td class="text-right">
+                                     <a ng-show="comparison.YearTo == 0" href="http://www.awin1.com/awclick.php?mid=6159&id=242009" target="_blank">Carwow</a>
+                                     <a ng-show="comparison.YearTo != 0" ng-href="http://www.autotrader.co.uk/search/used/cars/{{comparison.Manufacturer}}/{{comparison.Model}}" target="_blank">Autotrader</a>
+                                 </td>
+                            </tr>
                         </table>
                     </div>
                 </div>

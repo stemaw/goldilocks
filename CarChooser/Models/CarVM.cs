@@ -66,5 +66,7 @@ namespace CarChooser.Web.Models
         {
             return year.ToString().Substring(2, 2);
         }
+
+        public string UrlName { get { return string.Format("{0}/{1}/{2}/{3}/{4}", Manufacturer, Model, Derivative, YearFrom, Id).Replace(" ","_"); } }
     }
 }

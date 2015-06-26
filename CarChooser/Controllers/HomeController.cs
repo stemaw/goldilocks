@@ -45,8 +45,13 @@ namespace CarChooser.Web.Controllers
         [HttpPost]
         public JsonResult Post(SearchRequest request)
         {
-            var search = _searchMapper.Map(request);
+            if (request.RequestedCarId != 0)
+            {
+                return GetHistoricViewModel(request);
+            }
 
+            var search = _searchMapper.Map(request);
+            
             var adaptiveScorer = (AdaptiveScorer)Session["Scorer"];
             var currentCar = _searchService.GetCar(request.CurrentCar.Id);
             var carProfile = CarProfile.From(currentCar);
@@ -71,6 +76,22 @@ namespace CarChooser.Web.Controllers
             });
 
             return new JsonResult {Data = JsonConvert.SerializeObject(model)};
+        }
+
+        private JsonResult GetHistoricViewModel(SearchRequest request)
+        {
+            var car = _searchService.GetCar(request.RequestedCarId);
+
+            var search = _searchMapper.Map(request);
+
+            var viewModel = _searchVMMapper.Map(request, car, search);
+
+            if (viewModel.CurrentCar != null)
+            {
+                viewModel.CurrentCar.Image = GetBestImage(car);
+            }
+
+            return new JsonResult { Data = JsonConvert.SerializeObject(viewModel) };
         }
 
         private string GetBestImage(Car model)

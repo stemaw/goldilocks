@@ -28,7 +28,7 @@ namespace CarChooser.Web.Mappers
                     {
                         CarId = r.CarId,
                         //Reason = (RejectionReasons) Enum.Parse(typeof(RejectionReasons), r.Reason)
-                    }).ToList() : null
+                    }).ToList() : null,
             };
         }
 

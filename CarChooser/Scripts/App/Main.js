@@ -1,9 +1,6 @@
 ﻿var myApp = angular.module('mainApp', ['ngRoute', 'ngResource','angular-carousel']);
 
 myApp.run(['$location', '$rootScope', function ($location, $rootScope) {
-    $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-        $rootScope.title = current.$$route.title;
-    });
 
 }]);
 
@@ -31,13 +28,14 @@ myApp.directive('onErrorSrc', function () {
     };
 });
 
-myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl',
-   function ($scope, $http, viewModel, searchUrl) {
+myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl', '$location', '$window', '$rootScope',
+   function ($scope, $http, viewModel, searchUrl, $location, $window, $rootScope) {
        $scope.viewModel = viewModel;
        $scope.searchUrl = searchUrl;
        $scope.showReviews = false;
        $scope.comparisons = [];
-
+       $location.path($scope.viewModel.CurrentCar.UrlName);
+       
        $scope.submitRejection = function (reason) {
            $scope.doingStuff = true;
 
@@ -55,6 +53,8 @@ myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl',
                    $scope.viewModel = JSON.parse(data);
                    $scope.Finished = $scope.viewModel.CurrentCar == null;
                    $scope.doingStuff = false;
+                   $location.path($scope.viewModel.CurrentCar.UrlName);
+                   window.history.pushState($location.absUrl());
                }).
                error(function (data, status, headers, config) {
                    $scope.failedToSend = true;
@@ -85,6 +85,62 @@ myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl',
                    $scope.viewModel.Likes.splice(j, 1);
                }
            }
+       };
+       
+       $rootScope.$on('$locationChangeSuccess', function () {
+           $rootScope.actualLocation = $location.path();
+           $rootScope.title = $scope.viewModel.CurrentCar.FullName;
+       });
+
+       $rootScope.$watch(function () { return $location.path() }, function (newLocation, oldLocation) {
+           if ($rootScope.actualLocation === newLocation) {
+               var back, historyState = $window.history.state;
+
+               back = !!(historyState && historyState.position <= $rootScope.stackPosition);
+
+               if (back) {
+                   //back button
+                   $rootScope.stackPosition--;
+               } else {
+                   //forward button
+                   $rootScope.stackPosition++;
+               }
+
+               $scope.loadPrevious();
+               
+           } else {
+               //normal-way change of page (via link click)
+
+               if ($rootScope.current) {
+
+                   $window.history.replaceState({
+                       position: $rootScope.stackPosition
+                   });
+
+                   $rootScope.stackPosition++;
+               }
+           }
+       });
+       
+       $scope.loadPrevious = function() {
+           var postData = {
+               CurrentCar: $scope.viewModel.CurrentCar,
+               Likes: $scope.viewModel.Likes,
+               Dislikes: $scope.viewModel.Dislikes,
+               PreviousRejections: $scope.viewModel.PreviousRejections,
+               RequestedCarId: $location.path().substring($location.path().lastIndexOf("/")+1, $location.path().length)
+           };
+
+           $http.post($scope.searchUrl, postData).
+               success(function(data, status, headers, config) {
+                   $scope.viewModel = JSON.parse(data);
+                   $scope.Finished = $scope.viewModel.CurrentCar == null;
+                   $scope.doingStuff = false;
+               }).
+               error(function(data, status, headers, config) {
+                   $scope.failedToSend = true;
+                   $scope.doingStuff = false;
+               });
        };
    }]
 );

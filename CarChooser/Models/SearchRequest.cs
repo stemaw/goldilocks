@@ -12,5 +12,6 @@ namespace CarChooser.Web.Models
         public IList<CarVM> Dislikes { get; set; }
         public IList<RejectionVM> PreviousRejections { get; set; }
         public bool LikeIt {get ; set; }
+        public int RequestedCarId { get; set; }
     }
 }

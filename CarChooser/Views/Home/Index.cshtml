@@ -51,9 +51,11 @@
                         {{viewModel.CurrentCar.FullName}}
                     </div>
                 </div>
+                <div ng-show="doingStuff" ng-cloak class="loader">thinking...</div>
                 <div class="hidden-xs pull-left performance">
                     <a style="padding: 10px" class="pull-right" ng-show="!showFigures" ng-click="showFigures = true">view info <i class="glyphicon glyphicon-chevron-down"></i></a>
                     <a class="pull-right" ng-show="showFigures" ng-click="showFigures = false; showReviews = false;"><i class="glyphicon glyphicon-chevron-up"></i></a>
+                    
                     <table ng-show="showFigures">
                         <tr>
                             <td class="text-left">Price</td>

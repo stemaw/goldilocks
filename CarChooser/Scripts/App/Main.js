@@ -54,7 +54,6 @@ myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl',
                    $scope.Finished = $scope.viewModel.CurrentCar == null;
                    $scope.doingStuff = false;
                    $location.path($scope.viewModel.CurrentCar.UrlName);
-                   window.history.pushState($location.absUrl());
                }).
                error(function (data, status, headers, config) {
                    $scope.failedToSend = true;
@@ -123,6 +122,8 @@ myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl',
        });
        
        $scope.loadPrevious = function() {
+           $scope.doingStuff = true;
+           
            var postData = {
                CurrentCar: $scope.viewModel.CurrentCar,
                Likes: $scope.viewModel.Likes,

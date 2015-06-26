@@ -108,7 +108,10 @@ namespace CarChooser.Domain.ScoreStrategies
                         return result;
                     };
 
-            var viableCars = carOptions.Where(predicate).Where(c => !(Rejections.Select(d => d.Id).Contains(c.Id)))
+            var rejectionIds = Rejections.Select(d => d.Id);
+
+            var viableCars = carOptions.Where(c => !(rejectionIds.Contains(c.Id)))
+                .Where(predicate)
                 .OrderBy(c => ScoreTheCar(CarProfile.From(c))).ToList();
 
             return viableCars;

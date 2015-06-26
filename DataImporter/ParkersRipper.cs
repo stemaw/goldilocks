@@ -107,7 +107,6 @@ namespace DataImporter
                         Model = modelAndYear.ModelName,
                         Name = perf.Derivative,
                         PerformanceScore = Convert.ToInt32(carRatings["Performance"]*20),
-                        ReliabilityScore = Convert.ToInt32(carRatings["Reliability"]*20),
                         SizeScore = CalculateSizeScore(dimensions),
                         PriceScore = CalculatePriceScore(price),
                         PrestigeScore = 50,

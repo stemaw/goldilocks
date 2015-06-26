@@ -50,9 +50,6 @@ namespace CarChooser.Domain
         public int Sales { get; set; }
 
         [Score]
-        public int ReliabilityScore { get; set; }
-
-        [Score]
         public int Mpg { get; set; }
 
         [Score]

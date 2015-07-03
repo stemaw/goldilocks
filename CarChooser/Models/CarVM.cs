@@ -5,6 +5,7 @@ namespace CarChooser.Web.Models
 {
     public class CarVM
     {
+        private IEnumerable<UserRatingVM> _userRating;
         public string Model { get; set; }
         public int ModelId { get; set; }
 
@@ -27,7 +28,7 @@ namespace CarChooser.Web.Models
 
         public int YearTo { get; set; }
 
-        public IEnumerable<RatingVM> Ratings { get; set; }
+        public IEnumerable<OfficialRatingVM> Ratings { get; set; }
 
         public string Image { get; set; }
 
@@ -54,6 +55,22 @@ namespace CarChooser.Web.Models
         public string FullName { get { return string.Format("{0} {1} {2} {3}", Manufacturer, Model, Derivative, GetYear()); }}
 
         public string ReviewPage { get; set; }
+
+        public IEnumerable<UserRatingVM> UserRatings
+        {
+            get
+            {
+                return _userRating ?? (_userRating = new List<UserRatingVM>()
+                    {
+                        new UserRatingVM {Characteristic = "Attractiveness", Score = 1},
+                        new UserRatingVM {Characteristic = "Coolness", Score = 1},
+                        new UserRatingVM {Characteristic = "Prestige", Score = 1},
+                        new UserRatingVM {Characteristic = "Practicality", Score = 1},
+                        new UserRatingVM {Characteristic = "Girliness", Score = 1},
+                    });
+            }
+            set { _userRating = value; }
+        }
 
         private string GetYear()
         {

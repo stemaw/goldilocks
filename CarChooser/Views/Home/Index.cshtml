@@ -17,8 +17,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-                    <h1><img alt="Goldilocker" class="img-responsive" src="/Content/img/logo-transparent.png"/></h1>
-          @*          <h1 class="brand-heading">Goldilocker</h1>*@
+                    <h1>
+                        <img alt="Goldilocker" class="img-responsive" src="/Content/img/logo-transparent.png" /></h1>
                     <p class="intro-text">the new way to choose a car that's just right for you</p>
                     <p class="intro-text">our system recommends and learns from your choices</p>
                     <a href="#choose" class="btn btn-circle page-scroll">
@@ -41,21 +41,32 @@
         </div>
         <div class="row" ng-show="!Finished">
             <div class="carHeader visible-xs">
-                    <div class="text-primary currentCar">
-                        {{viewModel.CurrentCar.FullName}}
-                    </div>
+                <div class="text-primary currentCar">
+                    {{viewModel.CurrentCar.FullName}}
                 </div>
-            <div class="col-lg-12 bgimage" style="background-repeat: no-repeat;" ng-style="{'background-image': 'url('+viewModel.CurrentCar.Image+')', 'background-repeat' : 'no-repeat'}">
+            </div>
+            <div class="col-lg-12 bgimage" style="background-repeat: no-repeat; padding: 0" ng-style="{'background-image': 'url('+viewModel.CurrentCar.Image+')', 'background-repeat' : 'no-repeat'}">
                 <div class="carHeader hidden-xs">
                     <div class="text-primary currentCar">
                         {{viewModel.CurrentCar.FullName}}
                     </div>
                 </div>
                 <div ng-show="doingStuff" ng-cloak class="loader">thinking...</div>
+                <div ng-show="showRate" ng-cloak class="hidden-xs ratingBlock">
+                    <table>
+                        <tr ng-repeat="characteristic in viewModel.CurrentCar.UserRatings">
+                            <td class="pull-left">{{characteristic.Characteristic}}</td>
+                            <td class="text-right">
+                                <div star-rating ng-model="characteristic.Score" max="10"></div>
+                            </td>
+                        </tr>
+                    </table>
+                    <button class="btn dark" ng-click="viewModel.CurrentCar.hasRated = true; submitRejection('Too Common')">Done</button>
+                </div>
                 <div class="hidden-xs pull-left performance">
                     <a style="padding: 10px" class="pull-right" ng-show="!showFigures" ng-click="showFigures = true">view info <i class="glyphicon glyphicon-chevron-down"></i></a>
                     <a class="pull-right" ng-show="showFigures" ng-click="showFigures = false; showReviews = false;"><i class="glyphicon glyphicon-chevron-up"></i></a>
-                    
+
                     <table ng-show="showFigures">
                         <tr>
                             <td class="text-left">Price</td>
@@ -102,6 +113,13 @@
                     </table>
                 </div>
                 <div class="hidden-xs pull-right">
+                    <button class="btn btn-circle btn-circle-rate" ng-click="showRate = !showRate">
+                        <i class="glyphicon glyphicon-edit"></i>
+                        <br />
+                        Rate
+                    </button>
+                </div>
+                <div class="hidden-xs pull-right">
                     <button class="btn btn-circle btn-circle-like" ng-click="submitRejection('like')">
                         <i class="glyphicon glyphicon-thumbs-up"></i>
                         <br />
@@ -114,34 +132,58 @@
                         dislike</button>
                 </div>
 
+
                 <div class="hidden-xs bottom-align-text" ng-show="viewModel.Likes.length > 1">
                     <button class="btn btn-circle btn-circle-compare page-scroll" href="#compare">
                         Compare<br />
                         <i class="fa fa-angle-double-down animated"></i>
                     </button>
                 </div>
+
                 <div class="bgimage-inside"></div>
             </div>
-            <div class="pull-left">Need to sell yours? try <a href="http://www.awin1.com/awclick.php?mid=4455&id=242009" target="_blank">We Want Any Car</a></div>
-            <div class="visible-xs pull-right">
-                    <button class="btn btn-circle btn-circle-like" ng-click="submitRejection('like')">
-                        <i class="glyphicon glyphicon-thumbs-up"></i>
+            <div class="col-lg-6 pull-left">Need to sell yours? try <a href="http://www.awin1.com/awclick.php?mid=4455&id=242009" target="_blank">We Want Any Car</a></div>
+            
+             <div class="visible-xs pull-right">
+                    <button class="btn btn-circle btn-circle-rate" ng-click="showRate = !showRate">
+                        <i class="glyphicon glyphicon-edit"></i>
                         <br />
-                        like</button>
-                </div>
-                <div class="visible-xs pull-right">
-                    <button class="btn btn-circle btn-circle-dislike" ng-click="submitRejection('TooCommon')">
-                        <i class="glyphicon glyphicon-thumbs-down"></i>
-                        <br />
-                        dislike</button>
-                </div>
-
-                <div class="visible-xs" ng-show="viewModel.Likes.length > 1">
-                    <button class="btn btn-circle btn-circle-compare page-scroll" href="#compare">
-                        Compare<br />
-                        <i class="fa fa-angle-double-down animated"></i>
+                        Rate
                     </button>
                 </div>
+            
+            <div class="visible-xs pull-right">
+                <button class="btn btn-circle btn-circle-like" ng-click="submitRejection('like')">
+                    <i class="glyphicon glyphicon-thumbs-up"></i>
+                    <br />
+                    like</button>
+            </div>
+
+            <div class="visible-xs pull-right">
+                <button class="btn btn-circle btn-circle-dislike" ng-click="submitRejection('TooCommon')">
+                    <i class="glyphicon glyphicon-thumbs-down"></i>
+                    <br />
+                    dislike</button>
+            </div>
+            
+             <div ng-show="showRate" ng-cloak class="visible-xs ratingBlockXS">
+                    <table>
+                        <tr ng-repeat="characteristic in viewModel.CurrentCar.UserRatings">
+                            <td class="pull-left">{{characteristic.Characteristic}}</td>
+                            <td class="text-right">
+                                <div star-rating ng-model="characteristic.Score" max="10"></div>
+                            </td>
+                        </tr>
+                    </table>
+                    <button class="btn dark" ng-click="viewModel.CurrentCar.hasRated = true; submitRejection('Too Common')">Done</button>
+                </div>
+
+            <div class="visible-xs" ng-show="viewModel.Likes.length > 1">
+                <button class="btn btn-circle btn-circle-compare page-scroll" href="#compare">
+                    Compare<br />
+                    <i class="fa fa-angle-double-down animated"></i>
+                </button>
+            </div>
         </div>
     </section>
 
@@ -149,7 +191,7 @@
         <div ng-show="viewModel.Likes.length > 0">
             <div class="row row-centered spacer">
 
-                <h2 class="text-primary" style="margin:0px">click to compare</h2>
+                <h2 class="text-primary" style="margin: 0px">click to compare</h2>
 
                 <div>
                     <i class="carouselButton glyphicon glyphicon-chevron-left" ng-click="carouselIndex = carouselIndex-1"></i>
@@ -160,8 +202,7 @@
                         <li ng-click="selectToCompare($index)" ng-repeat="car in viewModel.Likes track by $index">
                             <div class="layer">
                                 <a class="text-center">{{ car.FullName | limitTo: 40 }}{{car.FullName.length > 40 ? '...' : ''}}</a>
-                                <i title="Remove from likes" ng-click="removeLike(car.Id)" class="glyphicon glyphicon-thumbs-down"></i>
-                                <img alt="{{car.FullName}}" ng-src="{{car.Image}}" class="col-lg-9 img-responsive" />
+                                <br/><img alt="{{car.FullName}}" ng-src="{{car.Image}}" class="col-lg-12 img-center img-responsive" />
                             </div>
                         </li>
                     </ul>
@@ -179,7 +220,7 @@
                         </div>
                     </div>
                     <img alt="{{comparison.FullName}}" ng-src="{{comparison.Image}}" class="img-responsive" />
-                    
+
                     <div class="performance">
                         <table>
                             <tr>
@@ -222,12 +263,12 @@
                                 <td class="text-left">Read more</td>
                                 <td class="text-right"><a href="{{comparison.ReviewPage}}" target="_blank">Parkers</a></td>
                             </tr>
-                             <tr>
+                            <tr>
                                 <td class="text-left">Buy one</td>
-                                 <td class="text-right">
-                                     <a ng-show="comparison.YearTo == 0" href="http://www.awin1.com/awclick.php?mid=6159&id=242009" target="_blank">Carwow</a>
-                                     <a ng-show="comparison.YearTo != 0" ng-href="http://www.autotrader.co.uk/search/used/cars/{{comparison.Manufacturer}}/{{comparison.Model}}" target="_blank">Autotrader</a>
-                                 </td>
+                                <td class="text-right">
+                                    <a ng-show="comparison.YearTo == 0" href="http://www.awin1.com/awclick.php?mid=6159&id=242009" target="_blank">Carwow</a>
+                                    <a ng-show="comparison.YearTo != 0" ng-href="http://www.autotrader.co.uk/search/used/cars/{{comparison.Manufacturer}}/{{comparison.Model}}" target="_blank">Autotrader</a>
+                                </td>
                             </tr>
                         </table>
                     </div>

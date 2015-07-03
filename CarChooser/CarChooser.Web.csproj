@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BingSiteAuth.xml" />
     <Content Include="Content\angular-carousel.css" />
     <Content Include="Content\angular-carousel.js" />
     <Content Include="Content\angular-carousel.min.css" />
@@ -983,21 +984,21 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CarController.cs" />
-    <Compile Include="Mappers\CarVMMapper.cs" />
-    <Compile Include="Mappers\IMapCarRatings.cs" />
-    <Compile Include="Mappers\CarRatingsMapper.cs" />
-    <Compile Include="Mappers\RatingVM.cs" />
+    <Compile Include="Mappers\CarMapper.cs" />
+    <Compile Include="Mappers\OfficialCarRatingsMapper.cs" />
+    <Compile Include="Mappers\UserCarRatingMapper.cs" />
+    <Compile Include="Models\OfficialRatingVM.cs" />
     <Compile Include="Models\PerformanceVM.cs" />
     <Compile Include="Models\CarVM.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Mappers\SearchMapper.cs" />
-    <Compile Include="Mappers\SearchVMMapper.cs" />
     <Compile Include="Models\RejectionVM.cs" />
-    <Compile Include="Models\SearchRequest.cs" />
+    <Compile Include="Models\SearchRequestVM.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\SearchResultVM.cs" />
+    <Compile Include="Models\UserRatingVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

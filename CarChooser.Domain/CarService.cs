@@ -24,11 +24,14 @@ namespace CarChooser.Domain
             return _carRepository.AllCars(skip, pageSize).ToList();
         }
 
-        public bool UpdateCarAttractiveness(int id, int score)
+        public void UpdateRatings(Car car)
         {
-            _carRepository.UpdateAttractiveness(id, score);
+            _carRepository.Save(car);
+        }
 
-            return true;
+        public Car GetCar(int id)
+        {
+            return _carRepository.GetCar(id);
         }
     }
 }

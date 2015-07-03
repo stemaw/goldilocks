@@ -93,7 +93,6 @@
     line-height: 1.42;
     border-radius: 15px;
     padding-right: 0;
-    margin-bottom: 75px;
 }
 
 .btn-circle-compare:hover,
@@ -101,6 +100,26 @@
     outline: 0;
     color: #fff;
     background-color: rgba(0, 29, 255, 0.9);
+}
+
+.btn-circle-rate
+{
+    background-color: rgba(161, 161, 161, 0.2);
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.42;
+    border-radius: 15px;
+    padding-right: 0;    
+}
+
+.btn-circle-rate:hover,
+.btn-circle-rate:focus {
+    outline: 0;
+    color: #fff;
+    background-color: rgba(161, 161, 161, 0.9);
 }
 
 .bg-dislike {
@@ -116,8 +135,35 @@
     padding-top: 75%
 }
 
+
+.ratingBlockXS {
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    border: 2px solid #3d3d3d;
+    border-radius: 10px;
+    background-color: rgba(55, 54, 54, 0.6);
+    padding: 10px;
+}
+.ratingBlock {
+    position: absolute;
+    top: 30%;
+    left: 30%;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    border: 2px solid #3d3d3d;
+    border-radius: 10px;
+    background-color: rgba(55, 54, 54, 0.6);
+    padding: 50px;
+  
+}
+.ratingBlock td {
+    padding: 10px;
+}
+
+.ratingBlock tr td:first-child {
+    color:#daeaf8
+}
 .performance {
     margin-top: 20px;
+    margin-left: 20px;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     border: 2px solid #3d3d3d;
     border-radius: 10px;
@@ -129,7 +175,7 @@
 }
 
 .performance tr td:first-child {
-    color:#7cbcf3
+    color:#daeaf8
 }
 
 .iffyTip {
@@ -158,13 +204,13 @@
     margin-right:-4px;
 }
 
- .layer { height:200px }
+ .layer { min-height: 200px; background-color: #3d3d3d; padding:10px }
 
  .myCarousel{ height:300px }
 
  ul[rn-carousel] {
-  width: 350px;
-  height: 200px;
+     height: 300px;
+     min-width: 200px;
   margin: 0 auto;
 }
 
@@ -220,3 +266,37 @@
     transform: rotate(360deg);
   }
 }
+.rating {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+.rating li {
+  padding: 1px;
+  color: #ddd;
+  font-size: 20px;
+  text-shadow: .05em .05em #aaa;
+  list-style-type: none;
+  display: inline-block;
+  cursor: pointer;
+}
+.rating li.filled {
+  color: #fd0;
+}
+.rating.readonly li.filled {
+  color: #666;
+}
+
+.text-primary {
+    color: #daeaf8;
+}
+
+a {
+    color: #c8dcee;
+}
+
+.dark {
+    color: #000;
+}
+
+.img-center {margin:0 auto; float:none}

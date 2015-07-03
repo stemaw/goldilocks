@@ -8,14 +8,14 @@ namespace CarChooser.Web.Mappers
 {
     public class SearchMapper : IMapSearchRequests
     {
-        private readonly IMapCarVMs _carMapper;
+        private readonly IMapCars _carMapper;
 
-        public SearchMapper(IMapCarVMs carMapper)
+        public SearchMapper(IMapCars carMapper)
         {
             _carMapper = carMapper;
         }
 
-        public Search Map(SearchRequest request)
+        public Search Map(SearchRequestVM request)
         {
             return new Search
             {
@@ -25,7 +25,32 @@ namespace CarChooser.Web.Mappers
             };
         }
 
-        private static List<PreviousRejection> GetRejections(SearchRequest request)
+        public SearchResultVM Map(SearchRequestVM request, Car result, Search search)
+        {
+            return new SearchResultVM
+            {
+                CurrentCar = _carMapper.Map(result),
+                Likes = request.Likes,
+                PreviousRejections = search.PreviousRejections.Select(r =>
+                                                              new RejectionVM
+                                                              {
+                                                                  Reason = r.Reason.ToString(),
+                                                                  CarId = r.CarId,
+                                                              }
+                    )
+            };
+        }
+
+        public SearchResultVM Map(Car result)
+        {
+            return new SearchResultVM
+            {
+                Likes = new List<CarVM>(),
+                CurrentCar = _carMapper.Map(result),
+            };
+        }
+
+        private static List<PreviousRejection> GetRejections(SearchRequestVM request)
         {
             if (request.PreviousRejections != null)
             {
@@ -40,7 +65,7 @@ namespace CarChooser.Web.Mappers
             return null;
         }
 
-        private static IEnumerable<CarVM> GetLikes(SearchRequest request)
+        private static IEnumerable<CarVM> GetLikes(SearchRequestVM request)
         {
             if (request.Likes == null)
             {
@@ -58,6 +83,8 @@ namespace CarChooser.Web.Mappers
 
     public interface IMapSearchRequests
     {
-        Search Map(SearchRequest request);
+        Search Map(SearchRequestVM request);
+        SearchResultVM Map(SearchRequestVM request, Car result, Search search);
+        SearchResultVM Map(Car result);
     }
 }

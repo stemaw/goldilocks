@@ -1,6 +1,6 @@
-namespace CarChooser.Web.Mappers
+namespace CarChooser.Web.Models
 {
-    public class RatingVM
+    public class OfficialRatingVM
     {
         public string Category { get; set; }
         public decimal Score { get; set; }

@@ -5,19 +5,19 @@ using CarChooser.Web.Models;
 
 namespace CarChooser.Web.Mappers
 {
-    public interface IMapCarVMs
+    public interface IMapCars
     {
         CarVM Map(Car car);
         Car Map(CarVM car);
     }
 
-    public class CarVMMapper : IMapCarVMs
+    public class CarMapper : IMapCars
     {
-        private readonly IMapCarRatings _carRatingsMapper;
+        private readonly IMapOfficialCarRatings _officialCarRatingsMapper;
 
-        public CarVMMapper(IMapCarRatings carRatingsMapper)
+        public CarMapper(IMapOfficialCarRatings officialCarRatingsMapper)
         {
-            _carRatingsMapper = carRatingsMapper;
+            _officialCarRatingsMapper = officialCarRatingsMapper;
         }
 
         public CarVM Map(Car car)
@@ -30,7 +30,7 @@ namespace CarChooser.Web.Mappers
                     ModelId = car.ModelId,
                     Model = car.Model,
                     Manufacturer = HttpUtility.HtmlDecode(car.Manufacturer.Name),
-                    Ratings = car.Ratings.Select(r => _carRatingsMapper.Map(r)),
+                    Ratings = car.Ratings.Select(r => _officialCarRatingsMapper.Map(r)),
                     Acceleration = car.Acceleration,
                     Derivative = car.Name,
                     Power = car.Power,

@@ -6,6 +6,7 @@ namespace CarChooser.Domain
     {
         IEnumerable<Car> GetAllCars();
         IEnumerable<Car> GetAllCars(int pageNumber);
-        bool UpdateCarAttractiveness(int id, int score);
+        void UpdateRatings(Car car);
+        Car GetCar(int id);
     }
 }

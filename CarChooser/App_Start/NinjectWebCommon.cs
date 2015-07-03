@@ -75,13 +75,13 @@ namespace CarChooser.Web.App_Start
         {
             kernel.Bind<ISearchCars>().To<SearchService>().InSingletonScope();
             kernel.Bind<IGetCars>().To<CarRepository>().InSingletonScope();
-            kernel.Bind<IMapCarVMs>().To<CarVMMapper>().InSingletonScope();
+            kernel.Bind<IMapCars>().To<CarMapper>().InSingletonScope();
             kernel.Bind<IMapSearchRequests>().To<SearchMapper>().InSingletonScope();
-            kernel.Bind<IMapSearchVMs>().To<SearchVMMapper>().InSingletonScope();
             kernel.Bind<IManageCars>().To<CarService>().InSingletonScope();
-            kernel.Bind<IMapCarRatings>().To<CarRatingsMapper>().InSingletonScope();
+            kernel.Bind<IMapOfficialCarRatings>().To<OfficialCarRatingsMapper>().InSingletonScope();
             kernel.Bind<IFilter>().To<AdaptiveScorer>();
             kernel.Bind<IRecordDecisions>().To<DecisionRepository>();
+            kernel.Bind<IMapUserCarRatings>().To<UserCarRatingMapper>().InSingletonScope();
         }        
     }
 }

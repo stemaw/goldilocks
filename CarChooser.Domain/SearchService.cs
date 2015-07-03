@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CarChooser.Domain.ScoreStrategies;
 
 namespace CarChooser.Domain
 {
@@ -20,7 +19,7 @@ namespace CarChooser.Domain
         {
             if (search.CurrentCar == null)
             {
-                return _carRepository.AllCars().Skip(_random.Next(_carRepository.AllCars().Count)).Take(1).First();
+                return GetInitialCar();
             }
 
             var concreteOptions = _carRepository.AllCars();
@@ -47,16 +46,16 @@ namespace CarChooser.Domain
             return seed <= stopCount ? null : matches.Skip(_random.Next(seed)).Take(1).ElementAt(0);
         }
 
+        private Car GetInitialCar()
+        {
+            return _carRepository.AllCars().Skip(_random.Next(_carRepository.AllCars().Count)).Take(1).First();
+        }
+
         private List<string> GetPreviousSeenModels(Search search)
         {
             return search.PreviousRejections.Select(rejectionId => _carRepository.GetCar(rejectionId.CarId).Model)
                 .Union(search.Likes.Select(id => _carRepository.GetCar(id).Model))
                 .ToList();
-        }
-
-        public Car GetCar(int id)
-        {
-            return _carRepository.GetCar(id);
         }
     }
 }

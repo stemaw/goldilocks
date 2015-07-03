@@ -9,9 +9,9 @@ namespace CarChooser.Web.Controllers
     public class CarController : Controller
     {
         private readonly IManageCars _carService;
-        private readonly IMapCarVMs _carMapper;
+        private readonly IMapCars _carMapper;
 
-        public CarController(IManageCars carService, IMapCarVMs carMapper)
+        public CarController(IManageCars carService, IMapCars carMapper)
         {
             _carService = carService;
             _carMapper = carMapper;
@@ -31,12 +31,6 @@ namespace CarChooser.Web.Controllers
             var model = cars.Select(c => _carMapper.Map(c));
 
             return new JsonResult {Data = JsonConvert.SerializeObject(model), JsonRequestBehavior = JsonRequestBehavior.AllowGet};
-        }
-
-        [HttpPost]
-        public bool UpdateAttractiveness(int id, int attractiveness)
-        {
-            return _carService.UpdateCarAttractiveness(id, attractiveness);
         }
     }
 }

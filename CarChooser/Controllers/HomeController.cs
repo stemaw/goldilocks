@@ -13,18 +13,21 @@ namespace CarChooser.Web.Controllers
     {
         private readonly ISearchCars _searchService;
         private readonly IMapSearchRequests _searchMapper;
-        private readonly IMapSearchVMs _searchVMMapper;
         private readonly IRecordDecisions _recordDecisions;
+        private readonly IMapUserCarRatings _userCarRatingsMapper;
+        private readonly IManageCars _carManager;
 
         public HomeController(ISearchCars searchService, 
             IMapSearchRequests searchMapper, 
-            IMapSearchVMs searchVMMapper,
-            IRecordDecisions recordDecisions)
+            IRecordDecisions recordDecisions,
+            IMapUserCarRatings userCarRatingsMapper,
+            IManageCars carManager)
         {
             _searchService = searchService;
             _searchMapper = searchMapper;
-            _searchVMMapper = searchVMMapper;
             _recordDecisions = recordDecisions;
+            _userCarRatingsMapper = userCarRatingsMapper;
+            _carManager = carManager;
         }
 
         [HttpGet]
@@ -35,7 +38,7 @@ namespace CarChooser.Web.Controllers
             var adaptiveScorer = (AdaptiveScorer)Session["Scorer"];
             var car = _searchService.GetCar(new Search(), adaptiveScorer);
 
-            var model = _searchVMMapper.Map(car);
+            var model = _searchMapper.Map(car);
 
             model.CurrentCar.Image = GetBestImage(car);
 
@@ -43,17 +46,19 @@ namespace CarChooser.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult Post(SearchRequest request)
+        public JsonResult Post(SearchRequestVM request)
         {
             if (request.RequestedCarId != 0)
             {
                 return GetHistoricViewModel(request);
             }
 
+            if (request.UserRatings.Any()) SubmitRatings(request);
+
             var search = _searchMapper.Map(request);
             
             var adaptiveScorer = (AdaptiveScorer)Session["Scorer"];
-            var currentCar = _searchService.GetCar(request.CurrentCar.Id);
+            var currentCar = _carManager.GetCar(request.CurrentCar.Id);
             var carProfile = CarProfile.From(currentCar);
             var like = request.LikeIt;
 
@@ -61,7 +66,7 @@ namespace CarChooser.Web.Controllers
 
             var car = _searchService.GetCar(search, adaptiveScorer); 
 
-            var model = _searchVMMapper.Map(request, car, search);
+            var model = _searchMapper.Map(request, car, search);
 
             if (model.CurrentCar != null)
             {
@@ -78,20 +83,29 @@ namespace CarChooser.Web.Controllers
             return new JsonResult {Data = JsonConvert.SerializeObject(model)};
         }
 
-        private JsonResult GetHistoricViewModel(SearchRequest request)
+        private void SubmitRatings(SearchRequestVM request)
         {
-            var car = _searchService.GetCar(request.RequestedCarId);
+            var car = _carManager.GetCar(request.CurrentCar.Id);
+
+            car.UserRatings.Add(request.UserRatings.Select(r => _userCarRatingsMapper.Map(r)).ToList());
+
+            _carManager.UpdateRatings(car);
+        }
+
+        private JsonResult GetHistoricViewModel(SearchRequestVM request)
+        {
+            var car = _carManager.GetCar(request.RequestedCarId);
 
             var search = _searchMapper.Map(request);
 
-            var viewModel = _searchVMMapper.Map(request, car, search);
+            var model = _searchMapper.Map(request, car, search);
 
-            if (viewModel.CurrentCar != null)
+            if (model.CurrentCar != null)
             {
-                viewModel.CurrentCar.Image = GetBestImage(car);
+                model.CurrentCar.Image = GetBestImage(car);
             }
 
-            return new JsonResult { Data = JsonConvert.SerializeObject(viewModel) };
+            return new JsonResult { Data = JsonConvert.SerializeObject(model) };
         }
 
         private string GetBestImage(Car model)

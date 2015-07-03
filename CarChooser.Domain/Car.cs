@@ -7,6 +7,7 @@ namespace CarChooser.Domain
 {
     public class Car
     {
+        private IList<IList<UserRating>> _userRatings;
         public string VEDBand { get; set; }
         public int Id { get; set; }
         public int ModelId { get;set; }
@@ -127,6 +128,12 @@ namespace CarChooser.Domain
         public string LessCrypticName
         {
             get { return Regex.Replace(Name, @"[1-9](\-?d)", DoorCount + " door"); }
+        }
+
+        public IList<IList<UserRating>> UserRatings
+        {
+            get { return _userRatings ?? (_userRatings = new List<IList<UserRating>>()); }
+            set { _userRatings = value; }
         }
     }
 }

@@ -52,9 +52,9 @@ namespace CarChooser.UnitTests
             throw new NotImplementedException();
         }
 
-        public Car GetCar(int currentCarId)
+        public Car GetCar(int id)
         {
-            return AllCars().First(c => c.Id == currentCarId);
+            return AllCars().First(c => c.Id == id);
         }
 
         public Car GetDefaultCar()

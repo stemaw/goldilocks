@@ -65,6 +65,7 @@
     <Compile Include="ScoreStrategies\VarianceExtension.cs" />
     <Compile Include="Search.cs" />
     <Compile Include="SearchService.cs" />
+    <Compile Include="UserRating.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SearchStrategies\" />

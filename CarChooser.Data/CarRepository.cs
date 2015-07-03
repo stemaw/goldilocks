@@ -17,31 +17,16 @@ namespace CarChooser.Data
 
         private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["dbconnection"].ToString();
 
-        public Car GetCar(int currentCarId)
+        public Car GetCar(int id)
         {
             using (var conn = new NpgsqlConnection(ConnectionString))
             {
                 conn.Open();
-                var command = new NpgsqlCommand("select car from cars where id = " + currentCarId, conn);
+                var command = new NpgsqlCommand("select car from cars where id = " + id, conn);
                 var result = (string)command.ExecuteScalar();
                 return JsonConvert.DeserializeObject<Car>(result);
             }
         }
-
-        public void UpdateAttractiveness(int id, int score)
-        {
-            var car = GetCar(id);
-            car.AttractivenessScore = score;
-
-            var json = JsonConvert.SerializeObject(car);
-            using (var conn = new NpgsqlConnection(ConnectionString))
-            {
-                conn.Open();
-                var command = new NpgsqlCommand(string.Format("UPDATE cars SET car={0} WHERE id = {1}", json, id), conn);
-                command.ExecuteNonQuery();
-            }
-        }
-
 
         public Car GetDefaultCar()
         {

@@ -51,6 +51,7 @@
     <Compile Include="IFilter.cs" />
     <Compile Include="IGetCars.cs" />
     <Compile Include="IManageCars.cs" />
+    <Compile Include="IReportProblems.cs" />
     <Compile Include="ISearchCars.cs" />
     <Compile Include="Manufacturer.cs" />
     <Compile Include="Performance.cs" />

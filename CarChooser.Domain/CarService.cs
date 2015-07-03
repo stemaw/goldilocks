@@ -6,10 +6,12 @@ namespace CarChooser.Domain
     public class CarService : IManageCars
     {
         private readonly IGetCars _carRepository;
+        private readonly IReportProblems _reporter;
 
-        public CarService(IGetCars carRepository)
+        public CarService(IGetCars carRepository, IReportProblems reporter)
         {
             _carRepository = carRepository;
+            _reporter = reporter;
         }
 
         public IEnumerable<Car> GetAllCars()
@@ -32,6 +34,11 @@ namespace CarChooser.Domain
         public Car GetCar(int id)
         {
             return _carRepository.GetCar(id);
+        }
+
+        public void ReportProblem(int id, string reason)
+        {
+            _reporter.Report(reason, id);
         }
     }
 }

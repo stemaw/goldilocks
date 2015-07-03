@@ -64,10 +64,11 @@ myApp.directive('onErrorSrc', function () {
     };
 });
 
-myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl', '$location', '$window', '$rootScope',
-    function($scope, $http, viewModel, searchUrl, $location, $window, $rootScope) {
+myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl', '$location', '$window', '$rootScope', 'problemUrl',
+    function($scope, $http, viewModel, searchUrl, $location, $window, $rootScope, problemUrl) {
         $scope.viewModel = viewModel;
         $scope.searchUrl = searchUrl;
+        $scope.problemUrl = problemUrl;
         $scope.showReviews = false;
         $scope.comparisons = [];
         $location.path($scope.viewModel.CurrentCar.UrlName);
@@ -96,6 +97,25 @@ myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl',
                    $scope.failedToSend = true;
                    $scope.doingStuff = false;
                });
+        };
+        
+        $scope.submitProblem = function (reason) {
+            $scope.doingStuff = true;
+
+            var postData = {
+                Id: $scope.viewModel.CurrentCar.Id,
+                reason: reason
+            };
+
+            $http.post($scope.problemUrl, postData).
+                success(function (data, status, headers, config) {
+                    $scope.doingStuff = false;
+                    $scope.viewModel.CurrentCar.ShowThanks = true;
+                }).
+                error(function (data, status, headers, config) {
+                    $scope.failedToSend = true;
+                    $scope.doingStuff = false;
+                });
         };
         
         $scope.selectToCompare = function (index) {

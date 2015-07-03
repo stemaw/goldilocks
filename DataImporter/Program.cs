@@ -27,20 +27,23 @@ namespace DataImporter
 
             //new InsuranceGroup(browser1).RipInsuranceGroup(0);
 
-    retry:
+    //retry:
 
-            BrowserSession browser = null;
-            try
-            {
-                browser = Browser.SpinUpBrowser();
-                Images(browser);
-            }
-            catch (Exception)
-            {
-                browser.Dispose();
-                goto retry;
-            }
+    //        BrowserSession browser = null;
+    //        try
+    //        {
+    //            browser = Browser.SpinUpBrowser();
+    //            Images(browser);
+    //        }
+    //        catch (Exception)
+    //        {
+    //            browser.Dispose();
+    //            goto retry;
+    //        }
             
+            //new MissingDataFixer().FixMissingData();
+
+            new ParkersPriceRipper().RipParkers();
 
             Console.WriteLine("Done");
             Console.ReadKey();

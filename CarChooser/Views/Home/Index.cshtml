@@ -7,8 +7,10 @@
 <script type="text/javascript">
     var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model));
     var searchUrl = '@Url.Action("Post", "Home")';
+    var problemUrl = '@Url.Action("ReportProblem", "Home")';
     myApp.value("viewModel", model);
     myApp.value("searchUrl", searchUrl);
+    myApp.value("problemUrl", problemUrl);
 </script>
 
 <!-- Intro Header -->
@@ -20,7 +22,7 @@
                     <h1>
                         <img alt="Goldilocker" class="img-responsive" src="/Content/img/logo-transparent.png" /></h1>
                     <p class="intro-text">the new way to choose a car that's just right for you</p>
-                    <p class="intro-text">our system recommends and learns from your choices</p>
+                    <p class="intro-text">our system recommends and learns from your choices and your ratings</p>
                     <a href="#choose" class="btn btn-circle page-scroll">
                         <i class="fa fa-angle-double-down animated"></i>
                     </a>
@@ -143,6 +145,8 @@
                 <div class="bgimage-inside"></div>
             </div>
             <div class="col-lg-6 pull-left">Need to sell yours? try <a href="http://www.awin1.com/awclick.php?mid=4455&id=242009" target="_blank">We Want Any Car</a></div>
+            <div class="col-lg-6 pull-right" ng-show="!viewModel.CurrentCar.ShowThanks">Rubbish image? <a ng-click="submitProblem('rubbishImage')">Click here to report</a></div>
+            <div class="col-lg-6 pull-right" ng-show="viewModel.CurrentCar.ShowThanks">Thanks, we'll get round to sorting it</div>
             
              <div class="visible-xs pull-right">
                     <button class="btn btn-circle btn-circle-rate" ng-click="showRate = !showRate">
@@ -324,6 +328,11 @@
             <p>
                 Once you've indicated a few cars you like, you can use the compare view to easily compare the details of the car such as performance,
                 fuel consumption, emissions, boot size etc... to find the one car that meets your needs.
+            </p>
+            <p>
+                If you use the Rate option then you can help other users of Goldilocker by improving the data we hold about the cars.
+                These personal ratings mean we can learn about more subjective factors such as attractiveness and prestige - stuff computers
+                aren't very good at judging without some help!
             </p>
             <p>
                 This is currently in 'beta' which means we're still learning what works and what doesn't.  We really value your feedback to help

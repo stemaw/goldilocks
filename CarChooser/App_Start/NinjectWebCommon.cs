@@ -82,6 +82,7 @@ namespace CarChooser.Web.App_Start
             kernel.Bind<IFilter>().To<AdaptiveScorer>();
             kernel.Bind<IRecordDecisions>().To<DecisionRepository>();
             kernel.Bind<IMapUserCarRatings>().To<UserCarRatingMapper>().InSingletonScope();
+            kernel.Bind<IReportProblems>().To<ReportRepository>().InSingletonScope();
         }        
     }
 }

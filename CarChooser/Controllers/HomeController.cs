@@ -83,6 +83,12 @@ namespace CarChooser.Web.Controllers
             return new JsonResult {Data = JsonConvert.SerializeObject(model)};
         }
 
+        [HttpPost]
+        public void ReportProblem(int id, string reason)
+        {
+            _carManager.ReportProblem(id, reason);
+        }
+
         private void SubmitRatings(SearchRequestVM request)
         {
             var car = _carManager.GetCar(request.CurrentCar.Id);

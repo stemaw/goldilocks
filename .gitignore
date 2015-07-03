@@ -19,3 +19,5 @@ CarChooser.Database/bin/
 CarChooser.Database/obj/Debug/CarChooser.Database.csproj.FileListAbsolute.txt
 DataMigrator/bin/
 DataMigrator/obj/
+*.vspx
+*.psess

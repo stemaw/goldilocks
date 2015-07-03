@@ -8,5 +8,6 @@ namespace CarChooser.Domain
         IEnumerable<Car> GetAllCars(int pageNumber);
         void UpdateRatings(Car car);
         Car GetCar(int id);
+        void ReportProblem(int id, string reason);
     }
 }

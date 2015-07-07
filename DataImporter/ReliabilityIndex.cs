@@ -10,9 +10,30 @@ namespace DataImporter
 {
     public class ReliabilityIndex
     {
+        public void FindManufacturersWithNoRating()
+        {
+            var repo = new CarRepository();
+
+            var allCars = repo.AllCars().Where(c => c.Manufacturer.ReliabilityIndex == 0);
+
+
+            var allManufacturers = from car in allCars
+                                   group car by car.Manufacturer.Name
+                                       into grp
+                                       select grp.Key;
+
+            //var source = GetScores();
+            //var missing = allManufacturers.Intersect(source.Select(s => s.Key));
+
+            foreach (var miss in allManufacturers)
+            {
+                Console.WriteLine(miss);
+            }
+        }
+
         public void ImportManufacturerScores()
         {
-            var sources = GetScores();
+            var sources = GetNewScores();
 
             var repo = new CarRepository();
 
@@ -33,6 +54,18 @@ namespace DataImporter
                     Console.WriteLine("Failed to update {0}", manufacturer.Key);
                 }
             }
+        }
+
+        public Dictionary<string, int> GetNewScores()
+        {
+            var source = new Dictionary<string, int>();
+
+            source.Add("Citro&#235;n", 106);
+            source.Add("SEAT", 126);
+            source.Add("MINI", 137);
+            source.Add("Abarth", 98);
+
+            return source;
         }
 
         public Dictionary<string, int> GetScores()

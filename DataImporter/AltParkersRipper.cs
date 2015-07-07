@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using CarChooser.Data;
 using CarChooser.Domain;
+using CarChooser.Domain.ScoreStrategies;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
 
@@ -19,6 +21,7 @@ namespace DataImporter
         private readonly ReliabilityIndex _reliability = new ReliabilityIndex();
 
         protected static string ManufacturerDropdownId = @"ctl00_contentHolder_topFullWidthContent_ctlQuickfindMiniManufacturerGrid_ctlManufacturerModelAreaDropdowns_ddlManufacturer_Control";
+        private static IEnumerable<PropertyInfo> _scoringProperties;
         const string ParkersUrl = "http://www.parkers.co.uk/cars/reviews/";
         const string ModelSearchUrl = "http://www.parkers.co.uk/HttpHandlers/DataStrategyService.ashx?mthd=manuf-models-indented-pairs";
         const string GetSectionsUrl = "http://www.parkers.co.uk/HttpHandlers/RedirectUrlService.ashx";
@@ -26,12 +29,14 @@ namespace DataImporter
         private void Pause()
         {
             var random = new Random();
-            var delay = random.Next(100,1000);
+            var delay = random.Next(0,200);
             Thread.Sleep(delay);
         }
 
         public void RipParkers()
         {
+                var carType = typeof (Car);
+
             var doc = GetHtml(ParkersUrl);
 
             var manufacturersElement = doc.GetElementbyId(ManufacturerDropdownId);
@@ -40,7 +45,7 @@ namespace DataImporter
 
             var manufacturers = options.Select(o => new { Id = o.GetAttributeValue("value", 0), Name = o.InnerText });
 
-            foreach (var manufacturer in manufacturers.Skip(9))
+            foreach (var manufacturer in manufacturers)
             {
                 var modelsResponse = GetWebPostResponse(ModelSearchUrl,
                         string.Format("sourceId=ctl00_contentHolder_topFullWidthContent_ctlQuickfindMiniManufacturerGrid_ctlManufacturerModelAreaDropdowns_ddlManufacturer_Control&targetId=ctl00_contentHolder_topFullWidthContent_ctlQuickfindMiniManufacturerGrid_ctlManufacturerModelAreaDropdowns_ddlModel_Control&filterName=manuf&manuf={0}",
@@ -106,6 +111,16 @@ namespace DataImporter
                     }
                 }
             }
+        }
+
+        public static IEnumerable<PropertyInfo> GetScoringProperties()
+        {
+            return _scoringProperties ??
+                   (_scoringProperties =
+                    typeof(Car).GetProperties()
+                                .Where(p => p.GetCustomAttributes().Any(a => a is ScoreAttribute)
+                                && p.Name != "YearTo")
+                                .ToList());
         }
 
         private static void GetFacts(HtmlNode derivative, Car car)

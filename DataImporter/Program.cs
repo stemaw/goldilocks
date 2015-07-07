@@ -23,7 +23,7 @@ namespace DataImporter
 
             //new Prestige().ImportManufacturerScores();
             //new ReliabilityIndex().ImportManufacturerScores();
-            //new Licensing().ImportSalesData();
+            new Licensing().ImportSalesData();
 
             //new InsuranceGroup(browser1).RipInsuranceGroup(0);
 
@@ -43,7 +43,10 @@ namespace DataImporter
             
             //new MissingDataFixer().FixMissingData();
 
-            new ParkersPriceRipper().RipParkers();
+            //new ParkersPriceRipper().RipParkers();
+
+            //new AltParkersRipper().RipParkers();
+            //new ReliabilityIndex().FindManufacturersWithNoRating();
 
             Console.WriteLine("Done");
             Console.ReadKey();

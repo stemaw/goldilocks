@@ -40,20 +40,33 @@ namespace DataImporter
                 Pause();
                 
                 var doc = GetHtml(firstMatch.ReviewPage + "facts-figures/");
-                
+
                 foreach (var derivative in model.Derivates)
                 {
                     var matchingData =
-                        doc.DocumentNode.SelectSingleNode(string.Format("//table[@class = 'infoTable']//tr/td[text() == {0}]", derivative.Name));
+                        doc.DocumentNode.SelectNodes(
+                            string.Format("//table[@class = 'infoTable']//tr/td/p[text() = '{0}']",
+                                          derivative.Name.Replace("'", "&quot;")))
+                        ;
 
-                    var price = matchingData.NextSibling.InnerText.Replace("£", "").Replace(",", "");
+                    if (matchingData == null || !matchingData.Any()) continue;
 
-                    derivative.Price = Convert.ToDecimal(price);
+                    var price =
+                        matchingData.First().ParentNode.ParentNode.SelectNodes("td[2]")
+                                    .First()
+                                    .InnerText.Replace("£", "")
+                                    .Replace(",", "");
 
-                    _carRepository.Save(derivative);
+                    decimal convertedPrice;
+                    if (decimal.TryParse(price, out convertedPrice))
+                    {
+                        derivative.Price = Convert.ToDecimal(price);
 
-                    Console.WriteLine("Successfully ripped {0} {1} {2}", derivative.Manufacturer.Name,
-                                      derivative.Model, derivative.Name);
+                        _carRepository.Save(derivative);
+
+                        Console.WriteLine("Successfully priced {0} {1} {2} £{3}", derivative.Manufacturer.Name,
+                                          derivative.Model, derivative.Name, derivative.Price);
+                    }
                 }
             }
         }

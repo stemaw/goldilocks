@@ -43,7 +43,7 @@ namespace CarChooser.Domain.ScoreStrategies
 
             if (factorScore.Count > 0)
             {
-                return FactorScores[criteriaName].StandardDeviation();
+                return factorScore.StandardDeviation();
             }
 
             return double.MaxValue;
@@ -92,17 +92,18 @@ namespace CarChooser.Domain.ScoreStrategies
 
         public List<Car> Filter(List<Car> carOptions)
         {
+            var properties = CriteriaBuilder.GetScoringProperties();
+
             Func<Car, bool> predicate =
                 c =>
                     {
                         var carProfile = CarProfile.From(c);
-                        var properties = CriteriaBuilder.GetScoringProperties();
-
+                        
                         var result = true;
 
                         foreach (var propertyInfo in properties)
                         {
-                            result &= IsCandidate(propertyInfo.Name, carProfile);
+                            result &= IsCandidate(propertyInfo.Name, c.Profile);
                         }
 
                         return result;

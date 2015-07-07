@@ -8,6 +8,7 @@ namespace CarChooser.Domain
     public class Car
     {
         private IList<IList<UserRating>> _userRatings;
+        private CarProfile _profile;
         public string VEDBand { get; set; }
         public int Id { get; set; }
         public int ModelId { get;set; }
@@ -47,7 +48,6 @@ namespace CarChooser.Domain
         [Score]
         public int YearTo { get; set; }
 
-        [Score]
         public int Sales { get; set; }
 
         [Score]
@@ -134,6 +134,12 @@ namespace CarChooser.Domain
         {
             get { return _userRatings ?? (_userRatings = new List<IList<UserRating>>()); }
             set { _userRatings = value; }
+        }
+
+        public CarProfile Profile
+        {
+            get { return _profile ?? (_profile = CarProfile.From(this)); }
+            set { _profile = value; }
         }
     }
 }

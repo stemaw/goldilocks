@@ -10,9 +10,29 @@ namespace DataImporter
 {
     public class Prestige
     {
+        public void FindManufacturersWithNoPrestige()
+        {
+            var repo = new CarRepository();
+
+            var allCars = repo.AllCars().Where(c => c.Prestige == 0);
+
+
+            var allManufacturers = from car in allCars
+                                   group car by car.Manufacturer.Name
+                                   into grp
+                                   select grp.Key;
+
+            //var source = GetScores();
+            //var missing = allManufacturers.Intersect(source.Select(s => s.Key));
+
+            foreach (var miss in allManufacturers)
+            {
+                Console.WriteLine(miss);
+            }
+        }
         public void ImportManufacturerScores()
         {
-            var sources = GetScores();
+            var sources = GetNewScores();
 
             var repo = new CarRepository();
 
@@ -24,14 +44,49 @@ namespace DataImporter
                 {
                     Console.WriteLine("Failed to update {0}", manufacturer.Key);
                 }
+                else
+                {
+                    Console.WriteLine("Updated {0}", manufacturer.Key);
+                }
             }
+        }
+
+        public Dictionary<string, int> GetNewScores()
+        {
+            var source = new Dictionary<string, int>();
+
+            source.Add("Dodge", 48);
+            source.Add("Cadillac", 55);
+            source.Add("Corvette", 58);
+            source.Add("Dacia", 36);
+            source.Add("Ferrari", 97);
+            source.Add("Infiniti", 79);
+            source.Add("Lotus", 81);
+            source.Add("Maserati", 88);
+            source.Add("Proton", 15);
+            source.Add("Rolls-Royce", 100);
+            source.Add("TVR", 80);
+            source.Add("Hummer", 54);
+            source.Add("Isuzu", 47);
+            source.Add("Lamborghini", 98);
+            source.Add("Maybach", 99);
+            source.Add("Noble", 91);
+            source.Add("Rover", 34);
+            source.Add("MG Motor UK", 20);
+            source.Add("Morgan", 76);
+            source.Add("Perodua", 19);
+
+            return source;
         }
 
         public Dictionary<string, int> GetScores()
         {
             var source = new Dictionary<string, int>();
 
+            
+            source.Add("Aston Martin", 99);
             source.Add("Abarth", 60);
+            source.Add("Caterham", 68);
             source.Add("Honda", 65);
             source.Add("Daihatsu", 20);
             source.Add("Suzuki", 30);
@@ -72,6 +127,26 @@ namespace DataImporter
             source.Add("Bentley", 100);
             source.Add("Tesla", 95);
 
+            source.Add("Dodge", 48);
+            source.Add("Cadillac", 55);
+            source.Add("Corvette", 58);
+            source.Add("Dacia", 36);
+            source.Add("Ferrari", 97);
+            source.Add("Infiniti", 79);
+            source.Add("Lotus", 81);
+            source.Add("Maserati", 88);
+            source.Add("Proton", 15);
+            source.Add("Rolls-Royce", 100);
+            source.Add("TVR", 80);
+            source.Add("Hummer", 54);
+            source.Add("Isuzu", 47);
+            source.Add("Lamborghini", 98);
+            source.Add("Maybach", 99);
+            source.Add("Noble", 91);
+            source.Add("Rover", 34);
+            source.Add("MG Motor UK", 20);
+            source.Add("Morgan", 76);
+            source.Add("Perodua", 19);
             return source;
         }
     }

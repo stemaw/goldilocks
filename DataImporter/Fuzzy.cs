@@ -30,7 +30,7 @@ namespace DataImporter
             return !matches.Any() ? null : matches.OrderBy(r => r.Value).First().Key;
         }
 
-        public static IEnumerable<string> FuzzyMatches(string[] potentials, string searchTerm)
+        public static IEnumerable<string> FuzzyMatches(string[] potentials, string searchTerm, bool isSeriesSearch)
         {
             searchTerm = searchTerm.ToLower();
 
@@ -38,7 +38,7 @@ namespace DataImporter
 
             foreach (var potential in potentials)
             {
-                if (SteStein(potential.ToLower(), searchTerm, false))
+                if (SteStein(potential.ToLower(), searchTerm, false, isSeriesSearch))
                 {
                     results.Add(potential);
                 }
@@ -48,7 +48,7 @@ namespace DataImporter
             {
                 foreach (var potential in potentials)
                 {
-                    if (SteStein(potential.ToLower(), searchTerm, true))
+                    if (SteStein(potential.ToLower(), searchTerm, true, isSeriesSearch))
                     {
                         results.Add(potential);
                     }
@@ -57,7 +57,7 @@ namespace DataImporter
             return results;
         }
 
-        private static bool SteStein(string potential, string searchTerm, bool lessStrict)
+        private static bool SteStein(string potential, string searchTerm, bool lessStrict, bool isSeriesSearch)
         {
             var splitSearch = searchTerm.Split(' ');
 
@@ -65,8 +65,13 @@ namespace DataImporter
             var otherIgnoreWords = new string[]{"convertible", "cabriolet", "sportback", "roadster", "estate", "cabrio", "hardtop", "softtop", "hardback"};
             bool matched = true;
 
-            if (!potential.StartsWith("one") && string.Compare(potential.Split(' ')[0], splitSearch[0], CultureInfo.CurrentCulture, CompareOptions.IgnoreNonSpace) != 0)
-            return false;
+            if (!isSeriesSearch)
+            {
+                if (!potential.StartsWith("one") &&
+                    string.Compare(potential.Split(' ')[0], splitSearch[0], CultureInfo.CurrentCulture,
+                                   CompareOptions.IgnoreNonSpace) != 0)
+                    return false;
+            }
 
             foreach (var word in splitSearch)
             {

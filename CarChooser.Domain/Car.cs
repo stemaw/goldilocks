@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using CarChooser.Domain.ScoreStrategies;
 
@@ -136,6 +137,7 @@ namespace CarChooser.Domain
             set { _userRatings = value; }
         }
 
+        [IgnoreDataMember]
         public CarProfile Profile
         {
             get { return _profile ?? (_profile = CarProfile.From(this)); }

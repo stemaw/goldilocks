@@ -19,28 +19,28 @@ namespace DataImporter
 
             //Task.WaitAll(task1, task2);
 
-           // Images(browser1);
+            // Images(browser1);
 
             //new Prestige().ImportManufacturerScores();
             //new ReliabilityIndex().ImportManufacturerScores();
-            new Licensing().ImportSalesData();
+            //new Licensing().ImportSalesData();
 
             //new InsuranceGroup(browser1).RipInsuranceGroup(0);
 
-    //retry:
+            retry:
 
-    //        BrowserSession browser = null;
-    //        try
-    //        {
-    //            browser = Browser.SpinUpBrowser();
-    //            Images(browser);
-    //        }
-    //        catch (Exception)
-    //        {
-    //            browser.Dispose();
-    //            goto retry;
-    //        }
-            
+            BrowserSession browser = null;
+            try
+            {
+                browser = Browser.SpinUpBrowser();
+                RubbishImages(browser);
+            }
+            catch (Exception)
+            {
+                browser.Dispose();
+                goto retry;
+            }
+
             //new MissingDataFixer().FixMissingData();
 
             //new ParkersPriceRipper().RipParkers();
@@ -54,6 +54,30 @@ namespace DataImporter
             //Parkers(browser1);
         }
 
+        private static void RubbishImages(BrowserSession browser)
+        {
+             var ripper = new GoogleImageRipper(browser);
+            var reports = new ReportRepository().GetReports("rubbishImage");
+
+            var allCars = new CarRepository().AllCars();
+            var modelLevel = true;
+            foreach (var report in reports)
+            {
+                var car = allCars.FirstOrDefault(c => c.Id == report);
+
+                if (car == null) continue;
+                
+                try
+                {
+                    ripper.RipImage(car, modelLevel, true, true);
+                    new ReportRepository().DeleteReport("rubbishImage", car.Id);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+            }
+        }
         private static void Images(BrowserSession browser)
         {
             var ripper = new GoogleImageRipper(browser);
@@ -66,8 +90,8 @@ namespace DataImporter
             {
                 var models = from car in allCars
                              group car by car.ModelId
-                             into g
-                             select new {ModelId = g.Key, Derivates = g.ToList()};
+                                 into g
+                                 select new { ModelId = g.Key, Derivates = g.ToList() };
 
                 foreach (var model in models)
                 {

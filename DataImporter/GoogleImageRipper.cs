@@ -31,7 +31,7 @@ namespace DataImporter
         }
 
         
-        public void RipImage(Car car, bool modelLevel, bool manualMode)
+        public void RipImage(Car car, bool modelLevel, bool manualMode, bool forceUpdate = false)
         {
             if (_files == null)
                 _files = Directory.GetFiles(@"C:\Users\ste_000\Documents\goldilocks\CarChooser\Content\CarImages\");
@@ -47,7 +47,7 @@ namespace DataImporter
 
             var imageName = GetImageName(idToUse);
 
-            if (File.Exists(imageName)) return;
+            if (!forceUpdate && File.Exists(imageName)) return;
 
             if (modelLevel)
             {

@@ -37,6 +37,7 @@
     <section id="choose" class="container content-section text-center" style="padding: 50px;">
         <div class="row" ng-show="Finished">
             <p>We don't think you'll like anything else so it's time to move to the comparison bit</p>
+            <p>Or if you want to start again, just <a href="javascript:history.go(0)">refresh the page</a></p>
             <a href="#compare" class="btn btn-circle page-scroll">
                 <i class="fa fa-angle-double-down animated"></i>
             </a>
@@ -271,7 +272,7 @@
                                 <td class="text-left">Buy one</td>
                                 <td class="text-right">
                                     <a ng-show="comparison.YearTo == 0" href="http://www.awin1.com/awclick.php?mid=6159&id=242009" target="_blank">Carwow</a>
-                                    <a ng-show="comparison.YearTo != 0" ng-href="http://www.autotrader.co.uk/search/used/cars/{{comparison.Manufacturer}}/{{comparison.Model}}" target="_blank">Autotrader</a>
+                                    <a ng-show="comparison.YearTo != 0" ng-href="https://www.awin1.com/awclick.php?mid=5834&id=242009&{{comparison.Manufacturer}}/{{comparison.Model}}" target="_blank">Preloved</a>
                                 </td>
                             </tr>
                         </table>
@@ -284,7 +285,7 @@
                 You haven't liked any cars yet so there's nothing to compare. 
                 <br />
                 Once you've liked a couple of cars, this section will allow you
-            to choose which cars to compare as well as some other suggestions you might also like.
+            to select cars to compare side by side.
             </p>
         </div>
     </section>

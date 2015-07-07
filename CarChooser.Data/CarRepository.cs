@@ -45,26 +45,32 @@ namespace CarChooser.Data
             return AllCars().Where(predicate);
         }
 
+        private readonly Object thisLock = new Object();
         private List<Car> _allCars;
         public List<Car> AllCars()
         {
             if (_allCars != null) return _allCars;
-
-            var allCars = new List<Car>();
-            using (var conn = new NpgsqlConnection(ConnectionString))
+            lock (thisLock)
             {
-                conn.Open();
-                var command = new NpgsqlCommand("select car from cars", conn);
-                var reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    var json = reader.GetString(0);
-                    allCars.Add(JsonConvert.DeserializeObject<Car>(json));
-                }
-            }
+                if (_allCars != null) return _allCars;
 
-            _allCars = allCars;
-            return _allCars;
+                var allCars = new List<Car>();
+                using (var conn = new NpgsqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    var command = new NpgsqlCommand("select car from cars", conn);
+                    command.CommandTimeout = 1000;
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var json = reader.GetString(0);
+                        allCars.Add(JsonConvert.DeserializeObject<Car>(json));
+                    }
+                }
+
+                _allCars = allCars;
+                return _allCars;
+            }
         }
 
         public IEnumerable<Car> AllCars(int skip, int take)
@@ -78,6 +84,7 @@ namespace CarChooser.Data
             
             if (existing)
             {
+                car.Profile = null;
                 var json = JsonConvert.SerializeObject(car).Replace("'", "''");
                 using (var conn = new NpgsqlConnection(ConnectionString))
                 {

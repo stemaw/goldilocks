@@ -16,18 +16,21 @@ namespace CarChooser.Web.Controllers
         private readonly IRecordDecisions _recordDecisions;
         private readonly IMapUserCarRatings _userCarRatingsMapper;
         private readonly IManageCars _carManager;
+        private readonly IMapCars _carMapper;
 
         public HomeController(ISearchCars searchService, 
             IMapSearchRequests searchMapper, 
             IRecordDecisions recordDecisions,
             IMapUserCarRatings userCarRatingsMapper,
-            IManageCars carManager)
+            IManageCars carManager,
+            IMapCars carMapper)
         {
             _searchService = searchService;
             _searchMapper = searchMapper;
             _recordDecisions = recordDecisions;
             _userCarRatingsMapper = userCarRatingsMapper;
             _carManager = carManager;
+            _carMapper = carMapper;
         }
 
         [HttpGet]
@@ -40,14 +43,31 @@ namespace CarChooser.Web.Controllers
 
             var model = _searchMapper.Map(car);
 
-            model.CurrentCar.Image = GetBestImage(car);
+            model.CurrentCar.Image = GetBestImage(model.CurrentCar);
 
             return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult Get(int carId)
+        {
+            var car = _carManager.GetCar(carId);
+
+            var model = _searchMapper.Map(car);
+
+            if (model.CurrentCar != null)
+            {
+                model.CurrentCar.Image = GetBestImage(model.CurrentCar);
+            }
+
+           return View("Index", model);
         }
 
         [HttpPost]
         public JsonResult Post(SearchRequestVM request)
         {
+            RePopulateLikes(request);
+
             if (request.RequestedCarId != 0)
             {
                 return GetHistoricViewModel(request);
@@ -70,7 +90,7 @@ namespace CarChooser.Web.Controllers
 
             if (model.CurrentCar != null)
             {
-                model.CurrentCar.Image = GetBestImage(car);
+                model.CurrentCar.Image = GetBestImage(model.CurrentCar);
             }
 
             _recordDecisions.RecordDecision(new DecisionEntry()
@@ -81,6 +101,17 @@ namespace CarChooser.Web.Controllers
             });
 
             return new JsonResult {Data = JsonConvert.SerializeObject(model)};
+        }
+
+        private void RePopulateLikes(SearchRequestVM request)
+        {
+            if (request.Likes == null) return;
+
+            for (var i = 0; i < request.Likes.Count; i++)
+            {
+                request.Likes[i] = _carMapper.Map(_carManager.GetCar(request.Likes[i].Id));
+                request.Likes[i].Image = GetBestImage(request.Likes[i]);
+            }
         }
 
         [HttpPost]
@@ -108,13 +139,13 @@ namespace CarChooser.Web.Controllers
 
             if (model.CurrentCar != null)
             {
-                model.CurrentCar.Image = GetBestImage(car);
+                model.CurrentCar.Image = GetBestImage(model.CurrentCar);
             }
 
             return new JsonResult { Data = JsonConvert.SerializeObject(model) };
         }
 
-        private string GetBestImage(Car model)
+        private string GetBestImage(CarVM model)
         {
             const string imageRoot = "/content/carimages/";
             var physicalRoot = Server.MapPath(imageRoot);

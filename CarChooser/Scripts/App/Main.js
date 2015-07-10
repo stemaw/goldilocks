@@ -1,8 +1,36 @@
 ﻿var myApp = angular.module('mainApp', ['ngRoute', 'ngResource','angular-carousel']);
 
-myApp.run(['$location', '$rootScope', function ($location, $rootScope) {
+myApp.config(['$routeProvider', '$locationProvider', function AppConfig($routeProvider, $locationProvider) {
+
+    //$routeProvider
+    //    .when(
+    //    '/', {
+    //        redirectTo: '/home'
+    //    })
+    //    .when('/home', {
+    //        templateUrl: 'templates/home.html'
+    //    })
+    //    .when('/login', {
+    //        templateUrl: 'templates/login.html'
+    //    })
+    //    .when('/news', {
+    //        templateUrl: 'templates/news.html'
+    //    })
+    //    .when('/news/archive', {
+    //        templateUrl: 'templates/newsarchive.html'
+    //    })
+    //    // removed other routes ... *snip
+    //    .otherwise({
+    //        redirectTo: '/home'
+    //    }
+    //);
+
+    // enable html5Mode for pushstate ('#'-less URLs)
+    $locationProvider.html5Mode(true);
+    $locationProvider.hashPrefix('!');
 
 }]);
+
 
 myApp.filter('enum', function() {
     return function(input) {
@@ -76,10 +104,14 @@ myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl',
         $scope.submitRejection = function (reason) {
            $scope.doingStuff = true;
 
+           var likeIds = $.map($scope.viewModel.Likes, function (c) {
+               return { Id: c.Id };
+           });
+
            var postData = {
                CurrentCar: $scope.viewModel.CurrentCar,
                RejectionReason: reason,
-               Likes: $scope.viewModel.Likes,
+               Likes: likeIds,
                Dislikes: $scope.viewModel.Dislikes,
                PreviousRejections: $scope.viewModel.PreviousRejections,
                LikeIt: reason == 'like',

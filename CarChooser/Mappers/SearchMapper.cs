@@ -37,7 +37,7 @@ namespace CarChooser.Web.Mappers
                                                                   Reason = r.Reason.ToString(),
                                                                   CarId = r.CarId,
                                                               }
-                    )
+                    ).ToList()
             };
         }
 

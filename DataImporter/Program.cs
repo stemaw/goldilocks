@@ -60,7 +60,7 @@ namespace DataImporter
             var reports = new ReportRepository().GetReports("rubbishImage");
 
             var allCars = new CarRepository().AllCars();
-            var modelLevel = true;
+            var modelLevel = false;
             foreach (var report in reports)
             {
                 var car = allCars.FirstOrDefault(c => c.Id == report);

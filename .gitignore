@@ -21,3 +21,6 @@ DataMigrator/bin/
 DataMigrator/obj/
 *.vspx
 *.psess
+SiteMapGenerator/bin/
+SiteMapGenerator/obj/
+CarChooser.Data/cars.sql

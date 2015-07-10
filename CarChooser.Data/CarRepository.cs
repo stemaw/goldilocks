@@ -19,13 +19,7 @@ namespace CarChooser.Data
 
         public Car GetCar(int id)
         {
-            using (var conn = new NpgsqlConnection(ConnectionString))
-            {
-                conn.Open();
-                var command = new NpgsqlCommand("select car from cars where id = " + id, conn);
-                var result = (string)command.ExecuteScalar();
-                return JsonConvert.DeserializeObject<Car>(result);
-            }
+            return AllCars().FirstOrDefault(c => c.Id == id);
         }
 
         public Car GetDefaultCar()

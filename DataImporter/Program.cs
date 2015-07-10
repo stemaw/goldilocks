@@ -27,19 +27,21 @@ namespace DataImporter
 
             //new InsuranceGroup(browser1).RipInsuranceGroup(0);
 
-            retry:
+            //retry:
 
-            BrowserSession browser = null;
-            try
-            {
-                browser = Browser.SpinUpBrowser();
-                RubbishImages(browser);
-            }
-            catch (Exception)
-            {
-                browser.Dispose();
-                goto retry;
-            }
+            //BrowserSession browser = null;
+            //try
+            //{
+            //    browser = Browser.SpinUpBrowser();
+            //    RubbishImages(browser);
+            //}
+            //catch (Exception)
+            //{
+            //    browser.Dispose();
+            //    goto retry;
+            //}
+
+            ModelFixer();
 
             //new MissingDataFixer().FixMissingData();
 
@@ -149,6 +151,15 @@ namespace DataImporter
 
                 ripper.RipParkers(currentManufacturer, modelIndex, false);
             }
+        }
+
+        private static void ModelFixer()
+        {
+            var cars = new CarRepository().AllCars();
+
+            var bmws = cars.Where(c => c.Manufacturer.Name == "BMW").ToList();
+
+            Console.WriteLine(bmws.Count);
         }
     }
 }

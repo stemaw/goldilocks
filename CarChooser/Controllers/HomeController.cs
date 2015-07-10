@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using CarChooser.Domain;
 using CarChooser.Domain.Audit;
@@ -61,6 +62,39 @@ namespace CarChooser.Web.Controllers
             }
 
            return View("Index", model);
+        }
+
+        [HttpGet]
+        public JsonResult GetManufacturers()
+        {
+            var manufacturers = (from car in _carManager.GetAllCars()
+                                group car by car.Manufacturer.Name
+                                into grp
+                                select HttpUtility.HtmlDecode(grp.Key)).ToList();
+
+            return new JsonResult { Data = JsonConvert.SerializeObject(manufacturers), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        [HttpGet]
+        public JsonResult GetModels(string manufacturer)
+        {
+            var models = (from car in _carManager.GetAllCars()
+                         where car.Manufacturer.Name == manufacturer
+                         group  car by car.Model into grp
+                         select grp.Key).ToList();
+
+            return new JsonResult { Data = JsonConvert.SerializeObject(models), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+
+        [HttpGet]
+        public JsonResult GetDerivatives(string model)
+        {
+            var models = (from car in _carManager.GetAllCars()
+                          where car.Model == model
+                          select new { Id = car.Id, Name = car.DerivativeName, Year = car.GetYear() }).ToList();
+
+            return new JsonResult { Data = JsonConvert.SerializeObject(models), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         [HttpPost]

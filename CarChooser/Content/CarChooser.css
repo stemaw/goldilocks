@@ -132,9 +132,34 @@
 }
 
 .bgimage-inside {
-    padding-top: 75%
+    padding-top: 70%
 }
-
+@media (min-width: 600px)
+{
+    .carSelectionBlock
+    {
+        position: absolute;
+        bottom: 20%;
+        left: 60%;
+        font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        border: 2px solid #3d3d3d;
+        border-radius: 10px;
+        background-color: rgba(55, 54, 54, 0.7);
+        padding: 50px;
+    }
+}
+@media (max-width: 600px)
+{
+    .carSelectionBlock
+    {
+        position: relative;
+        font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        border: 2px solid #3d3d3d;
+        border-radius: 10px;
+        background-color: rgba(55, 54, 54, 0.7);
+        padding: 50px;
+    }
+}
 
 .ratingBlockXS {
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -300,3 +325,7 @@ a {
 }
 
 .img-center {margin:0 auto; float:none}
+
+.btn-cancel {
+    background-color: rgba(221, 221, 221, 0.7);
+}

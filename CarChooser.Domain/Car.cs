@@ -126,6 +126,7 @@ namespace CarChooser.Domain
                                  YearFrom, YearTo);
         }
 
+        [IgnoreDataMember]
         public string LessCrypticName
         {
             get { return Regex.Replace(Name, @"[1-9](\-?d)", DoorCount + " door"); }
@@ -142,6 +143,27 @@ namespace CarChooser.Domain
         {
             get { return _profile ?? (_profile = CarProfile.From(this)); }
             set { _profile = value; }
+        }
+
+        [IgnoreDataMember]
+        public string DerivativeName
+        {
+            get
+            {
+                return string.Format("{0} ({1} to {2})", Name, YearFrom, YearTo == 0 ? "date" : YearTo.ToString());
+            }
+        }
+
+        public string GetYear()
+        {
+            if (YearTo == 0) return string.Format("({0} on)", To2DigitYear(YearFrom));
+
+            return string.Format("({0} - {1})", To2DigitYear(YearFrom), To2DigitYear(YearTo));
+        }
+
+        private static string To2DigitYear(int year)
+        {
+            return year.ToString().Substring(2, 2);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using CarChooser.Web.Mappers;
 
 namespace CarChooser.Web.Models
 {

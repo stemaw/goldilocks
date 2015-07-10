@@ -92,11 +92,14 @@ myApp.directive('onErrorSrc', function () {
     };
 });
 
-myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl', '$location', '$window', '$rootScope', 'problemUrl',
-    function($scope, $http, viewModel, searchUrl, $location, $window, $rootScope, problemUrl) {
+ myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl', '$location', '$window', '$rootScope', 'problemUrl', 'manufacturersUrl', 'modelsUrl', 'derivativesUrl', '$anchorScroll',
+    function ($scope, $http, viewModel, searchUrl, $location, $window, $rootScope, problemUrl, manufacturersUrl, modelsUrl, derivativesUrl, $anchorScroll) {
         $scope.viewModel = viewModel;
         $scope.searchUrl = searchUrl;
         $scope.problemUrl = problemUrl;
+        $scope.manufacturersUrl = manufacturersUrl;
+        $scope.modelsUrl = modelsUrl;
+        $scope.derivativesUrl = derivativesUrl;
         $scope.showReviews = false;
         $scope.comparisons = [];
         $location.path($scope.viewModel.CurrentCar.UrlName);
@@ -228,6 +231,73 @@ myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl',
                    $scope.doingStuff = false;
                }).
                error(function(data, status, headers, config) {
+                   $scope.failedToSend = true;
+                   $scope.doingStuff = false;
+               });
+       };
+       
+       $scope.getManufacturers = function () {
+           $scope.doingStuff = true;
+
+           $http.get($scope.manufacturersUrl).
+               success(function (data, status, headers, config) {
+                   $scope.manufacturers = JSON.parse(data);
+                   $scope.doingStuff = false;
+               }).
+               error(function (data, status, headers, config) {
+                   $scope.failedToSend = true;
+                   $scope.doingStuff = false;
+               });
+       };
+        
+       $scope.getModels = function () {
+           $scope.doingStuff = true;
+
+           $http.get($scope.modelsUrl + '?manufacturer=' + $scope.selectedManufacturer).
+               success(function (data, status, headers, config) {
+                   $scope.models = JSON.parse(data);
+                   $scope.doingStuff = false;
+               }).
+               error(function (data, status, headers, config) {
+                   $scope.failedToSend = true;
+                   $scope.doingStuff = false;
+               });
+       };
+        
+       $scope.getDerivatives = function () {
+           $scope.doingStuff = true;
+
+           $http.get($scope.derivativesUrl + '?model=' + $scope.selectedModel).
+               success(function (data, status, headers, config) {
+                   $scope.derivatives = JSON.parse(data);
+                   $scope.doingStuff = false;
+               }).
+               error(function (data, status, headers, config) {
+                   $scope.failedToSend = true;
+                   $scope.doingStuff = false;
+               });
+       };
+
+       $scope.selectCar = function () {
+           $scope.doingStuff = true;
+
+           var postData = {
+               CurrentCar: $scope.viewModel.CurrentCar,
+               Likes: $scope.viewModel.Likes,
+               Dislikes: $scope.viewModel.Dislikes,
+               PreviousRejections: $scope.viewModel.PreviousRejections,
+               RequestedCarId: $scope.selectedDerivative
+           };
+
+           $http.post($scope.searchUrl, postData).
+               success(function (data, status, headers, config) {
+                   $scope.viewModel = JSON.parse(data);
+                   $scope.Finished = $scope.viewModel.CurrentCar == null;
+                   $location.path($scope.viewModel.CurrentCar.UrlName);
+                   $scope.doingStuff = false;
+                   $("#scrollToChoose").click();
+               }).
+               error(function (data, status, headers, config) {
                    $scope.failedToSend = true;
                    $scope.doingStuff = false;
                });

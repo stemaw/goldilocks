@@ -26,6 +26,24 @@ namespace CarChooser.Web.App_Start
                 url: "{manufacturer}/{model}/{derivative}/{year}/{carId}",
                 defaults: new { controller = "Home", action = "Get" }
             );
+
+            routes.MapRoute(
+                name: "Manufacturers",
+                url: "manufacturers",
+                defaults: new { controller = "Home", action = "GetManufacturers" }
+            );
+
+            routes.MapRoute(
+                name: "Models",
+                url: "models/{manufacturer}",
+                defaults: new { controller = "Home", action = "GetModels" }
+            );
+
+            routes.MapRoute(
+                name: "Derivatives",
+                url: "derivatives/{model}",
+                defaults: new { controller = "Home", action = "GetDerivatives" }
+            );
         }
     }
 }

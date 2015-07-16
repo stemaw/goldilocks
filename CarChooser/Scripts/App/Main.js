@@ -133,6 +133,11 @@ myApp.directive('onErrorSrc', function () {
                    $scope.doingStuff = false;
                });
         };
+
+        $scope.startAgain = function() {
+            $location.path("");
+            history.go(0);
+        };
         
         $scope.submitProblem = function (reason) {
             $scope.doingStuff = true;

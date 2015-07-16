@@ -96,9 +96,7 @@ namespace CarChooser.Domain.ScoreStrategies
 
             Func<Car, bool> predicate =
                 c =>
-                    {
-                        var carProfile = CarProfile.From(c);
-                        
+                    {                        
                         var result = true;
 
                         foreach (var propertyInfo in properties)
@@ -113,7 +111,7 @@ namespace CarChooser.Domain.ScoreStrategies
 
             var viableCars = carOptions.Where(c => !(rejectionIds.Contains(c.Id)))
                 .Where(predicate)
-                .OrderBy(c => ScoreTheCar(CarProfile.From(c))).ToList();
+                .OrderBy(c => ScoreTheCar(c.Profile)).ToList();
 
             return viableCars;
         }

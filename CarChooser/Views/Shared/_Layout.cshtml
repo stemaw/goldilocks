@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title ng-bind="'Goldilocker - helping you choose your next car - ' + title">Goldilocker - helping you choose your next car</title>
-    <meta http-equiv="keywords" content="cars, help me choose a car, buy a car, car research, car comparison, cars compare, car chooser, best new car, best used car, help me choose a new car, help me choose a used car, used cars, new cars, new car comparison"/>
+    <meta http-equiv="keywords" content="cars, help me choose a car, buy a car, car research, car comparison, cars compare, car chooser, best new car, best used car, help me choose a new car, help me choose a used car, used cars, new cars, new car comparison, car quiz, car game, car top trumps, car top-trumps"/>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
@@ -42,7 +42,6 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                     <i class="fa fa-bars"></i>
                 </button>
-               
             </div>
 
             <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
@@ -61,6 +60,9 @@
                     </li>
                     <li>
                         <a class="page-scroll" href="#about">About</a>
+                    </li>
+                     <li>
+                        <a class="page-scroll" target="_self" href="@Url.Action("Index","Quiz")">Quiz</a>
                     </li>
                 </ul>
             </div>

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using CarChooser.Data;
 using CarChooser.Web.Mappers;
@@ -11,15 +7,8 @@ namespace SiteMapGenerator
 {
     class Program
     {
-        //        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-        //  <url>
-        //    <loc>http://www.goldilocker.co.uk/</loc>
-        //    <lastmod>2015-06-16</lastmod>
-        //    <changefreq>monthly</changefreq>
-        //    <priority>0.8</priority>
-        //  </url>
-        //</urlset>
-const string xmlns = @"http://www.sitemaps.org/schemas/sitemap/0.9";
+        const string xmlns = @"http://www.sitemaps.org/schemas/sitemap/0.9";
+        
         static void Main(string[] args)
         {
             var mapper = new CarMapper(new OfficialCarRatingsMapper());
@@ -42,38 +31,26 @@ const string xmlns = @"http://www.sitemaps.org/schemas/sitemap/0.9";
             AddTextNode("changefreq", "monthly", homeNode, doc);
             AddTextNode("priority", "1", homeNode, doc);
 
-            foreach (var car in cars)
-            {
-                var carvm = mapper.Map(car);
+            var quizNode = doc.CreateElement(string.Empty, "url", xmlns);
+            urlSetNode.AppendChild(quizNode);
+
+            AddTextNode("loc", "http://www.goldilocker.co.uk/Quiz", quizNode, doc);
+            AddTextNode("lastmod", DateTime.Today.ToString("yyyy-MM-dd"), quizNode, doc);
+            AddTextNode("changefreq", "monthly", quizNode, doc);
+            AddTextNode("priority", "0.9", quizNode, doc);
+
+            //foreach (var car in cars)
+            //{
+            //    var carvm = mapper.Map(car);
  
-                var urlNode = doc.CreateElement(string.Empty, "url", xmlns);
-                urlSetNode.AppendChild(urlNode);
+            //    var urlNode = doc.CreateElement(string.Empty, "url", xmlns);
+            //    urlSetNode.AppendChild(urlNode);
 
-                AddTextNode("loc", "http://www.goldilocker.co.uk/" + carvm.UrlName, urlNode, doc);
-                AddTextNode("lastmod", DateTime.Today.ToString("yyyy-MM-dd"), urlNode, doc);
-                AddTextNode("changefreq", "monthly", urlNode, doc);
-                AddTextNode("priority", "0.2", urlNode, doc);
-                
-                //var element3 = doc.CreateElement(string.Empty, "loc", string.Empty);
-                //var loc = doc.CreateTextNode("http://www.goldilocker.co.uk/" + carvm.UrlName);
-                //element3.AppendChild(loc);
-                //element2.AppendChild(element3);
-
-                //var element4 = doc.CreateElement(string.Empty, "lastmod", string.Empty);
-                //var lastmod = doc.CreateTextNode();
-                //element4.AppendChild(lastmod);
-                //element2.AppendChild(element4);
-
-                //var element5 = doc.CreateElement(string.Empty, "changefreq", string.Empty);
-                //var change = doc.CreateTextNode("monthly");
-                //element5.AppendChild(change);
-                //element2.AppendChild(element5);
-
-                //var element6 = doc.CreateElement(string.Empty, "priority", string.Empty);
-                //var priority = doc.CreateTextNode("0.1");
-                //element6.AppendChild(priority);
-                //element2.AppendChild(element6);
-            }
+            //    AddTextNode("loc", "http://www.goldilocker.co.uk/" + carvm.UrlName, urlNode, doc);
+            //    AddTextNode("lastmod", DateTime.Today.ToString("yyyy-MM-dd"), urlNode, doc);
+            //    AddTextNode("changefreq", "monthly", urlNode, doc);
+            //    AddTextNode("priority", "0.2", urlNode, doc);
+            //}
 
             doc.Save("sitemap.xml");
         }

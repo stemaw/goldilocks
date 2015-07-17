@@ -329,3 +329,67 @@ a {
 .btn-cancel {
     background-color: rgba(221, 221, 221, 0.7);
 }
+
+.description {
+    font-size: small;
+    margin-top: 30px;
+}
+
+.score {
+    position: absolute;
+    right: 10%;
+    top: 10%;
+    border-color: #fff;
+    border-width: 3px;
+    border-style: solid;
+    width: 160px;
+    height: 160px;
+    text-align: center;
+    padding: 6px 0;
+    line-height: 1.42;
+    border-radius: 50%;
+    font-size: x-large;
+    margin: auto;
+    padding-top: 30px;
+}
+
+.imgHover:hover,
+.imgHover:focus {
+    opacity: 0.7;
+}
+
+.answer {
+    position: absolute;
+    border-width: 20px;
+    border-style: solid;
+    left: 42%;
+    top: 35%;
+    width: 300px;
+    height: 300px;
+    margin:auto;
+    font-size: 200px;
+    z-index: 100;
+    border-radius: 50%;
+}
+
+.correct {
+    border-color: greenyellow;
+    color: greenyellow;
+}
+
+.incorrect {
+    border-color: red;
+    color: red;
+}
+
+.answerValue {
+    font-size: large;
+    margin-top: 50px;
+    border-width: 6px;
+    border-style: solid;
+    padding: 20px;
+    margin:auto;
+    z-index: 100;
+    border-radius: 25px;
+    min-height: 100px;
+}

@@ -44,8 +44,6 @@ namespace CarChooser.Web.Controllers
 
             var model = _searchMapper.Map(car);
 
-            model.CurrentCar.Image = GetBestImage(model.CurrentCar);
-
             return View(model);
         }
 
@@ -55,11 +53,6 @@ namespace CarChooser.Web.Controllers
             var car = _carManager.GetCar(carId);
 
             var model = _searchMapper.Map(car);
-
-            if (model.CurrentCar != null)
-            {
-                model.CurrentCar.Image = GetBestImage(model.CurrentCar);
-            }
 
            return View("Index", model);
         }
@@ -122,11 +115,6 @@ namespace CarChooser.Web.Controllers
 
             var model = _searchMapper.Map(request, car, search);
 
-            if (model.CurrentCar != null)
-            {
-                model.CurrentCar.Image = GetBestImage(model.CurrentCar);
-            }
-
             _recordDecisions.RecordDecision(new DecisionEntry()
             {
                 CarId = currentCar.Id,
@@ -144,7 +132,6 @@ namespace CarChooser.Web.Controllers
             for (var i = 0; i < request.Likes.Count; i++)
             {
                 request.Likes[i] = _carMapper.Map(_carManager.GetCar(request.Likes[i].Id));
-                request.Likes[i].Image = GetBestImage(request.Likes[i]);
             }
         }
 
@@ -171,30 +158,7 @@ namespace CarChooser.Web.Controllers
 
             var model = _searchMapper.Map(request, car, search);
 
-            if (model.CurrentCar != null)
-            {
-                model.CurrentCar.Image = GetBestImage(model.CurrentCar);
-            }
-
             return new JsonResult { Data = JsonConvert.SerializeObject(model) };
-        }
-
-        private string GetBestImage(CarVM model)
-        {
-            const string imageRoot = "/content/carimages/";
-            var physicalRoot = Server.MapPath(imageRoot);
-       
-            const string derivativeFormat = "{0}{1}-{2}.jpg";
-            var derivativePath = string.Format(derivativeFormat, physicalRoot, model.ModelId, model.Id);
-            
-            if (System.IO.File.Exists(derivativePath)) return string.Format(derivativeFormat, imageRoot, model.ModelId, model.Id);
-
-            const string modelFormat = "{0}{1}.jpg";
-            var modelPath = string.Format(modelFormat, physicalRoot, model.ModelId);
-
-            if (System.IO.File.Exists(modelPath)) return string.Format(modelFormat, imageRoot, model.ModelId);
-
-            return imageRoot + "default.png";
         }
     }
 }

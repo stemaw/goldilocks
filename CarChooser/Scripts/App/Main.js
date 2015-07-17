@@ -2,27 +2,27 @@
 
 myApp.config(['$routeProvider', '$locationProvider', function AppConfig($routeProvider, $locationProvider) {
 
-    //$routeProvider
-    //    .when(
-    //    '/', {
-    //        redirectTo: '/home'
-    //    })
-    //    .when('/home', {
-    //        templateUrl: 'templates/home.html'
-    //    })
-    //    .when('/login', {
-    //        templateUrl: 'templates/login.html'
-    //    })
-    //    .when('/news', {
-    //        templateUrl: 'templates/news.html'
-    //    })
-    //    .when('/news/archive', {
-    //        templateUrl: 'templates/newsarchive.html'
-    //    })
-    //    // removed other routes ... *snip
-    //    .otherwise({
-    //        redirectTo: '/home'
-    //    }
+    $routeProvider
+        .when(
+            '/Game', {
+                redirectTo: '/Game'
+            });
+        //.when('/home', {
+        //    templateUrl: 'templates/home.html'
+        //})
+        //.when('/login', {
+        //    templateUrl: 'templates/login.html'
+        //})
+        //.when('/news', {
+        //    templateUrl: 'templates/news.html'
+        //})
+        //.when('/news/archive', {
+        //    templateUrl: 'templates/newsarchive.html'
+        //})
+        //// removed other routes ... *snip
+        //.otherwise({
+        //    redirectTo: '/home'
+        //}
     //);
 
     // enable html5Mode for pushstate ('#'-less URLs)
@@ -102,11 +102,12 @@ myApp.directive('onErrorSrc', function () {
         $scope.derivativesUrl = derivativesUrl;
         $scope.showReviews = false;
         $scope.comparisons = [];
-        $location.path($scope.viewModel.CurrentCar.UrlName);
-
+        $scope.showFigures = true;
+        
         $scope.submitRejection = function (reason) {
            $scope.doingStuff = true;
-
+           $location.path($scope.viewModel.CurrentCar.UrlName);
+            
            var likeIds = $.map($scope.viewModel.Likes, function (c) {
                return { Id: c.Id };
            });
@@ -185,7 +186,9 @@ myApp.directive('onErrorSrc', function () {
        
        $rootScope.$on('$locationChangeSuccess', function () {
            $rootScope.actualLocation = $location.path();
-           $rootScope.title = $scope.viewModel.CurrentCar.FullName;
+           if ($location.path() !== "/") {
+               $rootScope.title = $scope.viewModel.CurrentCar.FullName;
+           }
        });
 
        $rootScope.$watch(function () { return $location.path() }, function (newLocation, oldLocation) {

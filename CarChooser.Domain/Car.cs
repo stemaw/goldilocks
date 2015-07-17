@@ -165,5 +165,7 @@ namespace CarChooser.Domain
         {
             return year.ToString().Substring(2, 2);
         }
+
+        public string Description { get; set; }
     }
 }

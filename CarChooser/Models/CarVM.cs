@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Web;
 
 namespace CarChooser.Web.Models
 {
@@ -29,7 +30,7 @@ namespace CarChooser.Web.Models
 
         public IEnumerable<OfficialRatingVM> Ratings { get; set; }
 
-        public string Image { get; set; }
+        public string Image { get { return GetBestImage(); } }
 
         public int Mpg { get; set; }
 
@@ -84,5 +85,23 @@ namespace CarChooser.Web.Models
         }
 
         public string UrlName { get { return string.Format("{0}/{1}/{2}/{3}/{4}", Manufacturer, Model, Derivative, YearFrom, Id).Replace(" ","_"); } }
+
+        public string GetBestImage()
+        {
+            const string imageRoot = "/content/carimages/";
+            var physicalRoot = HttpContext.Current.Server.MapPath(imageRoot);
+
+            const string derivativeFormat = "{0}{1}-{2}.jpg";
+            var derivativePath = string.Format(derivativeFormat, physicalRoot, ModelId, Id);
+
+            if (System.IO.File.Exists(derivativePath)) return string.Format(derivativeFormat, imageRoot, ModelId, Id);
+
+            const string modelFormat = "{0}{1}.jpg";
+            var modelPath = string.Format(modelFormat, physicalRoot, ModelId);
+
+            if (System.IO.File.Exists(modelPath)) return string.Format(modelFormat, imageRoot, ModelId);
+
+            return imageRoot + "default.png";
+        }
     }
 }

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using CarChooser.Data;
 using Coypu;
@@ -27,21 +30,31 @@ namespace DataImporter
 
             //new InsuranceGroup(browser1).RipInsuranceGroup(0);
 
-            //retry:
+            retry:
 
-            //BrowserSession browser = null;
-            //try
-            //{
-            //    browser = Browser.SpinUpBrowser();
-            //    RubbishImages(browser);
-            //}
-            //catch (Exception)
-            //{
-            //    browser.Dispose();
-            //    goto retry;
-            //}
+            BrowserSession browser = null;
+            try
+            {
+                browser = Browser.SpinUpBrowser();
+                RubbishImages(browser);
+            }
+            catch (Exception)
+            {
+                browser.Dispose();
+                goto retry;
+            }
 
-            ModelFixer();
+            //var carRepository = new CarRepository();
+
+            //var allCars = carRepository.AllCars();
+            //foreach (var car in allCars)
+            //{
+            //    //new DescriptionGenerator().Generate(car);
+            //    car.Description = null;
+            //    //WordWrap(car.Description);
+            //    //Thread.Sleep(1000);
+            //    carRepository.Save(car);
+            //}
 
             //new MissingDataFixer().FixMissingData();
 
@@ -56,13 +69,27 @@ namespace DataImporter
             //Parkers(browser1);
         }
 
+        public static void WordWrap(string paragraph)
+        {
+            paragraph = new Regex(@" {2,}").Replace(paragraph.Trim(), @" ");
+            var left = Console.CursorLeft; var top = Console.CursorTop; var lines = new List<string>();
+            for (var i = 0; paragraph.Length > 0; i++)
+            {
+                lines.Add(paragraph.Substring(0, Math.Min(Console.WindowWidth, paragraph.Length)));
+                var length = lines[i].LastIndexOf(" ", StringComparison.Ordinal);
+                if (length > 0) lines[i] = lines[i].Remove(length);
+                paragraph = paragraph.Substring(Math.Min(lines[i].Length + 1, paragraph.Length));
+                Console.SetCursorPosition(left, top + i); Console.WriteLine(lines[i]);
+            }
+        }
+
         private static void RubbishImages(BrowserSession browser)
         {
              var ripper = new GoogleImageRipper(browser);
             var reports = new ReportRepository().GetReports("rubbishImage");
 
             var allCars = new CarRepository().AllCars();
-            var modelLevel = false;
+            var modelLevel = true;
             foreach (var report in reports)
             {
                 var car = allCars.FirstOrDefault(c => c.Id == report);

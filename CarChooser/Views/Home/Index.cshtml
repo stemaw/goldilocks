@@ -106,6 +106,7 @@
                             <tr>
                                 <td class="text-left">Price</td>
                                 <td class="text-right" ng-show="viewModel.CurrentCar.Price > 0">{{viewModel.CurrentCar.Price | currency : "£" : 0}}</td>
+                                <td class="text-right" ng-show="viewModel.CurrentCar.Price == 0"><a href="{{viewModel.CurrentCar.ReviewPage}}" target="_blank">Check here</a></td>
                             </tr>
                             <tr>
                                 <td class="text-left">0-60</td>
@@ -180,7 +181,6 @@
                 <div class="col-lg-6 pull-left">Need to sell yours? try <a href="http://www.awin1.com/awclick.php?mid=4455&id=242009" target="_blank">We Want Any Car</a></div>
                 <div class="col-lg-6 pull-right" ng-show="!viewModel.CurrentCar.ShowThanks">Rubbish image? <a ng-click="submitProblem('rubbishImage')">Click here to report</a></div>
                 <div class="col-lg-6 pull-right" ng-show="viewModel.CurrentCar.ShowThanks">Thanks, we'll get round to sorting it</div>
-            
                 <div class="visible-xs col-xs-4">
                     <button class="btn btn-circle btn-circle-rate" ng-click="showRate = !showRate">
                         <i class="glyphicon glyphicon-edit"></i>
@@ -324,6 +324,18 @@
 
     </span>
 
+<section class="container content-section">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Test -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-1441904574998761"
+         data-ad-slot="8918139735"
+         data-ad-format="auto"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</section>
 
 <section id="contact" class="container content-section text-center">
     <div class="row">

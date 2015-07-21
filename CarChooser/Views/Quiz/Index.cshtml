@@ -12,7 +12,7 @@
 
 <header>
     <div class="container" style="padding-top:100px">
-        <div class="row">
+        <div class="row hidden-xs">
             <div class="col-md-8 col-md-offset-2">
                 <h1>Car Quiz</h1>
                 
@@ -21,8 +21,13 @@
         </div>
     </header>
 
-<section ng-controller="gameController" ng-cloak id="game" class="container content-section text-center" style="padding: 100px;">
-    <div class="score pull-right">
+<section ng-controller="gameController" ng-cloak id="game" class="container text-center">
+    <div class="score pull-right hidden-xs">
+        Score
+        <br />
+        {{viewModel.Score}} / {{viewModel.QuestionsAsked}}
+    </div>
+     <div class="score visible-xs">
         Score
         <br />
         {{viewModel.Score}} / {{viewModel.QuestionsAsked}}
@@ -30,32 +35,33 @@
     <div class="col-lg-12 text-primary currentCar">{{viewModel.Question}}</div>
     <div class="answer correct" ng-show="viewModel.Correct"><i class="glyphicon glyphicon-ok"></i></div>
     <div class="answer incorrect" ng-show="viewModel.Correct !== null && !viewModel.Correct"><i class="glyphicon glyphicon-remove"></i></div>
-
-    <div class="col-lg-6">
-        <div class="text-primary" style="height:50px">
+    <div class="row">
+    <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
+        <div class="text-primary" style="min-height:50px">
             {{viewModel.Cars[0].FullName}}
         </div>
         <img ng-show="!viewModel.showAnswers" class="img-responsive imgHover" ng-click="Answer(viewModel.Cars[0].Id)" ng-src="{{viewModel.Cars[0].Image}}" />
         <div class="answerValue" ng-show="viewModel.showAnswers">{{viewModel.CarOneAnswer}}</div>
     </div>
-    <div class="col-lg-6">
-        <div class="text-primary" style="height:50px">
+    <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
+        <div class="text-primary" style="min-height:50px">
             {{viewModel.Cars[1].FullName}}
         </div>
         <img ng-show="!viewModel.showAnswers" class="img-responsive imgHover" ng-click="Answer(viewModel.Cars[1].Id)" ng-src="{{viewModel.Cars[1].Image}}" />
         <div class="answerValue" ng-show="viewModel.showAnswers">{{viewModel.CarTwoAnswer}}</div>
-    </div>
+    </div></div>
 </section>
 
 <section class="container content-section">
+    <div class="row col-lg-12">
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- Test -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1441904574998761"
-     data-ad-slot="8918139735"
-     data-ad-format="auto"></ins>
-<script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+    <!-- Test -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-1441904574998761"
+         data-ad-slot="8918139735"
+         data-ad-format="auto"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></div>
 </section>

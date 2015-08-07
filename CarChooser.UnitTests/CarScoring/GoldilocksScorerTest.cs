@@ -16,9 +16,9 @@ namespace CarChooser.UnitTests.CarScoring
 
             TestCarFactory.PrepScorerWithCar(scorer, 112, 3, 84, "Audi", "A1 Sportsback 1.2 TFSI SE 3d", true);
 
-            Assert.That(scorer.Mean("Top Speed"), Is.EqualTo(112));
-            Assert.That(scorer.Mean("3-Doors"), Is.EqualTo(1));
-            Assert.That(scorer.Mean("Power"), Is.EqualTo(84));
+            Assert.That(scorer.Mean("Top Speed", true), Is.EqualTo(112));
+            Assert.That(scorer.Mean("3-Doors", true), Is.EqualTo(1));
+            Assert.That(scorer.Mean("Power", true), Is.EqualTo(84));
         }
 
         [Test]
@@ -28,10 +28,10 @@ namespace CarChooser.UnitTests.CarScoring
 
             TestCarFactory.PrepScorerWithCar(scorer, 112, 3, 84, "Audi", "A1 Sportsback 1.2 TFSI SE 3d", false);
 
-            Assert.That(scorer.Mean("Top Speed"), Is.EqualTo(0));
-            Assert.That(scorer.Mean("3-Doors"), Is.EqualTo(0));
-            Assert.That(scorer.Mean("5-Doors"), Is.EqualTo(0));
-            Assert.That(scorer.Mean("Power"), Is.EqualTo(0));
+            Assert.That(scorer.Mean("Top Speed", true), Is.EqualTo(0));
+            Assert.That(scorer.Mean("3-Doors", true), Is.EqualTo(0));
+            Assert.That(scorer.Mean("5-Doors", true), Is.EqualTo(0));
+            Assert.That(scorer.Mean("Power", true), Is.EqualTo(0));
         }
 
 

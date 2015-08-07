@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using MathNet.Numerics.LinearAlgebra.Double;
 
@@ -7,39 +8,44 @@ namespace CarChooser.Domain.ScoreStrategies
 {
     public class AdaptiveScorer : ILearn, IFilter
     {
-        private Dictionary<string, List<double>> FactorScores { get; set; }
+        private Dictionary<string, List<double>> LikeFactorScores { get; set; }
+        private Dictionary<string, List<double>> DislikeFactorScores { get; set; }
 
         private List<Car> Rejections { get; set; }
+        private List<Car> Likes { get; set; }
 
         public AdaptiveScorer()
         {
             Rejections = new List<Car>();
+            Likes = new List<Car>();
 
             var scoringProperties = CriteriaBuilder.GetScoringProperties();
 
-            FactorScores = new Dictionary<string, List<double>>();
+            LikeFactorScores = new Dictionary<string, List<double>>();
+            DislikeFactorScores = new Dictionary<string, List<double>>();
 
             foreach (var property in scoringProperties)
             {
-                FactorScores.Add(property.Name, new List<double>(){0.0} );
+                LikeFactorScores.Add(property.Name, new List<double>(){0.0} );
+                DislikeFactorScores.Add(property.Name, new List<double>(){0.0} );
             }
         }
 
 
-        public double Mean(string criteriaName)
+        public double Mean(string criteriaName, bool forLikes = true)
         {
-            var factorScore = FactorScores[criteriaName];
+            var factorScore = forLikes ? LikeFactorScores[criteriaName] : DislikeFactorScores[criteriaName];
 
-            if ( factorScore.Count > 0 )
+            if (factorScore.Count > 0 )
             {
                 return factorScore.Average();
             }
             return 0;
         }
 
-        public double StandardDeviation(string criteriaName)
+        public double StandardDeviation(string criteriaName, bool forLikes = true)
         {
-            var factorScore = FactorScores[criteriaName];
+            var factorScore = forLikes ? LikeFactorScores[criteriaName] : DislikeFactorScores[criteriaName];
 
             if (factorScore.Count > 0)
             {
@@ -51,27 +57,34 @@ namespace CarChooser.Domain.ScoreStrategies
 
         public bool Learn(CarProfile profile, bool doILikeIt)
         {
+            const int entry = 1;
+            
             if (doILikeIt)
             {
-                const int entry = 1;
+                Likes.Add(profile.OriginalCar);
 
-                foreach( var factor in FactorScores.Keys)
-                    FactorScores[factor].Add(entry * profile.Characteristics[factor]);
+                foreach (var factor in LikeFactorScores.Keys)
+                    LikeFactorScores[factor].Add(entry*profile.Characteristics[factor]);
             }
             else
+            {
                 Rejections.Add(profile.OriginalCar);
 
-
+                foreach (var factor in DislikeFactorScores.Keys)
+                    DislikeFactorScores[factor].Add(entry * profile.Characteristics[factor]);
+            }
             return true;
         }
         
         
         public double ScoreTheCar(CarProfile car)
         {
-            IList<double> residuals = FactorScores.Keys.Select(key =>
+            var factors = DislikeFactorScores;
+
+            IList<double> residuals = factors.Keys.Select(key =>
                                                                {
-                                                                   var denominator = Math.Abs(FactorScores[key].StandardDeviation()) < 0.00000000000001 ? 1 : FactorScores[key].StandardDeviation();
-                                                                   return Math.Abs(car.Characteristics[key] - FactorScores[key].StandardDeviation())/denominator;
+                                                                   var denominator = Math.Abs(factors[key].StandardDeviation()) < 0.00000000000001 ? 1 : factors[key].StandardDeviation();
+                                                                   return Math.Abs(car.Characteristics[key] - factors[key].StandardDeviation()) / denominator;
                                                                }).ToList();
 
             var coefficientMatrix =
@@ -86,8 +99,19 @@ namespace CarChooser.Domain.ScoreStrategies
         
         private bool IsCandidate(string criteriaName, CarProfile profile)
         {
-            return ( profile.Characteristics[criteriaName] >= Mean(criteriaName) - StandardDeviation(criteriaName) ) &&
-                   ( profile.Characteristics[criteriaName] <= Mean(criteriaName) + StandardDeviation(criteriaName) );
+            //if (profile.Model.Contains("V40")) Debugger.Break();
+
+            var mean = Mean(criteriaName);
+            var standardDeviation = StandardDeviation(criteriaName);
+            var value = profile.Characteristics[criteriaName];
+
+            return value == 0 || (Likes.Any() && ((value >= mean - standardDeviation) && (value <= mean + standardDeviation)));
+        }
+
+        private bool IsNotCandidate(string criteriaName, CarProfile profile)
+        {
+            return Rejections.Any() && (profile.Characteristics[criteriaName] >= Mean(criteriaName, false) - StandardDeviation(criteriaName, false)) &&
+                   (profile.Characteristics[criteriaName] <= Mean(criteriaName, false) + StandardDeviation(criteriaName, false));
         }
 
         public List<Car> Filter(List<Car> carOptions)
@@ -111,7 +135,7 @@ namespace CarChooser.Domain.ScoreStrategies
 
             var viableCars = carOptions.Where(c => !(rejectionIds.Contains(c.Id)))
                 .Where(predicate)
-                .OrderBy(c => ScoreTheCar(c.Profile)).ToList();
+                .OrderByDescending(c => ScoreTheCar(c.Profile)).ToList();
 
             return viableCars;
         }

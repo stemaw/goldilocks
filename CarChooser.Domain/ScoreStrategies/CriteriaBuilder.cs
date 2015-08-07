@@ -13,7 +13,7 @@ namespace CarChooser.Domain.ScoreStrategies
 
             var values = new Dictionary<string, double>
                 {
-                    {"Acceleration", Convert.ToDouble(car.Sales)},
+                    {"Acceleration", Convert.ToDouble(car.Acceleration)},
                     {"TopSpeed", Convert.ToDouble(car.TopSpeed)},
                     {"Power", Convert.ToDouble(car.Power)},
                     {"InsuranceGroup", Convert.ToDouble(car.InsuranceGroup)},

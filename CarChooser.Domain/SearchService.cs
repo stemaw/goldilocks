@@ -27,7 +27,7 @@ namespace CarChooser.Domain
 
             if (matches == null || !matches.Any())
             {
-                matches = concreteOptions;
+                matches = concreteOptions.OrderByDescending(c => judge.ScoreTheCar(c.Profile)).ToList();
             }
 
             var previouslySeen = GetPreviousSeenModels(search);
@@ -41,9 +41,9 @@ namespace CarChooser.Domain
                 stopCount = 1;
             }
             
-            var seed = matches.Count;
+            var seed = (int)Math.Floor(matches.Count/10D);
 
-            return seed <= stopCount ? null : matches.Skip(_random.Next(seed)).Take(1).ElementAt(0);
+            return seed < stopCount ? null : matches.Skip(_random.Next(seed)).Take(1).ElementAt(0);
         }
 
         private Car GetInitialCar()

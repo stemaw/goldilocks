@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,6 +39,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -72,6 +77,10 @@
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
       <Private>True</Private>
@@ -99,6 +108,10 @@
       <HintPath>..\packages\WebActivatorEx.2.0.6\lib\net40\WebActivatorEx.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -107,7 +120,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="android-chrome-36x36.png" />
+    <Content Include="android-chrome-48x48.png" />
+    <Content Include="android-chrome-72x72.png" />
+    <Content Include="android-chrome-96x96.png" />
+    <Content Include="apple-touch-icon-57x57.png" />
+    <Content Include="apple-touch-icon-60x60.png" />
+    <Content Include="apple-touch-icon-72x72.png" />
+    <Content Include="apple-touch-icon-76x76.png" />
+    <Content Include="apple-touch-icon-precomposed.png" />
+    <Content Include="apple-touch-icon.png" />
     <Content Include="BingSiteAuth.xml" />
+    <Content Include="browserconfig.xml" />
     <Content Include="Content\angular-carousel.css" />
     <Content Include="Content\angular-carousel.js" />
     <Content Include="Content\angular-carousel.min.css" />
@@ -134,6 +158,72 @@
     <Content Include="Content\js\grayscale.js" />
     <Content Include="Content\js\jquery.easing.min.js" />
     <Content Include="Content\js\jquery.js" />
+    <Content Include="Content\ManufacturerLogos\Abarth.png" />
+    <Content Include="Content\ManufacturerLogos\Alfa Romeo.png" />
+    <Content Include="Content\ManufacturerLogos\Aston Martin.png" />
+    <Content Include="Content\ManufacturerLogos\Audi.png" />
+    <Content Include="Content\ManufacturerLogos\Bentley.png" />
+    <Content Include="Content\ManufacturerLogos\BMW.png" />
+    <Content Include="Content\ManufacturerLogos\Cadillac.png" />
+    <Content Include="Content\ManufacturerLogos\Caterham.png" />
+    <Content Include="Content\ManufacturerLogos\Chevrolet.png" />
+    <Content Include="Content\ManufacturerLogos\Chrysler.png" />
+    <Content Include="Content\ManufacturerLogos\Citroen.png" />
+    <Content Include="Content\ManufacturerLogos\Corvette.png" />
+    <Content Include="Content\ManufacturerLogos\Dacia.png" />
+    <Content Include="Content\ManufacturerLogos\Daewoo.png" />
+    <Content Include="Content\ManufacturerLogos\Daihatsu.png" />
+    <Content Include="Content\ManufacturerLogos\Dodge.png" />
+    <Content Include="Content\ManufacturerLogos\Ferrari.png" />
+    <Content Include="Content\ManufacturerLogos\Fiat.png" />
+    <Content Include="Content\ManufacturerLogos\Ford.png" />
+    <Content Include="Content\ManufacturerLogos\Honda.png" />
+    <Content Include="Content\ManufacturerLogos\Hummer.png" />
+    <Content Include="Content\ManufacturerLogos\Hyundai.png" />
+    <Content Include="Content\ManufacturerLogos\Infiniti.png" />
+    <Content Include="Content\ManufacturerLogos\Isuzu.png" />
+    <Content Include="Content\ManufacturerLogos\Jaguar.png" />
+    <Content Include="Content\ManufacturerLogos\Jeep.png" />
+    <Content Include="Content\ManufacturerLogos\Kia.png" />
+    <Content Include="Content\ManufacturerLogos\Lamborghini.png" />
+    <Content Include="Content\ManufacturerLogos\Land Rover.png" />
+    <Content Include="Content\ManufacturerLogos\Lexus.png" />
+    <Content Include="Content\ManufacturerLogos\Lotus.png" />
+    <Content Include="Content\ManufacturerLogos\Maserati.png" />
+    <Content Include="Content\ManufacturerLogos\Maybach.png" />
+    <Content Include="Content\ManufacturerLogos\Mazda.png" />
+    <Content Include="Content\ManufacturerLogos\Mercedes-Benz.png" />
+    <Content Include="Content\ManufacturerLogos\MG Motor UK.png" />
+    <Content Include="Content\ManufacturerLogos\MG.png" />
+    <Content Include="Content\ManufacturerLogos\MINI.png" />
+    <Content Include="Content\ManufacturerLogos\Mitsubishi.png" />
+    <Content Include="Content\ManufacturerLogos\Morgan.png" />
+    <Content Include="Content\ManufacturerLogos\Nissan.png" />
+    <Content Include="Content\ManufacturerLogos\Noble.png" />
+    <Content Include="Content\ManufacturerLogos\Perodua.png" />
+    <Content Include="Content\ManufacturerLogos\Peugeot.png" />
+    <Content Include="Content\ManufacturerLogos\Porsche.png" />
+    <Content Include="Content\ManufacturerLogos\Proton.png" />
+    <Content Include="Content\ManufacturerLogos\Renault.png" />
+    <Content Include="Content\ManufacturerLogos\Rolls-Royce.png" />
+    <Content Include="Content\ManufacturerLogos\Rover.png" />
+    <Content Include="Content\ManufacturerLogos\Saab.png" />
+    <Content Include="Content\ManufacturerLogos\SEAT.png" />
+    <Content Include="Content\ManufacturerLogos\Skoda.png" />
+    <Content Include="Content\ManufacturerLogos\Smart.png" />
+    <Content Include="Content\ManufacturerLogos\SsangYong.png" />
+    <Content Include="Content\ManufacturerLogos\Subaru.png" />
+    <Content Include="Content\ManufacturerLogos\Suzuki.png" />
+    <Content Include="Content\ManufacturerLogos\Tesla.png" />
+    <Content Include="Content\ManufacturerLogos\Toyota.png" />
+    <Content Include="Content\ManufacturerLogos\TVR.png" />
+    <Content Include="Content\ManufacturerLogos\Vauxhall.png" />
+    <Content Include="Content\ManufacturerLogos\Volkswagen.png" />
+    <Content Include="Content\ManufacturerLogos\Volvo.png" />
+    <Content Include="favicon-16x16.png" />
+    <Content Include="favicon-32x32.png" />
+    <Content Include="favicon-96x96.png" />
+    <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -142,6 +232,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="mstile-150x150.png" />
+    <Content Include="mstile-310x150.png" />
+    <Content Include="mstile-70x70.png" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -166,6 +259,7 @@
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\App\CarEdit.js" />
+    <Content Include="Scripts\App\Blog.js" />
     <Content Include="Scripts\App\Quiz.js" />
     <Content Include="Scripts\App\Main.js" />
     <Content Include="Scripts\errors.json" />
@@ -217,6 +311,7 @@
     <Content Include="Content\less\mixins.less" />
     <Content Include="Content\less\variables.less" />
     <Content Include="Content\angular-carousel.css.map" />
+    <Content Include="manifest.json" />
     <None Include="Properties\PublishProfiles\AWS-ZIP.pubxml" />
     <None Include="Properties\PublishProfiles\aws.pubxml" />
     <None Include="Properties\PublishProfiles\CarChooser.pubxml" />
@@ -966,6 +1061,7 @@
     <Content Include="Scripts\i18n\angular-locale_zh.js" />
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
+    <None Include="Properties\PublishProfiles\localfiles.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -979,14 +1075,22 @@
     <Content Include="sitemap.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\Blog\WhatIsGoldilocker.html" />
+    <Content Include="Views\Blog\WhatYourCarSaysAboutYou.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="CarHelper.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CarController.cs" />
+    <Compile Include="Controllers\StatsController.cs" />
+    <Compile Include="Controllers\ManufacturerListController.cs" />
+    <Compile Include="Controllers\ManufacturerController.cs" />
     <Compile Include="Controllers\QuizController.cs" />
     <Compile Include="Mappers\CarMapper.cs" />
     <Compile Include="Mappers\OfficialCarRatingsMapper.cs" />
@@ -1013,6 +1117,10 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Car\Index.cshtml" />
     <Content Include="Views\Quiz\Index.cshtml" />
+    <Content Include="Views\Blog\Index.cshtml" />
+    <Content Include="Views\Stats\Index.cshtml" />
+    <None Include="Views\ManufacturerList\Index.cshtml" />
+    <None Include="Views\Manufacturer\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1022,6 +1130,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CarChooser.Data\CarChooser.Data.csproj">

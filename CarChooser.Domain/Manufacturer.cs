@@ -2,7 +2,16 @@
 {
     public class Manufacturer
     {
-        public string Name { get; set; }
+        private string _name;
+
+        public string Name
+        {
+            get {
+                return _name.StartsWith("Citr") ? "Citroen" : _name;
+            }
+            set { _name = value; }
+        }
+
         public int Score { get; set; }
 
         public int ReliabilityIndex { get; set; }

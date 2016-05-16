@@ -8,17 +8,29 @@ namespace CarChooser.Web.App_Start
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            
+
+            routes.MapRoute(
+                name: "BrowseManufacturer",
+                url: "manufacturer/{manufacturer}",
+                defaults: new {controller = "Manufacturer", action = "Index"}
+                );
+
+            routes.MapRoute(
+                name: "BrowseManufacturers",
+                url: "browse",
+                defaults: new { controller = "ManufacturerList", action = "Index" }
+                );
+
+            routes.MapRoute(
+                name: "Stats",
+                url: "stats/{manufacturer}",
+                defaults: new { controller = "Stats", action = "Index" }
+            );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
-
-            routes.MapRoute(
-                name: "CarPages",
-                url: "{controller}/{action}/{pageNumber}",
-                defaults: new { controller = "Car", action = "Get", pageNumber = UrlParameter.Optional }
             );
 
             routes.MapRoute(
@@ -44,6 +56,9 @@ namespace CarChooser.Web.App_Start
                 url: "derivatives/{model}",
                 defaults: new { controller = "Home", action = "GetDerivatives" }
             );
+
+            
+
         }
     }
 }

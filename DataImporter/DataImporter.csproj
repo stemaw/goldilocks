@@ -96,6 +96,7 @@
   <ItemGroup>
     <Compile Include="AltParkersRipper.cs" />
     <Compile Include="Browser.cs" />
+    <Compile Include="GoogleLogoRipper.cs" />
     <Compile Include="DescriptionGenerator.cs" />
     <Compile Include="ParkersPriceRipper.cs" />
     <Compile Include="Fuzzy.cs" />

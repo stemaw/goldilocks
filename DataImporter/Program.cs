@@ -30,19 +30,9 @@ namespace DataImporter
 
             //new InsuranceGroup(browser1).RipInsuranceGroup(0);
 
-            retry:
+            //FixRubbishImages();
 
-            BrowserSession browser = null;
-            try
-            {
-                browser = Browser.SpinUpBrowser();
-                RubbishImages(browser);
-            }
-            catch (Exception)
-            {
-                browser.Dispose();
-                goto retry;
-            }
+            //GetManufacturerLogos();
 
             //var carRepository = new CarRepository();
 
@@ -56,17 +46,52 @@ namespace DataImporter
             //    carRepository.Save(car);
             //}
 
-            //new MissingDataFixer().FixMissingData();
+            new MissingDataFixer().FixMissingData();
 
             //new ParkersPriceRipper().RipParkers();
 
             //new AltParkersRipper().RipParkers();
             //new ReliabilityIndex().FindManufacturersWithNoRating();
+            //new ReliabilityIndex().FixManufacturersWithNoRating();
 
             Console.WriteLine("Done");
             Console.ReadKey();
 
             //Parkers(browser1);
+        }
+
+        private static void GetManufacturerLogos()
+        {
+        retry:
+
+            BrowserSession browser = null;
+            try
+            {
+                browser = Browser.SpinUpBrowser();
+                new GoogleLogoRipper(browser).RipLogos(manualMode:true);
+            }
+            catch (Exception)
+            {
+                browser.Dispose();
+                goto retry;
+            }
+        }
+
+        private static void FixRubbishImages()
+        {
+            retry:
+
+            BrowserSession browser = null;
+            try
+            {
+                browser = Browser.SpinUpBrowser();
+                RubbishImages(browser);
+            }
+            catch (Exception)
+            {
+                browser.Dispose();
+                goto retry;
+            }
         }
 
         public static void WordWrap(string paragraph)

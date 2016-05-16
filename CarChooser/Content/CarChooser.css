@@ -138,14 +138,11 @@
 {
     .carSelectionBlock
     {
-        position: absolute;
-        bottom: 20%;
-        left: 60%;
         font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
         border: 2px solid #3d3d3d;
         border-radius: 10px;
         background-color: rgba(55, 54, 54, 0.7);
-        padding: 50px;
+        padding: 20px;
     }
 }
 @media (max-width: 600px)
@@ -157,7 +154,7 @@
         border: 2px solid #3d3d3d;
         border-radius: 10px;
         background-color: rgba(55, 54, 54, 0.7);
-        padding: 50px;
+        padding: 20px;
     }
 }
 
@@ -203,6 +200,23 @@
     color:#daeaf8
 }
 
+.compare-performance {
+    margin-top: 20px;
+    margin-left: 0px;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    border: 2px solid #3d3d3d;
+    border-radius: 10px;
+    background-color: rgba(55, 54, 54, 0.4);
+  
+}
+.compare-performance td {
+    padding: 10px;
+}
+
+.compare-performance tr td:first-child {
+    color:#daeaf8
+}
+
 .iffyTip {
      overflow:hidden;
      white-space:nowrap;
@@ -224,11 +238,14 @@
     display:inline-block;
     float:none;
     /* reset the text-align */
-    text-align:left;
+    text-align:center;
     /* inline-block space fix */
     margin-right:-4px;
 }
 
+.center {
+    margin: 0 auto;
+}
  .layer { min-height: 200px; background-color: #3d3d3d; padding:10px }
 
  .myCarousel{ height:300px }
@@ -432,4 +449,25 @@ a {
     z-index: 100;
     border-radius: 25px;
     min-height: 100px;
+}
+
+.blogPost {
+    background-color: #eeeeee;
+    font-size: large;
+    color: #111111;
+    padding: 20px;
+    font-family: calibri, verdana, trebucet, times new roman;
+    border-top: solid #666666 1px;
+}
+
+.blogPost ul {
+    margin-bottom: 30px;
+}
+
+.blogPost a {
+    color: blue;
+}
+
+.sameheight {
+    display: table;
 }

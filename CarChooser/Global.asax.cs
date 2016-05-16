@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
 using CarChooser.Domain.ScoreStrategies;
 using CarChooser.Web.App_Start;
@@ -11,6 +12,7 @@ namespace CarChooser.Web
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            //BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
         protected void Session_OnStart()

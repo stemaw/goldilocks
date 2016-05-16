@@ -2,14 +2,14 @@
 
 myApp.config(['$routeProvider', '$locationProvider', function AppConfig($routeProvider, $locationProvider) {
 
-    $routeProvider
-        .when(
-            '/Game', {
-                redirectTo: '/Game'
-            });
-        //.when('/home', {
-        //    templateUrl: 'templates/home.html'
-        //})
+    //$routeProvider
+    //    .when(
+    //        '/Game', {
+    //            redirectTo: '/Game'
+    //        })
+    //    .when('/whatisgoldilocks', {
+    //        templateUrl: 'whatisgoldilocks.html'
+    //    });
         //.when('/login', {
         //    templateUrl: 'templates/login.html'
         //})
@@ -92,8 +92,8 @@ myApp.directive('onErrorSrc', function () {
     };
 });
 
- myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl', '$location', '$window', '$rootScope', 'problemUrl', 'manufacturersUrl', 'modelsUrl', 'derivativesUrl', '$anchorScroll',
-    function ($scope, $http, viewModel, searchUrl, $location, $window, $rootScope, problemUrl, manufacturersUrl, modelsUrl, derivativesUrl, $anchorScroll) {
+ myApp.controller('mainController', ['$scope', '$http', 'viewModel', 'searchUrl', '$location', '$window', '$rootScope', 'problemUrl', 'manufacturersUrl', 'modelsUrl', 'derivativesUrl', '$anchorScroll', '$window',
+    function ($scope, $http, viewModel, searchUrl, $location, $window, $rootScope, problemUrl, manufacturersUrl, modelsUrl, derivativesUrl, $anchorScroll, $window) {
         $scope.viewModel = viewModel;
         $scope.searchUrl = searchUrl;
         $scope.problemUrl = problemUrl;
@@ -104,6 +104,7 @@ myApp.directive('onErrorSrc', function () {
         $scope.comparisons = [];
         $scope.showFigures = true;
         
+
         $scope.submitRejection = function (reason) {
            $scope.doingStuff = true;
            $location.path($scope.viewModel.CurrentCar.UrlName);
@@ -128,6 +129,7 @@ myApp.directive('onErrorSrc', function () {
                    $scope.Finished = $scope.viewModel.CurrentCar == null;
                    $scope.doingStuff = false;
                    $location.path($scope.viewModel.CurrentCar.UrlName);
+                   $window.document.title = $scope.viewModel.CurrentCar.FullName + " - your next car?";
                }).
                error(function (data, status, headers, config) {
                    $scope.failedToSend = true;
@@ -186,9 +188,9 @@ myApp.directive('onErrorSrc', function () {
        
        $rootScope.$on('$locationChangeSuccess', function () {
            $rootScope.actualLocation = $location.path();
-           if ($location.path() !== "/") {
-               $rootScope.title = $scope.viewModel.CurrentCar.FullName;
-           }
+           //if ($location.path() !== "/") {
+           //    $rootScope.title = $scope.viewModel.CurrentCar.FullName;
+           //}
        });
 
        $rootScope.$watch(function () { return $location.path() }, function (newLocation, oldLocation) {
@@ -237,6 +239,7 @@ myApp.directive('onErrorSrc', function () {
                    $scope.viewModel = JSON.parse(data);
                    $scope.Finished = $scope.viewModel.CurrentCar == null;
                    $scope.doingStuff = false;
+                   $window.document.title = $scope.viewModel.CurrentCar.FullName + " - your next car?";
                }).
                error(function(data, status, headers, config) {
                    $scope.failedToSend = true;
@@ -245,8 +248,7 @@ myApp.directive('onErrorSrc', function () {
        };
        
        $scope.getManufacturers = function () {
-           $scope.doingStuff = true;
-
+           
            $http.get($scope.manufacturersUrl).
                success(function (data, status, headers, config) {
                    $scope.manufacturers = JSON.parse(data);
@@ -257,7 +259,9 @@ myApp.directive('onErrorSrc', function () {
                    $scope.doingStuff = false;
                });
        };
-        
+
+       $scope.getManufacturers();
+
        $scope.getModels = function () {
            $scope.doingStuff = true;
 
@@ -304,11 +308,16 @@ myApp.directive('onErrorSrc', function () {
                    $location.path($scope.viewModel.CurrentCar.UrlName);
                    $scope.doingStuff = false;
                    $("#scrollToChoose").click();
+                   $window.document.title = $scope.viewModel.CurrentCar.FullName + " - your next car? like or dislike?";
                }).
                error(function (data, status, headers, config) {
                    $scope.failedToSend = true;
                    $scope.doingStuff = false;
                });
        };
-   }]
+
+        $scope.showCarSelection = function() {
+            angular.element(document.querySelector('#selectCar')).removeClass("hidden-xs").removeClass("hidden-sm");
+        };
+    }]
 );

@@ -26,6 +26,8 @@ namespace DataImporter
             _exclude = new List<string>
                 {
                     "site:http://zombiedrive.com/",
+                    "site:http://boldride.com/",
+                    "site:http://netcarshow.com/",
                     "interior"
                 };
         }
@@ -34,7 +36,7 @@ namespace DataImporter
         public void RipImage(Car car, bool modelLevel, bool manualMode, bool forceUpdate = false)
         {
             if (_files == null)
-                _files = Directory.GetFiles(@"C:\Users\ste_000\Documents\goldilocks\CarChooser\Content\CarImages\");
+                _files = Directory.GetFiles(@"C:\gitcode\goldilocks\CarChooser\Content\CarImages\");
             
             Thread.Sleep(200);
 
@@ -51,10 +53,10 @@ namespace DataImporter
 
             if (modelLevel)
             {
-                var match = _files.FirstOrDefault(f => f.Replace(@"C:\Users\ste_000\Documents\goldilocks\CarChooser\Content\CarImages\","").StartsWith(idToUse + "-"));
+                var match = _files.FirstOrDefault(f => f.Replace(@"C:\gitcode\goldilocks\CarChooser\Content\CarImages\","").StartsWith(idToUse + "-"));
                 if (match != null)
                 {
-                    File.Copy(match, imageName);
+                    File.Copy(match, imageName, true);
                 }
             }
             retry:           
@@ -120,7 +122,7 @@ namespace DataImporter
         private static string GetImageName(string id)
         {
             return string.Format(
-                @"C:\Users\ste_000\Documents\goldilocks\CarChooser\Content\CarImages\{0}.jpg",
+                @"C:\gitcode\goldilocks\CarChooser\Content\CarImages\{0}.jpg",
                 id);
         }
     }

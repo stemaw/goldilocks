@@ -30,7 +30,7 @@ namespace CarChooser.Web.Models
 
         public IEnumerable<OfficialRatingVM> Ratings { get; set; }
 
-        public string Image { get { return GetBestImage(); } }
+        public string Image { get { return CarHelper.GetBestImage(ModelId, Id); } }
 
         public int Mpg { get; set; }
 
@@ -52,7 +52,7 @@ namespace CarChooser.Web.Models
 
         public decimal Price { get; set; }
 
-        public string FullName { get { return string.Format("{0} {1} {2} {3}", Manufacturer, Model, Derivative, GetYear()); }}
+        public string FullName { get { return string.Format("{0} {1} {2} {3}", Manufacturer, Model, Derivative, CarHelper.GetYear(YearFrom, YearTo)); }}
 
         public string ReviewPage { get; set; }
 
@@ -72,36 +72,10 @@ namespace CarChooser.Web.Models
             set { _userRating = value; }
         }
 
-        private string GetYear()
-        {
-            if (YearTo == 0) return string.Format("({0} on)", To2DigitYear(YearFrom));
+        
 
-            return string.Format("({0} - {1})", To2DigitYear(YearFrom), To2DigitYear(YearTo));
-        }
+        public string UrlName { get { return CarHelper.GetUrl(Manufacturer, Model, Derivative, YearFrom, Id); } }
 
-        private static string To2DigitYear(int year)
-        {
-            return year.ToString().Substring(2, 2);
-        }
-
-        public string UrlName { get { return string.Format("{0}/{1}/{2}/{3}/{4}", Manufacturer, Model, Derivative, YearFrom, Id).Replace(" ","_"); } }
-
-        public string GetBestImage()
-        {
-            const string imageRoot = "/content/carimages/";
-            var physicalRoot = HttpContext.Current.Server.MapPath(imageRoot);
-
-            const string derivativeFormat = "{0}{1}-{2}.jpg";
-            var derivativePath = string.Format(derivativeFormat, physicalRoot, ModelId, Id);
-
-            if (System.IO.File.Exists(derivativePath)) return string.Format(derivativeFormat, imageRoot, ModelId, Id);
-
-            const string modelFormat = "{0}{1}.jpg";
-            var modelPath = string.Format(modelFormat, physicalRoot, ModelId);
-
-            if (System.IO.File.Exists(modelPath)) return string.Format(modelFormat, imageRoot, ModelId);
-
-            return imageRoot + "default.png";
-        }
+        
     }
 }

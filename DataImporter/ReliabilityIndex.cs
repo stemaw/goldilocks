@@ -10,13 +10,30 @@ namespace DataImporter
 {
     public class ReliabilityIndex
     {
-        public void FindManufacturersWithNoRating()
+        public void FixManufacturersWithNoRating()
         {
             var repo = new CarRepository();
 
             var allCars = repo.AllCars().Where(c => c.Manufacturer.ReliabilityIndex == 0);
 
+            var scores = GetScores();
 
+            foreach (var car in allCars)
+            {
+                if (scores.ContainsKey(car.Manufacturer.Name))
+                {
+                    car.Manufacturer.ReliabilityIndex = scores[car.Manufacturer.Name];
+                    repo.Save(car);
+                }
+            }
+        }
+
+        public void FindManufacturersWithNoRating()
+        {
+            var repo = new CarRepository();
+
+            var allCars = repo.AllCars().Where(c => c.Manufacturer.ReliabilityIndex == 0);
+            
             var allManufacturers = from car in allCars
                                    group car by car.Manufacturer.Name
                                        into grp
@@ -111,7 +128,32 @@ namespace DataImporter
             source.Add("Land Rover", 323);
             source.Add("Porsche", 365);
             source.Add("Bentley", 645);
-
+            source.Add("Citro&#235;n", 106);
+            source.Add("SEAT", 126);
+            source.Add("MINI", 137);
+            source.Add("Abarth", 98);
+            source.Add("Aston Martin", 186);
+            source.Add("Lotus", 250);
+            source.Add("Maserati", 290);
+            source.Add("TVR", 800);
+            source.Add("Corvette", 300);
+            source.Add("Isuzu", 100);
+            source.Add("Proton", 186);
+            source.Add("Cadillac", 186);
+            source.Add("Perodua", 186);
+            source.Add("Dacia", 186);
+            source.Add("Dodge", 186);
+            source.Add("Ferrari", 400);
+            source.Add("Infiniti", 186);
+            source.Add("Lamborghini", 300);
+            source.Add("Rolls-Royce", 100);
+            source.Add("Maybach", 100);
+            source.Add("Hummer", 186);
+            source.Add("Noble", 400);
+            source.Add("MG Motor UK", 250);
+            source.Add("Morgan", 186);
+            source.Add("Caterham", 250);
+            source.Add("Tesla", 300);
             return source;
         }
     }

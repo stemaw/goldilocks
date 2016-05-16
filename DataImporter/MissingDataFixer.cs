@@ -53,27 +53,106 @@ namespace DataImporter
 
         private void FixIt(string name, Car car)
         {
+            bool wasFixed;
             switch (name)
             {
+                case "InsuranceGroup":
+                    wasFixed = FixInsuranceGroup(car);
+                    if (!wasFixed)
+                    {
+                        car.InsuranceGroup = int.Parse(Console.ReadLine());
+                        _carRepository.Save(car);
+                    }
+                    break;
                 case "LuggageCapacity":
-                    FixLuggage(car);
+                    wasFixed = FixLuggage(car);
+                    if (!wasFixed)
+                    {
+                        car.LuggageCapacity = int.Parse(Console.ReadLine());
+                        _carRepository.Save(car);
+                    }
                     break;
                 case "Width":
-                    FixWidth(car);
+                    wasFixed = FixWidth(car);
+                    if (!wasFixed)
+                    {
+                        car.Width = int.Parse(Console.ReadLine());
+                        _carRepository.Save(car);
+                    }
                     break;
                 case "Height":
-                    FixHeight(car);
+                    wasFixed = FixHeight(car);
+                    if (!wasFixed)
+                    {
+                        car.Height = int.Parse(Console.ReadLine());
+                        _carRepository.Save(car);
+                    }
                     break;
                 case "Length":
-                    FixLength(car);
+                    wasFixed = FixLength(car);
+                    if (!wasFixed)
+                    {
+                        car.Length = int.Parse(Console.ReadLine());
+                        _carRepository.Save(car);
+                    }
                     break;
                 case "Weight":
-                    FixWeight(car);
+                    wasFixed = FixWeight(car);
+                    if (!wasFixed)
+                    {
+                        car.Weight = int.Parse(Console.ReadLine());
+                        _carRepository.Save(car);
+                    }
                     break;
+                case "Mpg":
+                    car.Mpg = int.Parse(Console.ReadLine());
+                    _carRepository.Save(car);
+                    break;
+                case "Acceleration":
+                    car.Acceleration = decimal.Parse(Console.ReadLine());
+                    _carRepository.Save(car);
+                    break;
+                case "TopSpeed":
+                    car.TopSpeed = int.Parse(Console.ReadLine());
+                    _carRepository.Save(car);
+                    break;
+                case "Emissions":
+                    //car.Emissions = int.Parse(Console.ReadLine());
+                    //_carRepository.Save(car);
+                    break;
+                case "Power":
+                    car.Power = int.Parse(Console.ReadLine());
+                    _carRepository.Save(car);
+                    break;
+                case "Cylinders":
+                    car.Cylinders = int.Parse(Console.ReadLine());
+                    _carRepository.Save(car);
+                    break;
+                case "Torque":
+                    car.Torque = int.Parse(Console.ReadLine());
+                    _carRepository.Save(car);
+                    break;
+
             }
         }
 
-        private void FixWidth(Car car)
+        private bool FixInsuranceGroup(Car car)
+        {
+            var missing =
+                _allCars.FirstOrDefault(c => c.ModelId == car.ModelId && c.InsuranceGroup != 0);
+
+            if (missing != null)
+            {
+                car.InsuranceGroup = missing.InsuranceGroup;
+                _carRepository.Save(car);
+                Console.WriteLine("Fixed InsuranceGroup for {0}", car.Name);
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool FixWidth(Car car)
         {
             var missing =
                 _allCars.FirstOrDefault(c => c.ModelId == car.ModelId && c.Width != 0);
@@ -83,10 +162,13 @@ namespace DataImporter
                 car.Width = missing.Width;
                 _carRepository.Save(car);
                 Console.WriteLine("Fixed width for {0}", car.Name);
+                return true;
             }
+
+            return false;
         }
 
-        private void FixHeight(Car car)
+        private bool FixHeight(Car car)
         {
             var missing =
                 _allCars.FirstOrDefault(c => c.ModelId == car.ModelId && c.Height != 0);
@@ -96,9 +178,12 @@ namespace DataImporter
                 car.Height = missing.Height;
                 _carRepository.Save(car);
                 Console.WriteLine("Fixed height for {0}", car.Name);
+                return true;
             }
+
+            return false;
         }
-        private void FixLength(Car car)
+        private bool FixLength(Car car)
         {
             var missing =
                 _allCars.FirstOrDefault(c => c.ModelId == car.ModelId && c.Length != 0);
@@ -108,10 +193,13 @@ namespace DataImporter
                 car.Length = missing.Length;
                 _carRepository.Save(car);
                 Console.WriteLine("Fixed length for {0}", car.Name);
+                return true;
             }
+
+            return false;
         }
 
-        private void FixWeight(Car car)
+        private bool FixWeight(Car car)
         {
             var missing =
                 _allCars.FirstOrDefault(c => c.ModelId == car.ModelId && c.Weight != 0);
@@ -121,10 +209,13 @@ namespace DataImporter
                 car.Weight = missing.Weight;
                 _carRepository.Save(car);
                 Console.WriteLine("Fixed weight for {0}", car.Name);
+                return true;
             }
+
+            return false;
         }
 
-        private void FixLuggage(Car car)
+        private bool FixLuggage(Car car)
         {
             var luggageForModel =
                 _allCars.FirstOrDefault(c => c.ModelId == car.ModelId && c.LuggageCapacity != 0);
@@ -134,7 +225,10 @@ namespace DataImporter
                 car.LuggageCapacity = luggageForModel.LuggageCapacity;
                 _carRepository.Save(car);
                 Console.WriteLine("Fixed luggage for {0}", car.Name);
+                return true;
             }
+
+            return false;
         }
 
         //private void FixPrice(Car car)

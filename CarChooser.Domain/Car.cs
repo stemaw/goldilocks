@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using CarChooser.Domain.ScoreStrategies;
+using LiteDB;
 
 namespace CarChooser.Domain
 {
@@ -11,6 +12,7 @@ namespace CarChooser.Domain
         private IList<IList<UserRating>> _userRatings;
         private CarProfile _profile;
         public string VEDBand { get; set; }
+       
         public int Id { get; set; }
         public int ModelId { get;set; }
 
@@ -127,6 +129,7 @@ namespace CarChooser.Domain
         }
 
         [IgnoreDataMember]
+        [BsonIgnore]
         public string LessCrypticName
         {
             get { return Regex.Replace(Name, @"[1-9](\-?d)", DoorCount + " door"); }
@@ -139,6 +142,7 @@ namespace CarChooser.Domain
         }
 
         [IgnoreDataMember]
+        [BsonIgnore]
         public CarProfile Profile
         {
             get { return _profile ?? (_profile = CarProfile.From(this)); }
@@ -146,6 +150,7 @@ namespace CarChooser.Domain
         }
 
         [IgnoreDataMember]
+        [BsonIgnore]
         public string DerivativeName
         {
             get

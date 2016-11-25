@@ -10,7 +10,7 @@ namespace CarChooser.Domain.ScoreStrategies
         public string Make { get; private set; }
         public Dictionary<string, double> Characteristics { get; set; }
         public string Model { get; private set; }
-        public Car OriginalCar { get; private set; }
+        public Car OriginalCar { get; set; }
 
         public CarProfile(string make, string model, Dictionary<string, double> characteristics)
         {

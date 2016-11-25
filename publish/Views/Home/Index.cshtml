@@ -1,0 +1,413 @@
+﻿@using CarChooser.Web.Models
+@model SearchResultVM
+@{
+    ViewBag.Title = "Helpchoose.co.uk helps you choose your next car with clever suggestions based on your likes and dislikes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Description = "free advice and comparison engine to help you choose which car to buy next. Its like Tinder for cars.";
+}
+
+<script type="text/javascript">
+    var model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model));
+    var searchUrl = '@Url.Action("Post", "Home")';
+    var problemUrl = '@Url.Action("ReportProblem", "Home")';
+    var manufacturersUrl = '@Url.Action("GetManufacturers", "Home")';
+    var modelsUrl = '@Url.Action("GetModels", "Home")';
+    var derivativesUrl = '@Url.Action("GetDerivatives", "Home")';
+    myApp.value("viewModel", model);
+    myApp.value("searchUrl", searchUrl);
+    myApp.value("problemUrl", problemUrl);
+    myApp.value("manufacturersUrl", manufacturersUrl);
+    myApp.value("modelsUrl", modelsUrl);
+    myApp.value("derivativesUrl", derivativesUrl);
+</script>
+<span ng-controller="mainController">
+    <!-- Intro Header -->
+    <header class="intro">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <p class="intro-text">
+                            <h1>the new way to choose a car that's just right for you</h1>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 col-xs-6">
+                        <div>Pick for me</div>
+                        <a href="#choose" id="scrollToChoose" class="btn btn-circle page-scroll">
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-6 col-md-push-4">
+                        <div>Browse</div>
+                        <a href="/browse" target="_self" class="btn btn-circle page-scroll">
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12 col-md-pull-4">
+                        <div>I've already got something in mind</div>
+                        <a href="#selectCar" class="center btn btn-circle page-scroll visible-xs visible-sm" ng-click="showCarSelection()">
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
+                        <div id="selectCar" class="col-xs-12 col-sm-12 carSelectionBlock hidden-xs hidden-sm">
+                            <div class="form-group">
+                                <label for="manufacturer">Manufacturer</label>
+                                <select class="form-control dark" ng-change="getModels()" ng-model="selectedManufacturer" id="manufacturer" ng-options="o as o for o in manufacturers | orderBy:o">
+                                    <option value="">select...</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="model">Model</label>
+                                <select id="model" class="form-control dark" ng-change="getDerivatives()" ng-model="selectedModel" ng-options="o as o for o in models | orderBy:o">
+                                    <option value="">select...</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="model">Derivative</label>
+                                <select id="model" class="form-control dark" ng-model="selectedDerivative" ng-options="o.Id as o.Name group by o.Year for o in derivatives | orderBy:'Name'">
+                                    <option value="">select...</option>
+                                </select>
+                            </div>
+                            <button class="btn dark" ng-click="selectCar()">Continue</button>
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+    </header>
+    <!-- About Section -->
+
+
+    <section id="choose" class="container content-section text-center" style="padding: 50px;">
+        <div class="row" ng-show="Finished">
+            <p>We don't think you'll like anything else so it's time to move to the comparison bit</p>
+            <p>Or if you want to start again, just <a href="#" ng-click="startAgain()">refresh the page</a></p>
+            <a href="#compare" class="btn btn-circle page-scroll">
+                <i class="fa fa-angle-double-down animated"></i>
+            </a>
+        </div>
+        <div class="row" ng-show="!Finished">
+            <div class="carHeader visible-xs">
+                <div class="text-primary currentCar">
+                    {{viewModel.CurrentCar.FullName}}
+                </div>
+            </div>
+            <div class="col-lg-12 bgimage" style="background-repeat: no-repeat; padding: 0" ng-style="{'background-image': 'url('+viewModel.CurrentCar.Image+')', 'background-repeat' : 'no-repeat'}">
+                <div class="carHeader hidden-xs">
+                    <div class="text-primary currentCar">
+                        {{viewModel.CurrentCar.FullName}}
+                    </div>
+                </div>
+                <div ng-show="doingStuff" ng-cloak class="loader">thinking...</div>
+                <div ng-show="showRate" ng-cloak class="hidden-xs ratingBlock">
+                    <table>
+                        <tr ng-repeat="characteristic in viewModel.CurrentCar.UserRatings">
+                            <td class="pull-left">{{characteristic.Characteristic}}</td>
+                            <td class="text-right">
+                                <div star-rating ng-model="characteristic.Score" max="10"></div>
+                            </td>
+                        </tr>
+                    </table>
+                    <button class="btn dark" ng-click="viewModel.CurrentCar.hasRated = true; submitRejection('Too Common')">Done</button>
+                </div>
+                <div class="hidden-xs pull-left performance">
+                    <a style="padding: 10px" class="pull-right" ng-show="!showFigures" ng-click="showFigures = true">view info <i class="glyphicon glyphicon-chevron-down"></i></a>
+                    <a class="pull-right" ng-show="showFigures" ng-click="showFigures = false; showReviews = false;"><i class="glyphicon glyphicon-chevron-up"></i></a>
+
+                    <table ng-show="showFigures">
+                        <tr>
+                            <td class="text-left">Price</td>
+                            <td class="text-right" ng-show="viewModel.CurrentCar.Price > 0">{{viewModel.CurrentCar.Price | currency : "£" : 0}}</td>
+                            <td class="text-right" ng-show="viewModel.CurrentCar.Price == 0"><a href="{{viewModel.CurrentCar.ReviewPage}}" target="_blank">Check here</a></td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">0-60</td>
+                            <td class="text-right">{{viewModel.CurrentCar.Acceleration}} secs</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Top Speed</td>
+                            <td class="text-right">{{viewModel.CurrentCar.TopSpeed}} mph</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Power</td>
+                            <td class="text-right">{{viewModel.CurrentCar.Power}} bhp</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Insurance</td>
+                            <td class="text-right">{{viewModel.CurrentCar.InsuranceGroup}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Mpg</td>
+                            <td class="text-right">{{viewModel.CurrentCar.Mpg}} mpg</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Ratings</td>
+                            <td class="text-right">
+                                <a ng-click="showReviews = !showReviews">View<i class="glyphicon glyphicon-chevron-right"></i></a></td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Read more</td>
+                            <td class="text-right"><a href="{{viewModel.CurrentCar.ReviewPage}}" target="_blank">Parkers</a></td>
+                        </tr>
+                    </table>
+
+                </div>
+                <div ng-show="showReviews" class="pull-left performance">
+                    <table>
+                        <tr ng-repeat="rating in viewModel.CurrentCar.Ratings">
+                            <td class="pull-left">{{rating.Category}}</td>
+                            <td class="text-right">{{rating.Score}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="hidden-xs pull-right">
+                    <button class="btn btn-circle btn-circle-rate" ng-click="showRate = !showRate">
+                        <i class="glyphicon glyphicon-edit"></i>
+                        <br />
+                        Rate
+                    </button>
+                </div>
+                <div class="hidden-xs pull-right">
+                    <button class="btn btn-circle btn-circle-like" ng-click="submitRejection('like')">
+                        <i class="glyphicon glyphicon-thumbs-up"></i>
+                        <br />
+                        like</button>
+                </div>
+                <div class="hidden-xs pull-right">
+                    <button class="btn btn-circle btn-circle-dislike" ng-click="submitRejection('TooCommon')">
+                        <i class="glyphicon glyphicon-thumbs-down"></i>
+                        <br />
+                        dislike</button>
+                </div>
+
+
+                <div class="hidden-xs bottom-align-text" ng-show="viewModel.Likes.length > 1">
+                    <button class="btn btn-circle btn-circle-compare page-scroll" href="#compare">
+                        Compare<br />
+                        <i class="fa fa-angle-double-down animated"></i>
+                    </button>
+                </div>
+
+                <div class="bgimage-inside"></div>
+            </div>
+            <div class="col-lg-6 pull-left">Need to sell yours? try <a href="http://www.awin1.com/awclick.php?mid=4455&id=242009" target="_blank">We Want Any Car</a></div>
+            <div class="col-lg-6 pull-right" ng-show="!viewModel.CurrentCar.ShowThanks">Rubbish image? <a ng-click="submitProblem('rubbishImage')">Click here to report</a></div>
+            <div class="col-lg-6 pull-right" ng-show="viewModel.CurrentCar.ShowThanks">Thanks, we'll get round to sorting it</div>
+            <div class="visible-xs col-xs-4">
+                <button class="btn btn-circle btn-circle-rate" ng-click="showRate = !showRate">
+                    <i class="glyphicon glyphicon-edit"></i>
+                    <br />
+                    Rate
+                </button>
+            </div>
+
+            <div class="visible-xs col-xs-4">
+                <button class="btn btn-circle btn-circle-like" ng-click="submitRejection('like')">
+                    <i class="glyphicon glyphicon-thumbs-up"></i>
+                    <br />
+                    like</button>
+            </div>
+
+            <div class="visible-xs col-xs-4">
+                <button class="btn btn-circle btn-circle-dislike" ng-click="submitRejection('TooCommon')">
+                    <i class="glyphicon glyphicon-thumbs-down"></i>
+                    <br />
+                    dislike</button>
+            </div>
+
+            <div ng-show="showRate" ng-cloak class="visible-xs ratingBlockXS">
+                <table>
+                    <tr ng-repeat="characteristic in viewModel.CurrentCar.UserRatings">
+                        <td class="pull-left">{{characteristic.Characteristic}}</td>
+                        <td class="text-right">
+                            <div star-rating ng-model="characteristic.Score" max="10"></div>
+                        </td>
+                    </tr>
+                </table>
+                <button class="btn dark" ng-click="viewModel.CurrentCar.hasRated = true; submitRejection('Too Common')">Done</button>
+            </div>
+
+            <div class="visible-xs" ng-show="viewModel.Likes.length > 1">
+                <button class="btn btn-circle btn-circle-compare page-scroll" href="#compare">
+                    Compare<br />
+                    <i class="fa fa-angle-double-down animated"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="compare" class="container-fluid content-section text-center" style="padding: 50px;">
+        <div ng-show="viewModel.Likes.length > 0">
+            @*<div class="row row-centered spacer">
+
+                <h2 class="text-primary" style="margin: 0px">click to compare</h2>
+
+                <div>
+                    <i class="carouselButton glyphicon glyphicon-chevron-left" ng-click="carouselIndex = carouselIndex-1"></i>
+                    <i class="carouselButton glyphicon glyphicon-chevron-right" ng-click="carouselIndex = carouselIndex+1"></i>
+                </div>
+                <div class="col-lg-2 col-centered">
+                    <ul rn-carousel rn-carousel-index="carouselIndex" rn-carousel-transition="hexagon" class="myCarousel">
+                        <li ng-click="selectToCompare($index)" ng-repeat="car in viewModel.Likes track by $index">
+                            <div class="layer">
+                                <a class="text-center">{{ car.FullName | limitTo: 40 }}{{car.FullName.length > 40 ? '...' : ''}}</a>
+                                <br />
+                                <img alt="{{car.FullName}}" ng-src="{{car.Image}}" class="col-lg-12 img-center img-responsive" />
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>*@
+
+            <div class="row row-centered">
+                <h2 class="text-primary" style="margin: 0px">Compare those you liked</h2>
+                <div ng-repeat="comparison in viewModel.Likes" class="col-lg-3 col-md-3 col-sm-6 col-xs-12 col-centered">
+
+                    <div class="carHeader">
+                        <div class="text-primary compareTitle iffyTip" title="{{comparison.FullName}}">
+                            {{comparison.FullName}}
+                        </div>
+                    </div>
+                    <img alt="{{comparison.FullName}}" ng-src="{{comparison.Image}}" class="img-responsive" />
+
+                    <div class="compare-performance">
+                        <table>
+                            <tr>
+                                <td class="text-left">Price</td>
+                                <td class="text-right" ng-show="comparison.Price > 0">{{comparison.Price | currency : "£" : 0}}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">0-60</td>
+                                <td class="text-right">{{comparison.Acceleration}} secs</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Top Speed</td>
+                                <td class="text-right">{{comparison.TopSpeed}} mph</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Power</td>
+                                <td class="text-right">{{comparison.Power}} bhp</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Engine</td>
+                                <td class="text-right">{{comparison.EngineSize}} cc</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Insurance</td>
+                                <td class="text-right">{{comparison.InsuranceGroup}}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Consumption</td>
+                                <td class="text-right">{{comparison.Mpg}} mpg</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Boot</td>
+                                <td class="text-right">{{comparison.LuggageCapacity}} litres</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Emissions</td>
+                                <td class="text-right">{{comparison.Emissions}} g/km</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Read more</td>
+                                <td class="text-right"><a href="{{comparison.ReviewPage}}" target="_blank">Parkers</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Buy one</td>
+                                <td class="text-right">
+                                    <a ng-show="comparison.YearTo == 0" href="http://www.awin1.com/awclick.php?mid=6159&id=242009" target="_blank">Carwow</a>
+                                    <a ng-show="comparison.YearTo != 0" ng-href="https://www.awin1.com/awclick.php?mid=5834&id=242009&{{comparison.Manufacturer}}/{{comparison.Model}}" target="_blank">Preloved</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="viewModel.Likes.length < 1">
+            <p>
+                You haven't liked any cars yet so there's nothing to compare. 
+                    <br />
+                Once you've liked a couple of cars, this section will allow you
+                    to select cars to compare side by side.
+            </p>
+        </div>
+    </section>
+
+</span>
+
+<section class="container content-section">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Test -->
+    <ins class="adsbygoogle"
+        style="display: block"
+        data-ad-client="ca-pub-1441904574998761"
+        data-ad-slot="8918139735"
+        data-ad-format="auto"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</section>
+
+<section id="contact" class="container content-section text-center">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <h2>Contact us</h2>
+            <p>Feel free to email us to provide some feedback, give us suggestions, or to just say hello!</p>
+            <p>
+                <a href="mailto:enquiry@mawbusinesssolutions.co.uk">enquiry@mawbusinesssolutions.co.uk</a>
+            </p>
+            <ul class="list-inline banner-social-buttons">
+                <li>
+                    <a href="https://twitter.com/goldilocker1" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i><span class="network-name">Twitter</span></a>
+                </li>
+
+                <li>
+                    <a href="https://plus.google.com/112151541140544832241/posts" class="btn btn-default btn-lg"><i class="fa fa-google-plus fa-fw"></i><span class="network-name">Google+</span></a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/goldilocker1" data-href="https://www.facebook.com/goldilocker1" data-layout="standard" data-action="like" data-show-faces="false" data-share="true" class="btn btn-default btn-lg"><i class="fa fa-facebook fa-fw"></i><span class="network-name">Facebook</span></a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="container content-section text-center">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <h2>What does it do?</h2>
+            <p>
+                We've collated data about all the cars currently available in the UK, both new and used.
+            </p>
+            <p>
+                We serve images of cars that the system thinks you may like, and you simply tell us if you like it or not.
+                We then begin to tailor the car suggestions based on your choices using a clever maths algorithm.  We hope to 
+                suggest other models that you'll like and to narrow down to that perfect car for you.
+            </p>
+            <p>
+                Once you've indicated a few cars you like, you can use the compare view to easily compare the details of each model such as performance,
+                fuel consumption, emissions, boot size etc... to find the one car that meets your needs.
+            </p>
+            <p>
+                If you use the Rate option then you can help other users of the site by improving the data we hold about the cars.
+                These personal ratings mean we can learn about more subjective factors such as attractiveness and prestige - stuff computers
+                aren't very good at judging without some help!
+            </p>
+            <p>
+                This is currently in 'beta' which means we're still learning what works and what doesn't.  We really value your feedback to help
+                us improve so please don't be shy and get in touch.
+            </p>
+        </div>
+    </div>
+</section>
+
+
+
+
+

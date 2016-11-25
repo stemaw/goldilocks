@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using System.Web.Hosting;
 using System.Web.SessionState;
 using CarChooser.Data;
 using CarChooser.Domain;
@@ -74,13 +75,13 @@ namespace CarChooser.Web.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<ISearchCars>().To<SearchService>().InSingletonScope();
-            kernel.Bind<IGetCars>().To<CarRepository>().InSingletonScope();
+            kernel.Bind<IGetCars>().To<CarRepository>().InSingletonScope().WithConstructorArgument("db", HostingEnvironment.MapPath("~/database/helpchoose.db"));
             kernel.Bind<IMapCars>().To<CarMapper>().InSingletonScope();
             kernel.Bind<IMapSearchRequests>().To<SearchMapper>().InSingletonScope();
             kernel.Bind<IManageCars>().To<CarService>().InSingletonScope();
             kernel.Bind<IMapOfficialCarRatings>().To<OfficialCarRatingsMapper>().InSingletonScope();
             kernel.Bind<IFilter>().To<AdaptiveScorer>();
-            kernel.Bind<IRecordDecisions>().To<DecisionRepository>();
+            kernel.Bind<IRecordDecisions>().To<DecisionRepository>().WithConstructorArgument("db", HostingEnvironment.MapPath("~/database/helpchoose.db"));
             kernel.Bind<IMapUserCarRatings>().To<UserCarRatingMapper>().InSingletonScope();
             kernel.Bind<IReportProblems>().To<ReportRepository>().InSingletonScope();
         }        

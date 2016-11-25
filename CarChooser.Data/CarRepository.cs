@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
+using System.Web.Hosting;
 using CarChooser.Domain;
-using HtmlAgilityPack;
-using Newtonsoft.Json;
-using Npgsql;
+using LiteDB;
 
 
 namespace CarChooser.Data
 {
     public class CarRepository : IGetCars
     {
-        //private const string ConnectionString = @"Server=goldilocks.clstkqqph5qy.eu-west-1.rds.amazonaws.com;Port=5432;User Id=postgres;Password=postgres;Database=goldilocks;Timeout=60";
-        // private const string ConnectionString = @"Server=localhost;Port=5432;User Id=postgres;Password=admin;Database=gold;";
+        private readonly string _db;
 
-        private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["dbconnection"].ToString();
+        public CarRepository(string db)
+        {
+            _db = db;
+        }
 
         public Car GetCar(int id)
         {
@@ -25,12 +25,11 @@ namespace CarChooser.Data
         public Car GetDefaultCar()
         {
             const int defaultId = 100;
-            using (var conn = new NpgsqlConnection(ConnectionString))
+            using (var db = new LiteDatabase(_db))
             {
-                conn.Open();
-                var command = new NpgsqlCommand("select car from cars where id = " + defaultId, conn);
-                var result = (string)command.ExecuteScalar();
-                return JsonConvert.DeserializeObject<Car>(result);
+                var col = db.GetCollection<Car>("cars");
+
+                return col.FindById(defaultId);
             }
         }
 
@@ -48,21 +47,13 @@ namespace CarChooser.Data
             {
                 if (_allCars != null) return _allCars;
 
-                var allCars = new List<Car>();
-                using (var conn = new NpgsqlConnection(ConnectionString))
+                using (var db = new LiteDatabase(_db))
                 {
-                    conn.Open();
-                    var command = new NpgsqlCommand("select car from cars", conn);
-                    command.CommandTimeout = 1000;
-                    var reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        var json = reader.GetString(0);
-                        allCars.Add(JsonConvert.DeserializeObject<Car>(json));
-                    }
+                    var col = db.GetCollection<Car>("cars");
+
+                    _allCars = col.FindAll().ToList();
                 }
 
-                _allCars = allCars;
                 return _allCars;
             }
         }
@@ -78,28 +69,22 @@ namespace CarChooser.Data
             
             if (existing)
             {
-                car.Profile = null;
-                var json = JsonConvert.SerializeObject(car).Replace("'", "''");
-                using (var conn = new NpgsqlConnection(ConnectionString))
+                using (var db = new LiteDatabase(_db))
                 {
-                    conn.Open();
-                    var command =
-                        new NpgsqlCommand(string.Format("UPDATE cars SET car='{0}' WHERE id = {1}", json, car.Id), conn);
-                    
-                    command.ExecuteNonQuery();
+                    var col = db.GetCollection<Car>("cars");
+
+                    col.Update(car);
                 }
             }
             else
             {
                 AllCars().Add(car);
 
-                var json = JsonConvert.SerializeObject(car).Replace("'", "''");
-                using (var conn = new NpgsqlConnection(ConnectionString))
+                using (var db = new LiteDatabase(_db))
                 {
-                    conn.Open();
-                    var command =
-                        new NpgsqlCommand(string.Format("INSERT INTO cars (id, car) VALUES ({0},'{1}')", car.Id, json), conn);
-                    command.ExecuteNonQuery();
+                    var col = db.GetCollection<Car>("cars");
+
+                    col.Insert(car);
                 }
             }
         }
